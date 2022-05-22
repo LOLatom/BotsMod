@@ -599,6 +599,17 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> CENO_GOBLIN_ANVIL = BLOCKS.register("ceno_goblin_anvil", () -> new CenoGoblinAnvil(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(5F,5F).randomTicks()));
 
+	public static final RegistryObject<Block> TERRALLOY_BLOCK = BLOCKS.register("terralloy_block", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> TERRALLOY_BRICKS = BLOCKS.register("terralloy_bricks", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> TERRALLOY_PILLAR = BLOCKS.register("terralloy_pillar", () -> new ConnectedTexturePillar(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> CHISELED_TERRALLOY_BLOCK = BLOCKS.register("chiseled_terralloy_block", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> NOBLIVIAN_VASE = BLOCKS.register("noblivian_vase", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> POST_MORTAL_ALTAR = BLOCKS.register("post_mortal_altar", () -> new PostMortalAltar(AbstractBlock.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

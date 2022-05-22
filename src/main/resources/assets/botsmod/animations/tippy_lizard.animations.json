@@ -1,0 +1,209 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.tippy_lizard.walk": {
+			"loop": true,
+			"bones": {
+				"Body": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 200) *0.5", 0, "math.cos(query.anim_time * 200) *1.5"]
+					},
+					"position": {
+						"vector": [0, "math.cos(query.anim_time * 100) *0.1", 0]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": ["-15 + math.cos(query.anim_time * 100) * 3", 0, 0]
+					}
+				},
+				"Thongue": {
+					"rotation": {
+						"vector": [12.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0.5, 2]
+					}
+				},
+				"RightLeg1": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 200) * 20", 0, "17.5+math.sin(query.anim_time * 200) * 10"]
+					}
+				},
+				"RightLeg2": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 200) * -20", 0, "17.5 + math.sin(query.anim_time * 200) * -10"]
+					}
+				},
+				"LeftLeg1": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 200) * -20", 0, "-17.5+math.sin(query.anim_time * 200) * 10"]
+					}
+				},
+				"LeftLeg2": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 200) * 20", 0, "-17.5+math.sin(query.anim_time * 200) * -10"]
+					}
+				},
+				"Tail1": {
+					"rotation": {
+						"vector": ["5 -math.cos(query.anim_time * 100) * 5", 0, "math.sin(query.anim_time * 100) * 5"]
+					}
+				},
+				"Tail2": {
+					"rotation": {
+						"vector": ["5 -math.cos(query.anim_time * 100) * 5", 0, "math.sin(query.anim_time * 100) * 5"]
+					}
+				}
+			}
+		},
+		"animation.tippy_lizard.running": {
+			"loop": true,
+			"bones": {
+				"Body": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 400) *1.5", 0, "math.cos(query.anim_time * 400) *1.5"]
+					},
+					"position": {
+						"vector": [0, "math.cos(query.anim_time * 700) *0.1", 0]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": [-15, 0, 0]
+					}
+				},
+				"Thongue": {
+					"rotation": {
+						"vector": [12.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0.5, 2]
+					}
+				},
+				"RightLeg1": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 1500) * 25", 0, "17.5+math.sin(query.anim_time * 1500) * 15"]
+					}
+				},
+				"RightLeg2": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 1500) * -25", 0, "17.5 + math.sin(query.anim_time * 1500) * -15"]
+					}
+				},
+				"LeftLeg1": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 1500) * -25", 0, "-17.5+math.sin(query.anim_time * 1500) * 15"]
+					}
+				},
+				"LeftLeg2": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 1500) * 25", 0, "-17.5+math.sin(query.anim_time * 1500) * -15"]
+					}
+				},
+				"Tail1": {
+					"rotation": {
+						"vector": ["5 -math.cos(query.anim_time * 700) * 5", 0, "math.sin(query.anim_time * 700) * 5"]
+					}
+				},
+				"Tail2": {
+					"rotation": {
+						"vector": ["5 -math.cos(query.anim_time * 700) * 5", 0, "math.sin(query.anim_time * 700) * 5"]
+					}
+				}
+			}
+		},
+		"animation.tippy_lizard.sit": {
+			"loop": true,
+			"bones": {
+				"Body": {
+					"rotation": {
+						"vector": [0, -37.5, 0]
+					},
+					"position": {
+						"vector": [2, -1.5, 0.75]
+					},
+					"scale": {
+						"vector": ["1 + math.cos(query.anim_time * 100) * 0.01", "1 + math.cos(query.anim_time * 100) * 0.01", "1 + math.cos(query.anim_time * 100) * 0.01"]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": ["-2.5 + math.sin(query.anim_time * 100) * 2", 27.5, 0]
+					}
+				},
+				"RightLeg1": {
+					"rotation": {
+						"vector": [-70, 0, 0]
+					}
+				},
+				"RightLeg2": {
+					"rotation": {
+						"vector": [72.5, 0, 0]
+					}
+				},
+				"LeftLeg1": {
+					"rotation": {
+						"vector": [-85, 0, 0]
+					}
+				},
+				"LeftLeg2": {
+					"rotation": {
+						"vector": [65, 0, 0]
+					}
+				},
+				"Tail1": {
+					"rotation": {
+						"vector": [0, -35, 0]
+					}
+				},
+				"Tail2": {
+					"rotation": {
+						"vector": [0, -65, 0]
+					}
+				}
+			}
+		},
+		"animation.tippy_lizard.idle": {
+			"loop": true,
+			"bones": {
+				"Body": {
+					"position": {
+						"vector": [0, "math.sin(query.anim_time * 100) * -0.1", 0]
+					}
+				},
+				"RightLeg1": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) *4"]
+					}
+				},
+				"RightLeg2": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) *4"]
+					}
+				},
+				"LeftLeg1": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) *-4"]
+					}
+				},
+				"LeftLeg2": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) *-4"]
+					}
+				},
+				"Tail1": {
+					"rotation": {
+						"vector": [55, 0, "math.sin(query.anim_time * 200) * 10"]
+					}
+				},
+				"Tail2": {
+					"rotation": {
+						"vector": [30, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

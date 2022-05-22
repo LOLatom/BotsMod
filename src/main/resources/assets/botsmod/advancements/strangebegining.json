@@ -1,0 +1,16 @@
+{
+  "display": {
+    "icon": {
+      "item": "botsmod:gray_note"
+    },
+    "title": "This is quite different...",
+    "description": "You created a new world, but this isn't right...",
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

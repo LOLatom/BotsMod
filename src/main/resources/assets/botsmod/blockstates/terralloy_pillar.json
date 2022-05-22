@@ -1,0 +1,16 @@
+{
+    "variants": {
+            "axis=y,c_up=true,c_down=false":  { "model": "botsmod:block/terralloy_pillar_up" },
+            "axis=z,c_up=true,c_down=false":   { "model": "botsmod:block/terralloy_pillar_up", "x": 90 },
+            "axis=x,c_up=true,c_down=false":   { "model": "botsmod:block/terralloy_pillar_up", "x": 90, "y": 90 },
+            "axis=y,c_up=false,c_down=true":  { "model": "botsmod:block/terralloy_pillar_down" },
+            "axis=z,c_up=false,c_down=true":   { "model": "botsmod:block/terralloy_pillar_down", "x": 90 },
+            "axis=x,c_up=false,c_down=true":   { "model": "botsmod:block/terralloy_pillar_down", "x": 90, "y": 90 },
+            "axis=y,c_up=false,c_down=false":  { "model": "botsmod:block/terralloy_pillar_middle" },
+            "axis=z,c_up=false,c_down=false":   { "model": "botsmod:block/terralloy_pillar_middle", "x": 90 },
+            "axis=x,c_up=false,c_down=false":   { "model": "botsmod:block/terralloy_pillar_middle", "x": 90, "y": 90 },
+            "axis=y,c_up=true,c_down=true":  { "model": "botsmod:block/terralloy_pillar_middle" },
+            "axis=z,c_up=true,c_down=true":   { "model": "botsmod:block/terralloy_pillar_middle", "x": 90 },
+            "axis=x,c_up=true,c_down=true":   { "model": "botsmod:block/terralloy_pillar_middle", "x": 90, "y": 90 }
+    }
+}

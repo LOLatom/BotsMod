@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "botsmod:blocks/chiseled_terralloy_block",
+        "side": "botsmod:blocks/terralloy_pillar_top"
+    }
+}

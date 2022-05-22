@@ -26,10 +26,4 @@ import java.util.Vector;
 
 @Mod.EventBusSubscriber(modid = BotsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SpecialItemHeldEvent {
-
-
-
-
-
-
 }

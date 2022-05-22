@@ -1,0 +1,19 @@
+
+{
+  "required": false,
+  "package": "com.thefreak.botsmod.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "botsmod.refmap.json",
+  "client": [
+    "client.BipedModelMixin",
+    "client.HeldItemLayerMixin",
+    "client.IngameGuiMixin",
+    "client.DisplayEffectsScreenMixin"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

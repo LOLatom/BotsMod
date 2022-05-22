@@ -23,7 +23,9 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -107,6 +109,7 @@ public class WanderingSpecterEntity extends CreatureEntity implements IAnimatabl
         animationData.addAnimationController(new AnimationController(this, "controller", 5, this::predicate));
 
     }
+
 
     private <E extends WanderingSpecterEntity> PlayState predicate(AnimationEvent<E> event) {
         AnimationController controller = event.getController();

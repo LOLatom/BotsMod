@@ -1,5 +1,6 @@
 package com.thefreak.botsmod.objects.items;
 
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,10 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.Random;
+import java.util.function.BiConsumer;
 
 import net.minecraft.item.Item.Properties;
 
-public class Candy extends Item {
+public class Candy extends Item{
 
     public Candy(Properties properties) {
         super(properties);
@@ -25,4 +27,5 @@ public class Candy extends Item {
 
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }
+
 }

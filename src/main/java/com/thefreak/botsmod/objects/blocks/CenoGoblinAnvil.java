@@ -5,6 +5,7 @@ import com.thefreak.botsmod.init.ModTileEntityTypes;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -82,15 +83,17 @@ public class CenoGoblinAnvil extends Block implements ITileEntityProvider {
         return null;
     }
 
+
+
+
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
-        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world);
+        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity);
         return super.use(state, world, pos, playerEntity, hand, blockRayTraceResult);
     }
 
     @Override
     public void tick(BlockState state, ServerWorld serverWorld, BlockPos pos, Random random) {
-        ((ITileEntityBase) serverWorld.getBlockEntity(pos)).Ticking(state, serverWorld, pos, random);
         super.tick(state, serverWorld, pos, random);
 
     }

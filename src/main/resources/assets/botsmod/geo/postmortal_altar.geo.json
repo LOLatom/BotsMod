@@ -1,0 +1,58 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "Main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 5, -8], "size": [16, 9, 16], "uv": [0, 23]},
+						{"origin": [-8, 14, -8], "size": [16, 2, 0], "uv": [54, 7]},
+						{"origin": [-8, 14, 8], "size": [16, 2, 0], "uv": [54, 5]},
+						{"origin": [-8, 14, -8], "size": [0, 2, 16], "uv": [48, 12]},
+						{"origin": [8, 14, -8], "size": [0, 2, 16], "uv": [42, 44]},
+						{"origin": [-9, 0, -9], "size": [18, 5, 18], "uv": [0, 0]},
+						{"origin": [-9, -5, -9], "size": [18, 5, 0], "uv": [54, 0]},
+						{"origin": [-9, -5, 9], "size": [18, 5, 0], "uv": [48, 30]},
+						{"origin": [9, -5, -9], "size": [0, 5, 18], "uv": [48, 5]},
+						{"origin": [-9, -5, -9], "size": [0, 5, 18], "uv": [0, 48]}
+					]
+				},
+				{
+					"name": "GodHeart",
+					"parent": "Main",
+					"pivot": [0, 22, 0],
+					"cubes": [
+						{"origin": [-7, 19.75, -7], "size": [14, 4, 14], "uv": [0, 48]},
+						{"origin": [-6, 16, -6], "size": [12, 12, 12], "uv": [52, 36]}
+					]
+				},
+				{
+					"name": "Aura",
+					"parent": "Main",
+					"pivot": [0, 22, 0],
+					"cubes": [
+						{"origin": [-10, 20, -10], "size": [20, 4, 20], "uv": [0, 71]}
+					]
+				},
+				{
+					"name": "Aura2",
+					"parent": "Main",
+					"pivot": [0, 22, 0],
+					"cubes": [
+						{"origin": [-12, 20, -12], "size": [24, 4, 24], "uv": [0, 100]}
+					]
+				}
+			]
+		}
+	]
+}

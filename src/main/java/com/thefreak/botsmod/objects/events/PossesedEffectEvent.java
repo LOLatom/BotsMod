@@ -57,7 +57,7 @@ public class PossesedEffectEvent {
         boolean isPlayer = entity instanceof PlayerEntity;
         if (!isPlayer && entity instanceof MobEntity) {
             MobEntity mobEntity = (MobEntity) entity;
-            mobEntity.goalSelector.addGoal(1, new AttackWhenPossesedGoal(mobEntity,5, true));
+            mobEntity.goalSelector.addGoal(1, new AttackWhenPossesedGoal(mobEntity,1D, true));
             mobEntity.targetSelector.addGoal(1, new TargetNearestWhenPossesed<>(mobEntity, PlayerEntity.class, true));
         }
     }

@@ -1,14 +1,16 @@
 package com.thefreak.botsmod;
 
-import com.thefreak.botsmod.entities.BansheeScreamEntity;
-import com.thefreak.botsmod.entities.GiantTardigradeEntity;
-import com.thefreak.botsmod.entities.WanderingSpecterEntity;
+import com.thefreak.botsmod.client.entity.render.PuffWormRender;
+import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.init.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.DistExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +52,9 @@ public class BotsMod
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     	ModEntityTypes.ENTITY.register(modEventBus);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerModel);
+        });
     	
 
 
@@ -63,6 +68,12 @@ public class BotsMod
             GlobalEntityTypeAttributes.put(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeEntity.setCustomAttributes().build());
             GlobalEntityTypeAttributes.put(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterEntity.setCustomAttributes().build());
             GlobalEntityTypeAttributes.put(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(ModEntityTypes.LADYBUG.get(), LadybugEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(ModEntityTypes.PUFF_WORM.get(), PuffWormEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(ModEntityTypes.DRAINED.get(), DrainedEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefEntity.setCustomAttributes().build());
+
 
         });
     }
@@ -101,12 +112,18 @@ public class BotsMod
         RenderTypeLookup.setRenderLayer(BlockInitNew.GLOWING_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockInitNew.BAUMEA_LEAVES.get(), RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockInitNew.TAR_TORCH.get(), RenderType.cutoutMipped());
-
-
-
+        RenderTypeLookup.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutoutMipped());
 
         ModelLoader.addSpecialModel(new ResourceLocation("botsmod:item/delta_crystal_shard_model"));
     }
+
+    public void registerModel(ModelRegistryEvent event) {
+        ModelLoader.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model"));
+        ModelLoader.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_glow"));
+        ModelLoader.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_part"));
+    }
+
+    
 
 
     @SubscribeEvent
@@ -131,7 +148,6 @@ public class BotsMod
     public static class BotsItemGroup extends ItemGroup
     {
     	public static final BotsItemGroup instance = new BotsItemGroup(ItemGroup.TABS.length, "botstab");
-    	
     	private BotsItemGroup(int index, String label)
     	{
     		super(index, label);
@@ -142,6 +158,21 @@ public class BotsMod
     	{
     		return new ItemStack(BlockInitNew.BRONZE_ALLOY_BRICKS.get());
     	}
+    }
+
+    public static class BotsfoodItemGroup extends ItemGroup
+    {
+        public static final BotsfoodItemGroup food = new BotsfoodItemGroup(ItemGroup.TABS.length, "botsfood");
+        private BotsfoodItemGroup(int index, String label)
+        {
+            super(index, label);
+        }
+
+        @Override
+        public ItemStack makeIcon()
+        {
+            return new ItemStack(ItemInitNew.PINK_PURIFIED_SALT.get());
+        }
     }
 
 }

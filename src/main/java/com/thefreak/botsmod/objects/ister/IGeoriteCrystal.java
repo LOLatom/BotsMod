@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.objects.ister;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.ItemStack;
 
 public interface IGeoriteCrystal {
     default int glowAlpha(ItemStack stack) { return 1; };

@@ -6,27 +6,25 @@ import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.init.ItemInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
 import jdk.nashorn.internal.ir.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.Collection;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class PinkPurifiedSalt extends Item {
     public PinkPurifiedSalt(Properties properties) {
         super(properties);
     }
-    private static boolean entityHasEffect(LivingEntity entity, Effect effect) {
-        Collection<EffectInstance> entityEffects = entity.getActiveEffects();
-        for (EffectInstance entityEffect : entityEffects) {
+    private static boolean entityHasEffect(LivingEntity entity, MobEffect effect) {
+        Collection<MobEffectInstance> entityEffects = entity.getActiveEffects();
+        for (MobEffectInstance entityEffect : entityEffects) {
             if (entityEffect.getEffect() == effect) {
                 return true;
             }
@@ -35,7 +33,7 @@ public class PinkPurifiedSalt extends Item {
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entityLiving) {
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entityLiving) {
         BlockPos pos = entityLiving.blockPosition();
         if (entityHasEffect(entityLiving, EffectInitNew.POSSESION.get())) {
             WanderingSpecterEntity wanderingSpecterEntity = ModEntityTypes.WANDERING_SPECTER.get().create(world);
@@ -53,7 +51,7 @@ public class PinkPurifiedSalt extends Item {
 
 
 
-    public PinkPurifiedSaltItemEntity createEntity(World world, Entity location, ItemStack itemstack)
+    public PinkPurifiedSaltItemEntity createEntity(Level world, Entity location, ItemStack itemstack)
     {
         return new PinkPurifiedSaltItemEntity(world, location.getX(), location.getY(), location.getZ(), itemstack) {
             @Override

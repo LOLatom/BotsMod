@@ -19,6 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
+import net.minecraft.world.item.SwordItem;
 
 import java.util.function.BiConsumer;
 

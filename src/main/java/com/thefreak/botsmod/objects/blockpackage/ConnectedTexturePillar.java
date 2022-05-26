@@ -5,6 +5,8 @@ package com.thefreak.botsmod.objects.blockpackage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -12,6 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
 import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class ConnectedTexturePillar extends RotatedPillarBlock {
     public static final BooleanProperty C_UP = BooleanProperty.create("c_up");
@@ -25,7 +33,7 @@ public class ConnectedTexturePillar extends RotatedPillarBlock {
 
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos pos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos pos, BlockPos facingPos) {
 
         boolean vertical = stateIn.getValue(AXIS) == Direction.Axis.Y;
         boolean horizontalx = stateIn.getValue(AXIS) == Direction.Axis.X;
@@ -87,11 +95,11 @@ public class ConnectedTexturePillar extends RotatedPillarBlock {
         return super.updateShape(stateIn, facing, facingState, worldIn, pos, facingPos);
     }
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(C_DOWN).add(C_UP).add(AXIS);
     }
 
-    public static boolean isConnectedAt(BlockPos pos, IWorld worldIn) {
+    public static boolean isConnectedAt(BlockPos pos, LevelAccessor worldIn) {
         boolean COnnect = worldIn.getBlockState(pos).getBlock() instanceof ConnectedTexturePillar;
         return COnnect;
     }

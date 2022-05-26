@@ -14,6 +14,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,7 +33,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.EnumSet;
 
-public class GiantTardigradeEntity extends CreatureEntity implements IAnimatable {
+public class GiantTardigradeEntity extends PathfinderMob implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.giant_tardigrade.idle");
     public static AnimationBuilder WALK_ANIM = new AnimationBuilder().addAnimation("animation.giant_tardigrade.walk");
@@ -38,23 +47,23 @@ public class GiantTardigradeEntity extends CreatureEntity implements IAnimatable
     //
 
 
-    GroundPathNavigator pathNavigator;
+    GroundPathNavigation pathNavigator;
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return MobEntity.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 320.0D)
                 .add(Attributes.MOVEMENT_SPEED, MoveSpeed)
                 .add(Attributes.ATTACK_DAMAGE, 2D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0D);
     }
 
-    public GiantTardigradeEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public GiantTardigradeEntity(EntityType<? extends PathfinderMob> type, Level worldIn) {
 
         super(type, worldIn);
-        this.pathNavigator = new GroundPathNavigator(this, this.level);
-        this.moveControl = new FlyingMovementController(this, 1, true);
+        this.pathNavigator = new GroundPathNavigation(this, this.level);
+        this.moveControl = new FlyingMoveControl(this, 1, true);
 
 
     }

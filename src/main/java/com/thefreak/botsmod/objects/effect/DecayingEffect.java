@@ -1,45 +1,42 @@
 package com.thefreak.botsmod.objects.effect;
 
 import com.thefreak.botsmod.API.EffectRender.IEffectSpecialRenderings;
-import com.thefreak.botsmod.init.EffectInitNew;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 
 import java.util.List;
 
-public class DecayingEffect extends Effect implements IEffectSpecialRenderings {
-    public DecayingEffect(EffectType p_i50391_1_, int p_i50391_2_) {
+public class DecayingEffect extends MobEffect implements IEffectSpecialRenderings {
+    public DecayingEffect(MobEffectCategory p_i50391_1_, int p_i50391_2_) {
         super(p_i50391_1_, p_i50391_2_);
     }
 
 
     @Override
-    public ResourceLocation hasCustomBackgroundLocation(EffectInstance effectInstance) {
+    public ResourceLocation hasCustomBackgroundLocation(MobEffectInstance effectInstance) {
         return new ResourceLocation("botsmod:textures/gui/effects/decaying_effect_background.png");
     }
 
     @Override
-    public boolean hasCustomBackground(EffectInstance effectInstance) {
+    public boolean hasCustomBackground(MobEffectInstance effectInstance) {
         return true;
     }
 
     @Override
-    public int hasCustomBackgroundHeight(EffectInstance effectInstance) {
+    public int hasCustomBackgroundHeight(MobEffectInstance effectInstance) {
         return 44;
     }
 
     @Override
-    public int customBackgroundHeightAdded(EffectInstance effectInstance) {
+    public int customBackgroundHeightAdded(MobEffectInstance effectInstance) {
         return -9;
     }
 
 
     @Override
-    public int durationBring(EffectInstance effectInstance) {
+    public int durationBring(MobEffectInstance effectInstance) {
         return -2;
     }
 }

@@ -1,5 +1,6 @@
 package com.thefreak.botsmod.entities;
 
+import com.mojang.math.Vector3d;
 import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.util.AI.AvoidItemEntityGoal;
 import net.minecraft.block.Blocks;
@@ -30,7 +31,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Overwrite;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -44,8 +50,9 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
+import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
-public class WanderingSpecterEntity extends CreatureEntity implements IAnimatable {
+public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable {
     protected static final DataParameter<Boolean> SPECTER_TRANSPARENT = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Boolean> SPECTER_HAUNTING = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Boolean> SPECTER_POSSES_MONSTER = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
@@ -58,7 +65,7 @@ public class WanderingSpecterEntity extends CreatureEntity implements IAnimatabl
     public static AnimationBuilder POSSES_ANIM = new AnimationBuilder().addAnimation("animation.wandering_specter.possesmonster");
 
 
-    public WanderingSpecterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public WanderingSpecterEntity(EntityType<? extends PathfinderMob> type, Level worldIn) {
         super(type, worldIn);
         this.moveControl = new WanderingSpecterEntity.MoveHelperController(this);
     }
@@ -170,18 +177,18 @@ public class WanderingSpecterEntity extends CreatureEntity implements IAnimatabl
     public AnimationFactory getFactory() {
         return this.factory;
     }
-    class MoveHelperController extends MovementController {
+    class MoveHelperController extends MoveControl {
 
         public MoveHelperController(WanderingSpecterEntity specterEntity) {
             super(specterEntity);
         }
 
         public void tick() {
-            if (this.operation == MovementController.Action.MOVE_TO) {
+            if (this.operation == MoveControl.Operation.MOVE_TO) {
                 Vector3d vector3d = new Vector3d(this.wantedX - WanderingSpecterEntity.this.getX(), this.wantedY - WanderingSpecterEntity.this.getY(), this.wantedZ - WanderingSpecterEntity.this.getZ());
                 double d0 = vector3d.length();
                 if (d0 < WanderingSpecterEntity.this.getBoundingBox().getSize()) {
-                    this.operation = MovementController.Action.WAIT;
+                    this.operation = MoveControl.Operation.WAIT;
                     WanderingSpecterEntity.this.setDeltaMovement(WanderingSpecterEntity.this.getDeltaMovement().scale(0.5D));
                 } else {
                     WanderingSpecterEntity.this.setDeltaMovement(WanderingSpecterEntity.this.getDeltaMovement().add(vector3d.scale(this.speedModifier * 0.05D / d0)));
@@ -192,7 +199,7 @@ public class WanderingSpecterEntity extends CreatureEntity implements IAnimatabl
                     } else {
                         double d2 = WanderingSpecterEntity.this.getTarget().getX() - WanderingSpecterEntity.this.getX();
                         double d1 = WanderingSpecterEntity.this.getTarget().getZ() - WanderingSpecterEntity.this.getZ();
-                        WanderingSpecterEntity.this.yRot = -((float)MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
+                        WanderingSpecterEntity.this.yRot = -((float) MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
                         WanderingSpecterEntity.this.yBodyRot = WanderingSpecterEntity.this.yRot;
                     }
                 }
@@ -213,7 +220,7 @@ public class WanderingSpecterEntity extends CreatureEntity implements IAnimatabl
         public void start() {
             WanderingSpecterEntity.this.moveControl.setWantedPosition((double) WanderingSpecterEntity.this.getTarget().blockPosition().getX(), (double) WanderingSpecterEntity.this.getTarget().blockPosition().getY(), (double) WanderingSpecterEntity.this.getTarget().blockPosition().getZ(), 10);
             WanderingSpecterEntity.this.entityData.set(SPECTER_HAUNTING, true);
-            WanderingSpecterEntity.this.getTarget().addEffect(new EffectInstance(EffectInitNew.POSSESION.get(), 9999999, 1));
+            WanderingSpecterEntity.this.getTarget().addEffect(new MobEffectInstance(EffectInitNew.POSSESION.get(), 9999999, 1));
             WanderingSpecterEntity.this.remove();
             super.start();
         }

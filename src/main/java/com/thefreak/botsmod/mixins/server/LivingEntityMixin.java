@@ -1,9 +1,7 @@
 package com.thefreak.botsmod.mixins.server;
 
 import com.thefreak.botsmod.API.EffectRender.IEffectSpecialRenderings;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;

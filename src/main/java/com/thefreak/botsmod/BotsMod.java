@@ -19,6 +19,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 
 import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;

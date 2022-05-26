@@ -5,12 +5,14 @@ import com.thefreak.botsmod.init.ModEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -22,7 +24,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.AbstractSpawner;
 
@@ -32,10 +39,10 @@ public class PuffWormEggs extends Item {
     public PuffWormEggs(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
-    public ActionResultType useOn(ItemUseContext p_195939_1_) {
-        World world = p_195939_1_.getLevel();
-        if (!(world instanceof ServerWorld)) {
-            return ActionResultType.SUCCESS;
+    public InteractionResult useOn(UseOnContext p_195939_1_) {
+        Level world = p_195939_1_.getLevel();
+        if (!(world instanceof ServerLevel)) {
+            return InteractionResult.SUCCESS;
         } else {
             ItemStack itemstack = p_195939_1_.getItemInHand();
             BlockPos blockpos = p_195939_1_.getClickedPos();
@@ -43,14 +50,14 @@ public class PuffWormEggs extends Item {
             BlockState blockstate = world.getBlockState(blockpos);
             if (blockstate.is(Blocks.SPAWNER)) {
                 TileEntity tileentity = world.getBlockEntity(blockpos);
-                if (tileentity instanceof MobSpawnerTileEntity) {
-                    AbstractSpawner abstractspawner = ((MobSpawnerTileEntity)tileentity).getSpawner();
+                if (tileentity instanceof SpawnerBlockEntity) {
+                    AbstractSpawner abstractspawner = ((SpawnerBlockEntity)tileentity).getSpawner();
                     EntityType<PuffWormEntity> entitytype1 = ModEntityTypes.PUFF_WORM.get();
                     abstractspawner.setEntityId(entitytype1);
                     tileentity.setChanged();
                     world.sendBlockUpdated(blockpos, blockstate, blockstate, 3);
                     itemstack.shrink(1);
-                    return ActionResultType.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
             }
 

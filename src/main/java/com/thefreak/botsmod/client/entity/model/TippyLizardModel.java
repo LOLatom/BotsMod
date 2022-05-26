@@ -1,9 +1,8 @@
 package com.thefreak.botsmod.client.entity.model;
 
 import com.thefreak.botsmod.BotsMod;
-import com.thefreak.botsmod.entities.LadybugEntity;
 import com.thefreak.botsmod.entities.TippyLizardEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class TippyLizardModel extends AnimatedGeoModel<TippyLizardEntity> {

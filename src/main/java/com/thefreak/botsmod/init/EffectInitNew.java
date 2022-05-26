@@ -5,13 +5,10 @@ import com.thefreak.botsmod.objects.effect.DecayingEffect;
 import com.thefreak.botsmod.objects.effect.ExplosiveEffect;
 import com.thefreak.botsmod.objects.effect.MogroveToxinsEffect;
 import com.thefreak.botsmod.objects.effect.PossesionEffect;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.MobEffectCategory;
+
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.Potion;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.fml.RegistryObject;
+
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

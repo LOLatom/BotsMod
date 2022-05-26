@@ -7,23 +7,18 @@ import com.thefreak.botsmod.objects.items.Eggs.PuffWormEggs;
 import com.thefreak.botsmod.objects.items.ItemType.CleaverSwordItem;
 import com.thefreak.botsmod.objects.items.ItemType.HammerItem;
 import com.thefreak.botsmod.objects.items.ProjectileItem.SaltedArrowItem;
-import net.minecraft.client.renderer.MobEffectInstance;
-import net.minecraft.item.FoodProperties;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.SwordItem;
-import net.minecraft.potion.MobEffectInstance;
-import net.minecraft.potion.MobEffects;
+
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+
+import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.Random;
+
 
 public class ItemInitNew {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BotsMod.MOD_ID);
@@ -94,23 +89,23 @@ public class ItemInitNew {
     public static final RegistryObject<Item> SALTED_ARROW = ITEMS.register("salted_arrow", () -> new SaltedArrowItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
 
-    public static final RegistryObject<Item> BELL_METAL_GREATSWORD = ITEMS.register("bell_metal_greatsword", () -> new CleaverSwordItem(ItemTier.GOLD, 1, 2F, new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+    public static final RegistryObject<Item> BELL_METAL_GREATSWORD = ITEMS.register("bell_metal_greatsword", () -> new CleaverSwordItem(Tiers.GOLD, 1, 2F, new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
-    public static final RegistryObject<Item> BELL_METAL_HAMMER = ITEMS.register("bell_metal_hammer", () -> new HammerItem(ItemTier.GOLD, new Item.Properties()));
+    public static final RegistryObject<Item> BELL_METAL_HAMMER = ITEMS.register("bell_metal_hammer", () -> new HammerItem(Tiers.GOLD, new Item.Properties()));
 
     public static final RegistryObject<Item> LADYBUG = ITEMS.register("ladybug", () -> new LadybugItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
-    public static final RegistryObject<Item> RAW_TIPPY_LIZARD = ITEMS.register("raw_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).build())));
+    public static final RegistryObject<Item> RAW_TIPPY_LIZARD = ITEMS.register("raw_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).build())));
 
-    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD = ITEMS.register("cooked_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(4).saturationMod(3F).build())));
+    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD = ITEMS.register("cooked_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(4).saturationMod(3F).build())));
 
-    public static final RegistryObject<Item> RAW_TIPPY_LIZARD_BITS = ITEMS.register("raw_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(1).saturationMod(0F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).fast().build())));
+    public static final RegistryObject<Item> RAW_TIPPY_LIZARD_BITS = ITEMS.register("raw_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(1).saturationMod(0F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).fast().build())));
 
-    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD_BITS = ITEMS.register("cooked_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(3).saturationMod(2.5F).fast().build())));
+    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD_BITS = ITEMS.register("cooked_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(3).saturationMod(2.5F).fast().build())));
 
-    public static final RegistryObject<Item> GLAZED_TIPPY_LIZARD_BITS = ITEMS.register("glazed_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(4).saturationMod(3.5F).fast().build())));
+    public static final RegistryObject<Item> GLAZED_TIPPY_LIZARD_BITS = ITEMS.register("glazed_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(4).saturationMod(3.5F).fast().build())));
 
-    public static final RegistryObject<Item> PUFF_WORM_EGGS = ITEMS.register("puff_worm_eggs", () -> new PuffWormEggs(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(1).saturationMod(1.5F).effect( () -> new MobEffectInstance(MobEffects.CONFUSION, 200, 1),1.0F).fast().build())));
+    public static final RegistryObject<Item> PUFF_WORM_EGGS = ITEMS.register("puff_worm_eggs", () -> new PuffWormEggs(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(1).saturationMod(1.5F).effect( () -> new MobEffectInstance(MobEffects.CONFUSION, 200, 1),1.0F).fast().build())));
 
     public static final RegistryObject<Item> GRAY_NOTE = ITEMS.register("gray_note", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 

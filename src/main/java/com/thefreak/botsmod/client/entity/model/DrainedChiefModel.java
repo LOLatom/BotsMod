@@ -2,8 +2,8 @@ package com.thefreak.botsmod.client.entity.model;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.entities.DrainedChiefEntity;
-import com.thefreak.botsmod.entities.DrainedEntity;
-import net.minecraft.util.ResourceLocation;
+
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class DrainedChiefModel extends AnimatedGeoModel<DrainedChiefEntity> {

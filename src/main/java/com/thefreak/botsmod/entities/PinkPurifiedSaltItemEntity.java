@@ -2,39 +2,22 @@ package com.thefreak.botsmod.entities;
 
 import com.thefreak.botsmod.init.ItemInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.fluid.WaterFluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -49,11 +32,11 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
     public int lifespan = 6000;
     private int age;
 
-    public PinkPurifiedSaltItemEntity(EntityType<? extends ItemEntity> p_i50217_1_, World world) {
+    public PinkPurifiedSaltItemEntity(EntityType<? extends ItemEntity> p_i50217_1_, Level world) {
         super(p_i50217_1_, world);
     }
 
-    public PinkPurifiedSaltItemEntity(World world, double posX, double posY, double posZ, ItemStack itemstack) {
+    public PinkPurifiedSaltItemEntity(Level world, double posX, double posY, double posZ, ItemStack itemstack) {
         super(world, posX, posY, posZ, itemstack);
         this.setItem(itemstack);
         this.yRot = this.random.nextFloat() * 360.0F;
@@ -65,7 +48,7 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
 
 
 
-    public void playerTouch(PlayerEntity p_70100_1_) {
+    public void playerTouch(Player p_70100_1_) {
         if (!this.level.isClientSide) {
             if (this.pickupDelay > 0) return;
             ItemStack itemstack = this.getItem();
@@ -78,10 +61,11 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
             ItemStack copy = itemstack.copy();
             if (this.pickupDelay == 0 && (this.owner == null || lifespan - this.age <= 200 || this.owner.equals(p_70100_1_.getUUID())) && (hook == 1 || i <= 0 || p_70100_1_.inventory.add(itemstack))) {
                 copy.setCount(copy.getCount() - getItem().getCount());
+                // TODO: ?
                 net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerItemPickupEvent(p_70100_1_, this, copy);
                 p_70100_1_.take(this, i);
                 if (itemstack.isEmpty()) {
-                    this.remove();
+                    this.remove(RemovalReason.DISCARDED); // TODO: ?
                     itemstack.setCount(i);
                 }
 
@@ -101,8 +85,8 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
         if (this.age != -32768) {
             ++this.age;
         }
-        List<ArrowEntity> inAABB = PinkPurifiedSaltItemEntity.this.level.getEntitiesOfClass(ArrowEntity.class, PinkPurifiedSaltItemEntity.this.getBoundingBox().inflate(0.2D, 0.2D, 0.2D));
-        for (ArrowEntity arrowEntity : inAABB) {
+        List<Arrow> inAABB = PinkPurifiedSaltItemEntity.this.level.getEntitiesOfClass(Arrow.class, PinkPurifiedSaltItemEntity.this.getBoundingBox().inflate(0.2D, 0.2D, 0.2D));
+        for (Arrow arrowEntity : inAABB) {
             if (arrowEntity == null) {
 
             }else {
@@ -120,7 +104,7 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
         Entity entity = source.getDirectEntity();
         if (entity != null) {
 
-            if (source.getDirectEntity() instanceof ArrowEntity) {
+            if (source.getDirectEntity() instanceof Arrow) {
                 this.remove();
             }
 

@@ -1,41 +1,28 @@
 package com.thefreak.botsmod.entities;
 
-import com.mojang.math.Vector3d;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.patchy.BlockedServers;
 import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.util.AI.AvoidItemEntityGoal;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.passive.OcelotEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Overwrite;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -49,13 +36,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.EnumSet;
 import java.util.Random;
 
-import net.minecraft.entity.ai.goal.Goal.Flag;
 import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
 public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable {
-    protected static final DataParameter<Boolean> SPECTER_TRANSPARENT = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
-    protected static final DataParameter<Boolean> SPECTER_HAUNTING = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
-    protected static final DataParameter<Boolean> SPECTER_POSSES_MONSTER = EntityDataManager.defineId(WanderingSpecterEntity.class, DataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> SPECTER_TRANSPARENT = SynchedEntityData.defineId(WanderingSpecterEntity.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> SPECTER_HAUNTING = SynchedEntityData.defineId(WanderingSpecterEntity.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> SPECTER_POSSES_MONSTER = SynchedEntityData.defineId(WanderingSpecterEntity.class, EntityDataSerializers.BOOLEAN);
 
 
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -70,10 +56,10 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
         this.moveControl = new WanderingSpecterEntity.MoveHelperController(this);
     }
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return MobEntity.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0D)
                 .add(Attributes.ATTACK_DAMAGE, 2D)
@@ -81,8 +67,8 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
     }
     public void tick() {
         BlockPos blockPos = WanderingSpecterEntity.this.blockPosition();
-        World world = WanderingSpecterEntity.this.level;
-        if (world.getBlockState(blockPos).getBlock() != Blocks.AIR && getSpecterTransparentState() == false) {
+        Level world = WanderingSpecterEntity.this.level;
+        if (world.getBlockState(blockPos).getBlock() != BlockedServers.AIR && getSpecterTransparentState() == false) {
             setSpecterTransparentState(true);
         } else if(world.getBlockState(blockPos).getBlock() == Blocks.AIR && getSpecterTransparentState() == true){
             setSpecterTransparentState(false);
@@ -135,24 +121,24 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new SwimGoal(this));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(0, new AvoidItemEntityGoal(this, PinkPurifiedSaltItemEntity.class, 15f,10f,10f));
          this.goalSelector.addGoal(3, new WanderingSpecterEntity.MoveRandomGoal());
         this.goalSelector.addGoal(3, new WanderingSpecterEntity.LookAtTargetGoal());
         this.goalSelector.addGoal(2, new HauntAttackGoal());
         this.goalSelector.addGoal(1, new WanderingSpecterEntity.Posses());
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, MobEntity.class, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Mob.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
         Entity entity = source.getDirectEntity();
         if (entity != null) {
-            World world = entity.getCommandSenderWorld();
-            if (entity instanceof ArrowEntity) {
+            Level world = entity.getCommandSenderWorld();
+            if (entity instanceof Arrow) {
                 BlockPos EntityPos = entity.blockPosition();
-                entity.remove();
+                entity.remove(); // TODO
                 for (int i = 0; i < 20; i++) {
                     world.addParticle(ParticleTypes.CLOUD, EntityPos.getX(), EntityPos.getY(), EntityPos.getZ(), 0D, 0D, 0D);
                 }
@@ -168,7 +154,7 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
     public boolean canCollideWith(Entity entity) {
         return false;
     }
-    public void move(MoverType typeIn, Vector3d pos) {
+    public void move(MoverType typeIn, Vec3 pos) {
         super.move(typeIn, pos);
         this.checkInsideBlocks();
     }
@@ -185,7 +171,7 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
 
         public void tick() {
             if (this.operation == MoveControl.Operation.MOVE_TO) {
-                Vector3d vector3d = new Vector3d(this.wantedX - WanderingSpecterEntity.this.getX(), this.wantedY - WanderingSpecterEntity.this.getY(), this.wantedZ - WanderingSpecterEntity.this.getZ());
+                Vec3 vector3d = new Vec3(this.wantedX - WanderingSpecterEntity.this.getX(), this.wantedY - WanderingSpecterEntity.this.getY(), this.wantedZ - WanderingSpecterEntity.this.getZ());
                 double d0 = vector3d.length();
                 if (d0 < WanderingSpecterEntity.this.getBoundingBox().getSize()) {
                     this.operation = MoveControl.Operation.WAIT;
@@ -193,13 +179,13 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
                 } else {
                     WanderingSpecterEntity.this.setDeltaMovement(WanderingSpecterEntity.this.getDeltaMovement().add(vector3d.scale(this.speedModifier * 0.05D / d0)));
                     if (WanderingSpecterEntity.this.getTarget() == null) {
-                        Vector3d vector3d1 = WanderingSpecterEntity.this.getDeltaMovement();
-                        WanderingSpecterEntity.this.yRot = -((float) MathHelper.atan2(vector3d1.x, vector3d1.z)) * (180F / (float)Math.PI);
+                        Vec3 vector3d1 = WanderingSpecterEntity.this.getDeltaMovement();
+                        WanderingSpecterEntity.this.yRot = -((float) Mth.atan2(vector3d1.x, vector3d1.z)) * (180F / (float)Math.PI);
                         WanderingSpecterEntity.this.yBodyRot = WanderingSpecterEntity.this.yRot;
                     } else {
                         double d2 = WanderingSpecterEntity.this.getTarget().getX() - WanderingSpecterEntity.this.getX();
                         double d1 = WanderingSpecterEntity.this.getTarget().getZ() - WanderingSpecterEntity.this.getZ();
-                        WanderingSpecterEntity.this.yRot = -((float) MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
+                        WanderingSpecterEntity.this.yRot = -((float) Mth.atan2(d2, d1)) * (180F / (float)Math.PI);
                         WanderingSpecterEntity.this.yBodyRot = WanderingSpecterEntity.this.yRot;
                     }
                 }
@@ -221,7 +207,7 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
             WanderingSpecterEntity.this.moveControl.setWantedPosition((double) WanderingSpecterEntity.this.getTarget().blockPosition().getX(), (double) WanderingSpecterEntity.this.getTarget().blockPosition().getY(), (double) WanderingSpecterEntity.this.getTarget().blockPosition().getZ(), 10);
             WanderingSpecterEntity.this.entityData.set(SPECTER_HAUNTING, true);
             WanderingSpecterEntity.this.getTarget().addEffect(new MobEffectInstance(EffectInitNew.POSSESION.get(), 9999999, 1));
-            WanderingSpecterEntity.this.remove();
+            WanderingSpecterEntity.this.remove(); // TODO
             super.start();
         }
     }
@@ -279,7 +265,7 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
         public void tick() {
             this.timer++;
             if (WanderingSpecterEntity.this.getTarget() != null) {
-                WanderingSpecterEntity.this.getTarget().addEffect(new EffectInstance(Effects.CONFUSION, 200, 5));
+                WanderingSpecterEntity.this.getTarget().addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 5));
             }
             super.tick();
         }
@@ -324,7 +310,7 @@ public class WanderingSpecterEntity extends PathfinderMob implements IAnimatable
                         WanderingSpecterEntity.this.random.nextInt(11) - 5,
                         WanderingSpecterEntity.this.random.nextInt(15) - 7);
 
-                int y = WanderingSpecterEntity.this.level.getHeight(Heightmap.Type.WORLD_SURFACE, blockpos1.getX(), blockpos1.getZ());
+                int y = WanderingSpecterEntity.this.level.getHeight(Heightmap.Types.WORLD_SURFACE, blockpos1.getX(), blockpos1.getZ());
                 if (WanderingSpecterEntity.this.level.isEmptyBlock(blockpos1) && blockpos1.getY() < y + 10D ) {
                     WanderingSpecterEntity.this.moveControl.setWantedPosition((double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() < y ? y + 3D :
                             (double) blockpos1.getY() + 0.5D, (double)blockpos1.getZ() + 0.5D, 0.25D);

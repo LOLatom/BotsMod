@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,7 +25,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.logging.Level;
 
 public class DrainedChiefEntity extends Monster implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);

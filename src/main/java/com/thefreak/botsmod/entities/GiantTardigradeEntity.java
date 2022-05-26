@@ -37,7 +37,7 @@ public class GiantTardigradeEntity extends PathfinderMob implements IAnimatable 
     public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return Mob.createMobAttributes()
+        return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 320.0D)
                 .add(Attributes.MOVEMENT_SPEED, MoveSpeed)
                 .add(Attributes.ATTACK_DAMAGE, 2D)

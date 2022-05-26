@@ -52,7 +52,7 @@ public class BotsMod
 
     public BotsMod() {
     	final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    	modEventBus.addListener(this::setup);
+    	modEventBus.addListener(this::registerEntityAttributes);
     	modEventBus.addListener(this::doClientStuff);
         EffectInitNew.EFFECTS.register(modEventBus);
         ItemInitNew.ITEMS.register(modEventBus);
@@ -69,21 +69,16 @@ public class BotsMod
         instance = this;
         MinecraftForge.EVENT_BUS.register(this);
     }
-
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        event.enqueueWork(() -> {
-            DefaultAttributes.hasSupplier(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.LADYBUG.get(), LadybugEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.PUFF_WORM.get(), PuffWormEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.DRAINED.get(), DrainedEntity.setCustomAttributes().build());
-            DefaultAttributes.hasSupplier(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefEntity.setCustomAttributes().build());
-
-
-        });
+    
+    public void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.LADYBUG.get(), LadybugEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.PUFF_WORM.get(), PuffWormEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.DRAINED.get(), DrainedEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefEntity.setCustomAttributes().build());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

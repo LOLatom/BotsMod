@@ -3,31 +3,31 @@ package com.thefreak.botsmod.entities;
 import com.thefreak.botsmod.init.ItemInit;
 import com.thefreak.botsmod.init.ItemInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.advancements.critereon.PlayerHurtEntityTrigger;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -39,23 +39,23 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.EnumSet;
 import java.util.Random;
 
-public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
+public class TippyLizardEntity extends PathfinderMob implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
-    protected static final DataParameter<Boolean> ISSLEEPING = EntityDataManager.defineId(TippyLizardEntity.class, DataSerializers.BOOLEAN);
-    protected static final DataParameter<Float> FOODLEVEL = EntityDataManager.defineId(TippyLizardEntity.class, DataSerializers.FLOAT);
-    protected static final DataParameter<String> VARIENT = EntityDataManager.defineId(TippyLizardEntity.class, DataSerializers.STRING);
+    protected static final EntityDataAccessor<Boolean> ISSLEEPING = SynchedEntityData.defineId(TippyLizardEntity.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Float> FOODLEVEL = SynchedEntityData.defineId(TippyLizardEntity.class, EntityDataSerializers.FLOAT);
+    protected static final EntityDataAccessor<String> VARIENT = SynchedEntityData.defineId(TippyLizardEntity.class, EntityDataSerializers.STRING);
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.tippy_lizard.idle");
     public static AnimationBuilder WALK_ANIM = new AnimationBuilder().addAnimation("animation.tippy_lizard.walk");
     public static AnimationBuilder RUN_ANIM = new AnimationBuilder().addAnimation("animation.tippy_lizard.running");
     public static AnimationBuilder SLEEP_ANIM = new AnimationBuilder().addAnimation("animation.tippy_lizard.sit");
     public static Random random = new Random();
-    public TippyLizardEntity(EntityType<? extends CreatureEntity> p_i48568_1_, World p_i48568_2_) {
+    public TippyLizardEntity(EntityType<? extends PathfinderMob> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
     }
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return CreatureEntity.createMobAttributes()
+        return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
@@ -97,9 +97,9 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
     }
 
     @Override
-    public void killed(ServerWorld world, LivingEntity livingEntity) {
-        if (livingEntity.getEntity().getType() == ModEntityTypes.LADYBUG.get()) {
-            this.setItemInHand(Hand.MAIN_HAND, ItemInitNew.LADYBUG.get().getDefaultInstance());
+    public void killed(ServerLevel world, LivingEntity livingEntity) {
+        if (livingEntity/*.getEntity()*/.getType() == ModEntityTypes.LADYBUG.get()) {
+            this.setItemInHand(InteractionHand.MAIN_HAND, ItemInitNew.LADYBUG.get().getDefaultInstance());
         }
         super.killed(world, livingEntity);
     }
@@ -127,15 +127,15 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SleepAtNightGoal());
         this.goalSelector.addGoal(1, new eatGoal());
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this,TippyLizardEntity.this.entityData.get(FOODLEVEL) > 10 ? 1.7D : 0.5D));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this,TippyLizardEntity.this.entityData.get(FOODLEVEL) > 10 ? 1.7D : 0.5D));
         this.goalSelector.addGoal(3, new MeleeAttackIfMouthEmptyGoal(this, TippyLizardEntity.this.entityData.get(FOODLEVEL) > 10 ? 1.7D : 0.5D, true));
-        this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, PlayerEntity.class, 6.0F, 1.0D, TippyLizardEntity.this.entityData.get(FOODLEVEL) > 10 ? 1.7D : 0.5D));
+        this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Player.class, 6.0F, 1.0D, TippyLizardEntity.this.entityData.get(FOODLEVEL) > 10 ? 1.7D : 0.5D));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, LadybugEntity.class, true));
         super.registerGoals();
     }
 
     @Override
-    public ActionResultType interactAt(PlayerEntity playerEntity, Vector3d vector3d, Hand hand) {
+    public InteractionResult interactAt(Player playerEntity, Vec3 vector3d, InteractionHand hand) {
         if (playerEntity.getItemInHand(hand).getItem() == ItemInitNew.YELLOW_CANDY.get()) {
             this.entityData.set(VARIENT, "gecko1");
             System.out.println(TippyLizardEntity.this.entityData.get(VARIENT));
@@ -155,13 +155,13 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
         return super.interactAt(playerEntity, vector3d, hand);
     }
 
-    public void addAdditionalSaveData(CompoundNBT nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putString("Varient", this.getVarient());
     }
 
 
-    public void readAdditionalSaveData(CompoundNBT nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         if (nbt.contains("Varient")) {
             this.setVarient(nbt.getString("Varient"));
@@ -200,7 +200,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
         public void tick() {
             if (this.eatingtick < 100) {
                 this.eatingtick += 1;
-                TippyLizardEntity.this.level.addParticle((IParticleData) new ItemParticleData(ParticleTypes.ITEM, TippyLizardEntity.this.getMainHandItem().getStack()), TippyLizardEntity.this.position().x, TippyLizardEntity.this.position().y, TippyLizardEntity.this.position().z, 1, 1, 1);
+                TippyLizardEntity.this.level.addParticle((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, TippyLizardEntity.this.getMainHandItem().getContainerItem()), TippyLizardEntity.this.position().x, TippyLizardEntity.this.position().y, TippyLizardEntity.this.position().z, 1, 1, 1);
 
             }
             else {
@@ -217,7 +217,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
 
         @Override
         public void stop() {
-            TippyLizardEntity.this.setItemInHand(Hand.MAIN_HAND, Items.AIR.getDefaultInstance());
+            TippyLizardEntity.this.setItemInHand(InteractionHand.MAIN_HAND, Items.AIR.getDefaultInstance());
             super.stop();
         }
     }
@@ -251,7 +251,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
     }
 
     class MeleeAttackIfMouthEmptyGoal extends MeleeAttackGoal {
-        protected final CreatureEntity mob;
+        protected final PathfinderMob mob;
         private final double speedModifier;
         private final boolean followingTargetEvenIfNotSeen;
         private Path path;
@@ -266,7 +266,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
         private boolean canPenalize = false;
 
 
-        public MeleeAttackIfMouthEmptyGoal(CreatureEntity p_i1636_1_, double p_i1636_2_, boolean p_i1636_4_) {
+        public MeleeAttackIfMouthEmptyGoal(PathfinderMob p_i1636_1_, double p_i1636_2_, boolean p_i1636_4_) {
             super(p_i1636_1_,p_i1636_2_,p_i1636_4_);
             this.mob = p_i1636_1_;
             this.speedModifier = p_i1636_2_;
@@ -321,7 +321,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
             } else if (!this.mob.isWithinRestriction(livingentity.blockPosition())) {
                 return false;
             } else {
-                return !(livingentity instanceof PlayerEntity) || !livingentity.isSpectator() && !((PlayerEntity)livingentity).isCreative();
+                return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player)livingentity).isCreative();
             }
         }
 
@@ -334,7 +334,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
 
         public void stop() {
             LivingEntity livingentity = this.mob.getTarget();
-            if (!EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
+            if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
                 this.mob.setTarget((LivingEntity)null);
             }
 
@@ -347,7 +347,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
             this.mob.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
             double d0 = this.mob.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
             this.ticksUntilNextPathRecalculation = Math.max(this.ticksUntilNextPathRecalculation - 1, 0);
-            if ((this.followingTargetEvenIfNotSeen || this.mob.getSensing().canSee(livingentity)) && this.ticksUntilNextPathRecalculation <= 0 && (this.pathedTargetX == 0.0D && this.pathedTargetY == 0.0D && this.pathedTargetZ == 0.0D || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY, this.pathedTargetZ) >= 1.0D || this.mob.getRandom().nextFloat() < 0.05F)) {
+            if ((this.followingTargetEvenIfNotSeen || this.mob.getSensing().hasLineOfSight(livingentity)) && this.ticksUntilNextPathRecalculation <= 0 && (this.pathedTargetX == 0.0D && this.pathedTargetY == 0.0D && this.pathedTargetZ == 0.0D || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY, this.pathedTargetZ) >= 1.0D || this.mob.getRandom().nextFloat() < 0.05F)) {
                 this.pathedTargetX = livingentity.getX();
                 this.pathedTargetY = livingentity.getY();
                 this.pathedTargetZ = livingentity.getZ();
@@ -355,7 +355,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
                 if (this.canPenalize) {
                     this.ticksUntilNextPathRecalculation += failedPathFindingPenalty;
                     if (this.mob.getNavigation().getPath() != null) {
-                        net.minecraft.pathfinding.PathPoint finalPathPoint = this.mob.getNavigation().getPath().getEndNode();
+                        Node finalPathPoint = this.mob.getNavigation().getPath().getEndNode();
                         if (finalPathPoint != null && livingentity.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                             failedPathFindingPenalty = 0;
                         else
@@ -383,7 +383,7 @@ public class TippyLizardEntity extends CreatureEntity implements IAnimatable {
             double d0 = this.getAttackReachSqr(p_190102_1_);
             if (p_190102_2_ <= d0 && this.ticksUntilNextAttack <= 0) {
                 this.resetAttackCooldown();
-                this.mob.swing(Hand.MAIN_HAND);
+                this.mob.swing(InteractionHand.MAIN_HAND);
                 this.mob.doHurtTarget(p_190102_1_);
             }
 

@@ -11,10 +11,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -117,7 +114,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
     public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return Mob.createMobAttributes()
+        return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED, 0.4D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
@@ -198,10 +195,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
         public PuffAwayFromEntityGoal(PuffWormEntity p_i46404_1_, Class<T> p_i46404_2_, float p_i46404_3_, double p_i46404_4_, double p_i46404_6_) {
             this(p_i46404_1_, p_i46404_2_, (p_200828_0_) -> {
                 return true;
-            }, p_i46404_3_, p_i46404_4_, p_i46404_6_, (value) ->
-                    (!(value instanceof Player)) ||
-                            (!((Player) value).isCreative() && !value.isSpectator())
-            );
+            }, p_i46404_3_, p_i46404_4_, p_i46404_6_, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test);
         }
 
 

@@ -1,27 +1,37 @@
 package com.thefreak.botsmod.entities;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.NodeEvaluator;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -36,22 +46,22 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class PuffWormEntity extends CreatureEntity implements IAnimatable {
+public class PuffWormEntity extends PathfinderMob implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
-    protected static final DataParameter<Boolean> PUFFED = EntityDataManager.defineId(PuffWormEntity.class, DataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> PUFFED = SynchedEntityData.defineId(PuffWormEntity.class, EntityDataSerializers.BOOLEAN);
 
-    FlyingPathNavigator pathNavigator;
+    FlyingPathNavigation pathNavigator;
 
-    protected static final DataParameter<Float> STORED_WATER = EntityDataManager.defineId(PuffWormEntity.class, DataSerializers.FLOAT);
+    protected static final EntityDataAccessor<Float> STORED_WATER = SynchedEntityData.defineId(PuffWormEntity.class, EntityDataSerializers.FLOAT);
 
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.puff_worm.idle");
     public static AnimationBuilder WALK_ANIM = new AnimationBuilder().addAnimation("animation.puff_worm.walk");
     public static AnimationBuilder PUFF_ANIM_IDLE_ANIM = new AnimationBuilder().addAnimation("animation.puffed_puff_worm.idle");
     public static AnimationBuilder PUFF_ANIM_WALK_ANIM = new AnimationBuilder().addAnimation("animation.puffed_puff_worm.walk");
 
-    public PuffWormEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
+    public PuffWormEntity(EntityType<? extends PathfinderMob> p_i48575_1_, Level p_i48575_2_) {
         super(p_i48575_1_, p_i48575_2_);
-        this.pathNavigator = new FlyingPathNavigator(this, this.level);
+        this.pathNavigator = new FlyingPathNavigation(this, this.level);
         this.moveControl = new PuffMovementController(this, 1, true);
     }
     private <E extends LadybugEntity> PlayState predicate(AnimationEvent<E> event) {
@@ -82,14 +92,14 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         PuffWormEntity.this.setPuffState(nbt.getBoolean("IsPuffed"));
         PuffWormEntity.this.setWaterStored(nbt.getFloat("WaterStored"));
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putFloat("WaterStored", getWaterStored());
         nbt.putBoolean("IsPuffed", getPuffState());
@@ -104,10 +114,10 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
 
 
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return CreatureEntity.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED, 0.4D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
@@ -136,14 +146,14 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.4D));
-        this.goalSelector.addGoal(1, new PuffAwayFromEntityGoal(this,PlayerEntity.class,2,2,2));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.4D));
+        this.goalSelector.addGoal(1, new PuffAwayFromEntityGoal(this, Player.class,2,2,2));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         super.registerGoals();
     }
 
     @Override
-    protected ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+    protected InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
         setCustomAttributes().add(Attributes.ARMOR, 5D);
         setPuffState(true);
         return super.mobInteract(p_230254_1_, p_230254_2_);
@@ -174,10 +184,10 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
     public class PuffAwayFromEntityGoal<T extends LivingEntity> extends Goal {
         PuffWormEntity instance;
         Class<T> livingentity;
-        World level;
+        Level level;
         protected T toAvoid;
-        private final EntityPredicate avoidEntityTargeting;
-        protected final PathNavigator pathNav;
+        private final TargetingConditions avoidEntityTargeting;
+        protected final PathNavigation pathNav;
         protected Path path;
         protected float maxDist;
         private final double walkSpeedModifier;
@@ -188,7 +198,10 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
         public PuffAwayFromEntityGoal(PuffWormEntity p_i46404_1_, Class<T> p_i46404_2_, float p_i46404_3_, double p_i46404_4_, double p_i46404_6_) {
             this(p_i46404_1_, p_i46404_2_, (p_200828_0_) -> {
                 return true;
-            }, p_i46404_3_, p_i46404_4_, p_i46404_6_, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test);
+            }, p_i46404_3_, p_i46404_4_, p_i46404_6_, (value) ->
+                    (!(value instanceof Player)) ||
+                            (!((Player) value).isCreative() && !value.isSpectator())
+            );
         }
 
 
@@ -203,18 +216,20 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
             this.predicateOnAvoidEntity = p_i48859_9_;
             this.pathNav = p_i48859_1_.getNavigation();
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-            this.avoidEntityTargeting = (new EntityPredicate()).range((double)p_i48859_4_).selector(p_i48859_9_.and(p_i48859_3_));
+            // TODO: check
+            this.avoidEntityTargeting = (TargetingConditions.forNonCombat()).range((double)p_i48859_4_).selector(p_i48859_9_.and(p_i48859_3_));
         }
 
         @Override
         public boolean canUse() {
             boolean ispuffed = (PuffWormEntity.this.getPuffState());
             boolean livingentitynotnull = this.livingentity != null;
-            this.toAvoid = this.instance.level.getNearestLoadedEntity(this.livingentity, this.avoidEntityTargeting, this.instance, this.instance.getX(), this.instance.getY(), this.instance.getZ(), this.instance.getBoundingBox().inflate((double)this.maxDist, 3.0D, (double)this.maxDist));
+            this.toAvoid = this.instance.level.getNearestEntity(this.livingentity, this.avoidEntityTargeting, this.instance, this.instance.getX(), this.instance.getY(), this.instance.getZ(), this.instance.getBoundingBox().inflate((double)this.maxDist, 3.0D, (double)this.maxDist));
             if (ispuffed && livingentitynotnull) {
                 if (this.toAvoid == null) {
                     return false;
                 } else {
+                    // TODO
                     Vector3d vector3d = RandomPositionGenerator.getPosAvoid(this.instance, 16, 7, this.toAvoid.position());
                     if (vector3d == null) {
                         return false;
@@ -268,21 +283,21 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
         }
     }
 
-    public class PuffMovementController extends MovementController {
+    public class PuffMovementController extends MoveControl {
 
         private final int maxTurn;
         private final boolean hoversInPlace;
 
-        public PuffMovementController(MobEntity p_i225710_1_, int p_i225710_2_, boolean p_i225710_3_) {
+        public PuffMovementController(Mob p_i225710_1_, int p_i225710_2_, boolean p_i225710_3_) {
             super(p_i225710_1_);
             this.maxTurn = p_i225710_2_;
             this.hoversInPlace = p_i225710_3_;
         }
         private boolean isWalkable(float p_234024_1_, float p_234024_2_) {
-            PathNavigator pathnavigator = this.mob.getNavigation();
+            PathNavigation pathnavigator = this.mob.getNavigation();
             if (pathnavigator != null) {
-                NodeProcessor nodeprocessor = pathnavigator.getNodeEvaluator();
-                if (nodeprocessor != null && nodeprocessor.getBlockPathType(this.mob.level, MathHelper.floor(this.mob.getX() + (double)p_234024_1_), MathHelper.floor(this.mob.getY()), MathHelper.floor(this.mob.getZ() + (double)p_234024_2_)) != PathNodeType.WALKABLE) {
+                NodeEvaluator nodeprocessor = pathnavigator.getNodeEvaluator();
+                if (nodeprocessor != null && nodeprocessor.getBlockPathType(this.mob.level, Mth.floor(this.mob.getX() + (double)p_234024_1_), Mth.floor(this.mob.getY()), Mth.floor(this.mob.getZ() + (double)p_234024_2_)) != BlockPathTypes.WALKABLE) {
                     return false;
                 }
             }
@@ -292,8 +307,8 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
 
         public void tick() {
             if (PuffWormEntity.this.getPuffState()) {
-                if (this.operation == MovementController.Action.MOVE_TO) {
-                    this.operation = MovementController.Action.WAIT;
+                if (this.operation == MoveControl.Operation.MOVE_TO) {
+                    this.operation = MoveControl.Operation.WAIT;
                     this.mob.setNoGravity(true);
                     double d0 = this.wantedX - this.mob.getX();
                     double d1 = this.wantedY - this.mob.getY();
@@ -305,7 +320,7 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                         return;
                     }
 
-                    float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
+                    float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
                     this.mob.yRot = this.rotlerp(this.mob.yRot, f, 90.0F);
                     float f1;
                     if (this.mob.isOnGround()) {
@@ -315,8 +330,8 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                     }
 
                     this.mob.setSpeed(f1);
-                    double d4 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-                    float f2 = (float) (-(MathHelper.atan2(d1, d4) * (double) (180F / (float) Math.PI)));
+                    double d4 = (double) Mth.sqrt((float) (d0 * d0 + d2 * d2)); // originally this cast wasn't needed, I may have slipped up on something here
+                    float f2 = (float) (-(Mth.atan2(d1, d4) * (double) (180F / (float) Math.PI)));
                     this.mob.xRot = this.rotlerp(this.mob.xRot, f2, (float) this.maxTurn);
                     this.mob.setYya(d1 > 0.0D ? f1 : -f1);
                 } else {
@@ -328,12 +343,12 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                     this.mob.setZza(0.0F);
                 }
             } else {
-                if (this.operation == MovementController.Action.STRAFE) {
+                if (this.operation == MoveControl.Operation.STRAFE) {
                     float f = (float)this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
                     float f1 = (float)this.speedModifier * f;
                     float f2 = this.strafeForwards;
                     float f3 = this.strafeRight;
-                    float f4 = MathHelper.sqrt(f2 * f2 + f3 * f3);
+                    float f4 = Mth.sqrt(f2 * f2 + f3 * f3);
                     if (f4 < 1.0F) {
                         f4 = 1.0F;
                     }
@@ -341,8 +356,8 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                     f4 = f1 / f4;
                     f2 = f2 * f4;
                     f3 = f3 * f4;
-                    float f5 = MathHelper.sin(this.mob.yRot * ((float)Math.PI / 180F));
-                    float f6 = MathHelper.cos(this.mob.yRot * ((float)Math.PI / 180F));
+                    float f5 = Mth.sin(this.mob.yRot * ((float)Math.PI / 180F));
+                    float f6 = Mth.cos(this.mob.yRot * ((float)Math.PI / 180F));
                     float f7 = f2 * f6 - f3 * f5;
                     float f8 = f3 * f6 + f2 * f5;
                     if (!this.isWalkable(f7, f8)) {
@@ -353,9 +368,9 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                     this.mob.setSpeed(f1);
                     this.mob.setZza(this.strafeForwards);
                     this.mob.setXxa(this.strafeRight);
-                    this.operation = MovementController.Action.WAIT;
-                } else if (this.operation == MovementController.Action.MOVE_TO) {
-                    this.operation = MovementController.Action.WAIT;
+                    this.operation = MoveControl.Operation.WAIT;
+                } else if (this.operation == MoveControl.Operation.MOVE_TO) {
+                    this.operation = MoveControl.Operation.WAIT;
                     double d0 = this.wantedX - this.mob.getX();
                     double d1 = this.wantedZ - this.mob.getZ();
                     double d2 = this.wantedY - this.mob.getY();
@@ -365,21 +380,21 @@ public class PuffWormEntity extends CreatureEntity implements IAnimatable {
                         return;
                     }
 
-                    float f9 = (float)(MathHelper.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
+                    float f9 = (float)(Mth.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
                     this.mob.yRot = this.rotlerp(this.mob.yRot, f9, 90.0F);
                     this.mob.setSpeed((float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                     BlockPos blockpos = this.mob.blockPosition();
                     BlockState blockstate = this.mob.level.getBlockState(blockpos);
                     Block block = blockstate.getBlock();
                     VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level, blockpos);
-                    if (d2 > (double)this.mob.maxUpStep && d0 * d0 + d1 * d1 < (double)Math.max(1.0F, this.mob.getBbWidth()) || !voxelshape.isEmpty() && this.mob.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY() && !block.is(BlockTags.DOORS) && !block.is(BlockTags.FENCES)) {
+                    if (d2 > (double)this.mob.maxUpStep && d0 * d0 + d1 * d1 < (double)Math.max(1.0F, this.mob.getBbWidth()) || !voxelshape.isEmpty() && this.mob.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY() && !blockstate.is(BlockTags.DOORS) && !blockstate.is(BlockTags.FENCES)) {
                         this.mob.getJumpControl().jump();
-                        this.operation = MovementController.Action.JUMPING;
+                        this.operation = MoveControl.Operation.JUMPING;
                     }
-                } else if (this.operation == MovementController.Action.JUMPING) {
+                } else if (this.operation == MoveControl.Operation.JUMPING) {
                     this.mob.setSpeed((float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                     if (this.mob.isOnGround()) {
-                        this.operation = MovementController.Action.WAIT;
+                        this.operation = MoveControl.Operation.WAIT;
                     }
                 } else {
                     this.mob.setZza(0.0F);

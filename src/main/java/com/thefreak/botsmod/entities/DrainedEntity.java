@@ -1,36 +1,30 @@
 package com.thefreak.botsmod.entities;
 
 import com.thefreak.botsmod.init.BlockInitNew;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -46,12 +40,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DrainedEntity extends MonsterEntity implements IAnimatable {
+public class DrainedEntity extends Monster implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
 
-    public static DataParameter<Boolean> IS_SCARED = EntityDataManager.defineId(DrainedEntity.class, DataSerializers.BOOLEAN);
-    public static DataParameter<Boolean> VASE = EntityDataManager.defineId(DrainedEntity.class, DataSerializers.BOOLEAN);
-    public static DataParameter<Boolean> HELMET = EntityDataManager.defineId(DrainedEntity.class, DataSerializers.BOOLEAN);
+    public static EntityDataAccessor<Boolean> IS_SCARED = SynchedEntityData.defineId(DrainedEntity.class, EntityDataSerializers.BOOLEAN);
+    public static EntityDataAccessor<Boolean> VASE = SynchedEntityData.defineId(DrainedEntity.class, EntityDataSerializers.BOOLEAN);
+    public static EntityDataAccessor<Boolean> HELMET = SynchedEntityData.defineId(DrainedEntity.class, EntityDataSerializers.BOOLEAN);
 
 
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.drained.idle");
@@ -60,14 +54,14 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
 
 
 
-    public DrainedEntity(EntityType<? extends MonsterEntity> p_i48553_1_, World p_i48553_2_) {
+    public DrainedEntity(EntityType<? extends Monster> p_i48553_1_, Level p_i48553_2_) {
         super(p_i48553_1_, p_i48553_2_);
     }
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return MobEntity.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.12D)
                 .add(Attributes.ATTACK_DAMAGE, 2D)
@@ -76,7 +70,7 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    protected ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+    protected InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
         BlockPos pos = new BlockPos(DrainedEntity.this.position().x,DrainedEntity.this.position().y,DrainedEntity.this.position().z);
         System.out.println(this.entityData.get(IS_SCARED).toString());
         BlockState state = this.level.getBlockState(this.blockPosition());
@@ -90,7 +84,7 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
         }
 
 
-        System.out.println(this.level.getBrightness(LightType.BLOCK, this.blockPosition()));
+        System.out.println(this.level.getBrightness(LightLayer.BLOCK, this.blockPosition()));
         System.out.println(this.blockPosition());
 
         return super.mobInteract(playerEntity, hand);
@@ -128,7 +122,7 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt) {
         nbt.putBoolean("scared", this.entityData.get(IS_SCARED));
         nbt.putBoolean("vase", this.entityData.get(VASE));
         nbt.putBoolean("helmet", this.entityData.get(HELMET));
@@ -136,7 +130,7 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt) {
         this.entityData.set(IS_SCARED, nbt.getBoolean("scared"));
         this.entityData.set(VASE, nbt.getBoolean("vase"));
         this.entityData.set(HELMET, nbt.getBoolean("helmet"));
@@ -147,9 +141,9 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new ScaredOfLightGoal(this));
-        goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this,0.4D));
+        goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,0.4D));
         goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.4D, false));
-        targetSelector.addGoal(1,new NearestAttackableTargetGoal(this, PlayerEntity.class, false));
+        targetSelector.addGoal(1,new NearestAttackableTargetGoal<>(this, Player.class, false));
         super.registerGoals();
     }
 
@@ -163,7 +157,7 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     protected void dropCustomDeathLoot(DamageSource damageSource, int p_213333_2_, boolean p_213333_3_) {
-        World world = damageSource.getEntity().level;
+        Level world = damageSource.getEntity().level;
         ArrayList<ItemStack> itemStacks = new ArrayList<ItemStack>();
         itemStacks.add(Items.DIAMOND.getDefaultInstance());
         itemStacks.add(Items.IRON_INGOT.getDefaultInstance());
@@ -191,19 +185,19 @@ public class DrainedEntity extends MonsterEntity implements IAnimatable {
     public class ScaredOfLightGoal extends Goal {
 
 
-        public ScaredOfLightGoal(MonsterEntity entity) {
+        public ScaredOfLightGoal(Monster entity) {
 
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         }
         @Override
         public boolean canUse() {
-            return DrainedEntity.this.level.getBrightness(LightType.BLOCK, DrainedEntity.this.blockPosition()) > 8 && !(DrainedEntity.this.entityData.get(HELMET));
+            return DrainedEntity.this.level.getBrightness(LightLayer.BLOCK, DrainedEntity.this.blockPosition()) > 8 && !(DrainedEntity.this.entityData.get(HELMET));
         }
 
 
         @Override
         public boolean canContinueToUse() {
-            return DrainedEntity.this.level.getBrightness(LightType.BLOCK, DrainedEntity.this.blockPosition()) > 8 && !(DrainedEntity.this.entityData.get(HELMET));
+            return DrainedEntity.this.level.getBrightness(LightLayer.BLOCK, DrainedEntity.this.blockPosition()) > 8 && !(DrainedEntity.this.entityData.get(HELMET));
         }
 
         @Override

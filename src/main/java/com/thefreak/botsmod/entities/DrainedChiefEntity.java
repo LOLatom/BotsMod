@@ -1,28 +1,19 @@
 package com.thefreak.botsmod.entities;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -33,8 +24,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.logging.Level;
 
-public class DrainedChiefEntity extends MonsterEntity implements IAnimatable {
+public class DrainedChiefEntity extends Monster implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
 
 
@@ -43,14 +35,14 @@ public class DrainedChiefEntity extends MonsterEntity implements IAnimatable {
 
 
 
-    public DrainedChiefEntity(EntityType<? extends MonsterEntity> p_i48553_1_, World p_i48553_2_) {
+    public DrainedChiefEntity(EntityType<? extends Monster> p_i48553_1_, Level p_i48553_2_) {
         super(p_i48553_1_, p_i48553_2_);
     }
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes()
+    public static AttributeSupplier.Builder setCustomAttributes()
     {
 
-        return MobEntity.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 100.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.12D)
                 .add(Attributes.ATTACK_DAMAGE, 2D)
@@ -70,12 +62,12 @@ public class DrainedChiefEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
 
     }
@@ -83,10 +75,11 @@ public class DrainedChiefEntity extends MonsterEntity implements IAnimatable {
     @Override
     public boolean hurt(DamageSource damageSource, float p_70097_2_) {
         if (damageSource.getDirectEntity() != null) {
-            if (damageSource.getDirectEntity() instanceof ArrowEntity) {
-                damageSource.getDirectEntity().remove();
+            if (damageSource.getDirectEntity() instanceof Arrow) {
+                // TODO: select a reason
+                damageSource.getDirectEntity().remove(RemovalReason.DISCARDED);
                 this.level.playLocalSound(damageSource.getDirectEntity().getX(), damageSource.getDirectEntity().getY(), damageSource.getDirectEntity().getZ(),
-                        SoundEvents.PLAYER_BURP, SoundCategory.HOSTILE,1F,1F,true);
+                        SoundEvents.PLAYER_BURP, SoundSource.HOSTILE,1F,1F,true);
                 return false;
             } else {
                 return super.hurt(damageSource, p_70097_2_);
@@ -101,8 +94,8 @@ public class DrainedChiefEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this,1D));
-        targetSelector.addGoal(1,new NearestAttackableTargetGoal(this, PlayerEntity.class, false));
+        goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1D));
+        targetSelector.addGoal(1,new NearestAttackableTargetGoal(this, Player.class, false));
         super.registerGoals();
     }
 

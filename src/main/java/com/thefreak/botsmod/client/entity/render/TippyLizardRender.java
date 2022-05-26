@@ -1,19 +1,17 @@
 package com.thefreak.botsmod.client.entity.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.thefreak.botsmod.client.entity.model.LadybugModel;
 import com.thefreak.botsmod.client.entity.model.TippyLizardModel;
 import com.thefreak.botsmod.entities.LadybugEntity;
 import com.thefreak.botsmod.entities.TippyLizardEntity;
 import com.thefreak.botsmod.entities.WanderingSpecterEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
@@ -21,7 +19,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 @OnlyIn(Dist.CLIENT)
 public class TippyLizardRender extends GeoEntityRenderer<TippyLizardEntity> {
-    public TippyLizardRender(EntityRendererManager renderManager) {
+    public TippyLizardRender(EntityRendererProvider.Context renderManager) {
         super(renderManager, new TippyLizardModel());
         this.shadowRadius = 0.4F;
     }
@@ -33,7 +31,7 @@ public class TippyLizardRender extends GeoEntityRenderer<TippyLizardEntity> {
     }
 
     @Override
-    public void renderRecursively(GeoBone bone, MatrixStack stack, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderRecursively(GeoBone bone, PoseStack stack, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         if (bone.getName().equals("Head")) { // rArmRuff is the name of the bone you to set the item to attach too. Please see Note
             stack.pushPose();
 
@@ -47,7 +45,8 @@ public class TippyLizardRender extends GeoEntityRenderer<TippyLizardEntity> {
             //Sets the scaling of the item.
             stack.scale(1.0f, 1.0f, 1.0f);
             // Change mainHand to predefined Itemstack and Mode to what transform you would want to use.
-            Minecraft.getInstance().getItemRenderer().renderStatic(mainHand, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, packedLightIn, packedOverlayIn, stack, this.rtb);
+            // TODO: fixme
+//            Minecraft.getInstance().getItemRenderer().renderStatic(mainHand, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, packedLightIn, packedOverlayIn, stack, bufferIn, this.rtb);
             stack.popPose();
             bufferIn = rtb.getBuffer(RenderType.entityTranslucent(whTexture));
         }

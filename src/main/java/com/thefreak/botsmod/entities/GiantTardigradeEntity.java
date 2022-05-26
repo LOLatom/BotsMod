@@ -1,28 +1,13 @@
 package com.thefreak.botsmod.entities;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -104,7 +89,7 @@ public class GiantTardigradeEntity extends PathfinderMob implements IAnimatable 
         super.checkInsideBlocks();
     }
     public boolean isPickable() {
-        return !this.removed;
+        return !this.dead; // I think this is what "removed" became?
     }
     public boolean isPushable() {
         return false;
@@ -141,7 +126,7 @@ public class GiantTardigradeEntity extends PathfinderMob implements IAnimatable 
         super.tickDeath();
         ++this.deathTime;
         if (this.deathTime == 200) {
-            this.remove();
+            this.remove(RemovalReason.KILLED); // TODO: I'd assume this is right
             for(int i = 0; i < 20; ++i) {
                 double d0 = this.random.nextGaussian() * 0.02D;
                 double d1 = this.random.nextGaussian() * 0.02D;
@@ -160,7 +145,7 @@ public class GiantTardigradeEntity extends PathfinderMob implements IAnimatable 
 
 
     @Override
-    protected AxisAlignedBB getBoundingBoxForPose(Pose pose) {
+    protected AABB getBoundingBoxForPose(Pose pose) {
         return super.getBoundingBoxForPose(pose);
     }
 

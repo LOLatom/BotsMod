@@ -16,6 +16,8 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
@@ -36,23 +38,23 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void clientSetup (FMLClientSetupEvent event) {
                                          //      MOBS       //
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LADYBUG.get(), LadybugRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PUFF_WORM.get(), PuffWormRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DRAINED.get(), DrainedRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefRender::new);
-
+        EntityRenderers.register(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeRender::new);
+        EntityRenderers.register(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterRender::new);
+        EntityRenderers.register(ModEntityTypes.LADYBUG.get(), LadybugRender::new);
+        EntityRenderers.register(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardRender::new);
+        EntityRenderers.register(ModEntityTypes.PUFF_WORM.get(), PuffWormRender::new);
+        EntityRenderers.register(ModEntityTypes.DRAINED.get(), DrainedRender::new);
+        EntityRenderers.register(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefRender::new);
+        
 
 
         //      SPECIAL       //
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SALTED_ARROW.get(), SaltedArrowRenderer::new);
+        EntityRenderers.register(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamRenderer::new);
+        EntityRenderers.register(ModEntityTypes.SALTED_ARROW.get(), SaltedArrowRenderer::new);
 
         //      ITEMS       //
 
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINK_PURIFIED_SALT_ITEM_ENTITY.get(), (renderManager) -> new ItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+        EntityRenderers.register(ModEntityTypes.PINK_PURIFIED_SALT_ITEM_ENTITY.get(), (renderManager) -> new ItemEntityRenderer(renderManager));
 
         //  TILE-ENTITIES  //
         ClientRegistry.bindTileEntityRenderer((BlockEntityType)ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get(), PostMortalAltarRender::new);

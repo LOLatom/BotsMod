@@ -1,27 +1,24 @@
 package com.thefreak.botsmod.util.AI;
 
 import com.thefreak.botsmod.init.EffectInitNew;
-import com.thefreak.botsmod.init.ModEntityTypes;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.Collection;
 import java.util.EnumSet;
 
-import static net.minecraft.entity.ai.attributes.Attributes.ATTACK_DAMAGE;
+import static net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE;
 
 public class AttackWhenPossesedGoal extends Goal {
-    protected final MobEntity attacker;
+    protected final Mob attacker;
     private final double speedTowardsTarget;
     private final boolean longMemory;
     private Path path;
@@ -35,7 +32,7 @@ public class AttackWhenPossesedGoal extends Goal {
     private int failedPathFindingPenalty = 0;
     private boolean canPenalize = false;
 
-    public AttackWhenPossesedGoal(MobEntity creature, double speedIn, boolean useLongMemory) {
+    public AttackWhenPossesedGoal(Mob creature, double speedIn, boolean useLongMemory) {
         this.attacker = creature;
         this.speedTowardsTarget = speedIn;
         this.longMemory = useLongMemory;
@@ -46,9 +43,9 @@ public class AttackWhenPossesedGoal extends Goal {
      * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
      * method as well.
      */
-    private static boolean entityHasEffect(LivingEntity entity, Effect effect) {
-        Collection<EffectInstance> entityEffects = entity.getActiveEffects();
-        for (EffectInstance entityEffect : entityEffects) {
+    private static boolean entityHasEffect(LivingEntity entity, MobEffect effect) {
+        Collection<MobEffectInstance> entityEffects = entity.getActiveEffects();
+        for (MobEffectInstance entityEffect : entityEffects) {
             if (entityEffect.getEffect() == effect) {
                 return true;
             }
@@ -57,7 +54,7 @@ public class AttackWhenPossesedGoal extends Goal {
     }
 
     public boolean canUse() {
-        if (entityHasEffect((LivingEntity) this.attacker.getEntity(), EffectInitNew.POSSESION.get())) {
+        if (entityHasEffect((LivingEntity) this.attacker/* .getEntity() */, EffectInitNew.POSSESION.get())) {
         long i = this.attacker.level.getGameTime();
         if (i - this.lastCanUseCheck < 20L) {
             return false;
@@ -103,7 +100,7 @@ public class AttackWhenPossesedGoal extends Goal {
         } else if (!this.attacker.isWithinRestriction(livingentity.blockPosition())) {
             return false;
         } else {
-            return !(livingentity instanceof PlayerEntity) || !livingentity.isSpectator() && !((PlayerEntity)livingentity).isCreative();
+            return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player)livingentity).isCreative();
         }
     }
 
@@ -122,7 +119,7 @@ public class AttackWhenPossesedGoal extends Goal {
      */
     public void stop() {
         LivingEntity livingentity = this.attacker.getTarget();
-        if (!EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
+        if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
             this.attacker.setTarget((LivingEntity)null);
         }
 
@@ -134,12 +131,12 @@ public class AttackWhenPossesedGoal extends Goal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        if (entityHasEffect((LivingEntity) this.attacker.getEntity(), EffectInitNew.POSSESION.get())) {
+        if (entityHasEffect((LivingEntity) this.attacker/*.getEntity()*/, EffectInitNew.POSSESION.get())) {
             LivingEntity livingentity = this.attacker.getTarget();
             this.attacker.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
             double d0 = this.attacker.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
             this.delayCounter = Math.max(this.delayCounter - 1, 0);
-            if ((this.longMemory || this.attacker.getSensing().canSee(livingentity)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || livingentity.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRandom().nextFloat() < 0.05F)) {
+            if ((this.longMemory || this.attacker.getSensing().hasLineOfSight(livingentity)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || livingentity.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRandom().nextFloat() < 0.05F)) {
                 this.targetX = livingentity.getX();
                 this.targetY = livingentity.getY();
                 this.targetZ = livingentity.getZ();
@@ -147,7 +144,7 @@ public class AttackWhenPossesedGoal extends Goal {
                 if (this.canPenalize) {
                     this.delayCounter += failedPathFindingPenalty;
                     if (this.attacker.getNavigation().getPath() != null) {
-                        net.minecraft.pathfinding.PathPoint finalPathPoint = this.attacker.getNavigation().getPath().getEndNode();
+                        Node finalPathPoint = this.attacker.getNavigation().getPath().getEndNode();
                         if (finalPathPoint != null && livingentity.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                             failedPathFindingPenalty = 0;
                         else
@@ -178,7 +175,7 @@ public class AttackWhenPossesedGoal extends Goal {
         double d0 = this.getAttackReachSqr(enemy);
         if (distToEnemySqr <= d0 && this.ticksUntilNextAttack <= 0) {
             this.resetAttackCooldown();
-            this.attacker.swing(Hand.MAIN_HAND);
+            this.attacker.swing(InteractionHand.MAIN_HAND);
             this.attacker.doHurtTarget(enemy);
         }
 

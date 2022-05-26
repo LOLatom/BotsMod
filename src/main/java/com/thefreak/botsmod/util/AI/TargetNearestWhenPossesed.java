@@ -1,16 +1,17 @@
 package com.thefreak.botsmod.util.AI;
 
 import com.thefreak.botsmod.init.EffectInitNew;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -22,26 +23,26 @@ public class TargetNearestWhenPossesed<T extends LivingEntity> extends TargetGoa
     protected final int targetChance;
     protected LivingEntity nearestTarget;
     /** This filter is applied to the Entity search. Only matching entities will be targeted. */
-    protected EntityPredicate targetEntitySelector;
+    protected TargetingConditions targetEntitySelector;
 
-    public TargetNearestWhenPossesed(MobEntity goalOwnerIn, Class<T> targetClassIn, boolean checkSight) {
+    public TargetNearestWhenPossesed(Mob goalOwnerIn, Class<T> targetClassIn, boolean checkSight) {
         this(goalOwnerIn, targetClassIn, checkSight, false);
     }
 
-    public TargetNearestWhenPossesed(MobEntity goalOwnerIn, Class<T> targetClassIn, boolean checkSight, boolean nearbyOnlyIn) {
+    public TargetNearestWhenPossesed(Mob goalOwnerIn, Class<T> targetClassIn, boolean checkSight, boolean nearbyOnlyIn) {
         this(goalOwnerIn, targetClassIn, 10, checkSight, nearbyOnlyIn, (Predicate<LivingEntity>)null);
     }
 
-    public TargetNearestWhenPossesed(MobEntity goalOwnerIn, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
+    public TargetNearestWhenPossesed(Mob goalOwnerIn, Class<T> targetClassIn, int targetChanceIn, boolean checkSight, boolean nearbyOnlyIn, @Nullable Predicate<LivingEntity> targetPredicate) {
         super(goalOwnerIn, checkSight, nearbyOnlyIn);
         this.targetClass = targetClassIn;
         this.targetChance = targetChanceIn;
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
-        this.targetEntitySelector = (new EntityPredicate()).range(this.getFollowDistance()).selector(targetPredicate);
+        this.targetEntitySelector = (TargetingConditions.forCombat()).range(this.getFollowDistance()).selector(targetPredicate);
     }
-    private static boolean entityHasEffect(LivingEntity entity, Effect effect) {
-        Collection<EffectInstance> entityEffects = entity.getActiveEffects();
-        for (EffectInstance entityEffect : entityEffects) {
+    private static boolean entityHasEffect(LivingEntity entity, MobEffect effect) {
+        Collection<MobEffectInstance> entityEffects = entity.getActiveEffects();
+        for (MobEffectInstance entityEffect : entityEffects) {
             if (entityEffect.getEffect() == effect) {
                 return true;
             }
@@ -54,7 +55,7 @@ public class TargetNearestWhenPossesed<T extends LivingEntity> extends TargetGoa
      * method as well.
      */
     public boolean canUse() {
-        if (entityHasEffect((LivingEntity) this.mob.getEntity(), EffectInitNew.POSSESION.get())) {
+        if (entityHasEffect((LivingEntity) this.mob/*.getEntity()*/, EffectInitNew.POSSESION.get())) {
             if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
                 return false;
             } else {
@@ -64,13 +65,13 @@ public class TargetNearestWhenPossesed<T extends LivingEntity> extends TargetGoa
         } else return false;
     }
 
-    protected AxisAlignedBB getTargetableArea(double targetDistance) {
+    protected AABB getTargetableArea(double targetDistance) {
         return this.mob.getBoundingBox().inflate(targetDistance, 4.0D, targetDistance);
     }
 
     protected void findNearestTarget() {
-        if (this.targetClass != PlayerEntity.class && this.targetClass != ServerPlayerEntity.class) {
-            this.nearestTarget = this.mob.level.getNearestLoadedEntity(this.targetClass, this.targetEntitySelector, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ(), this.getTargetableArea(this.getFollowDistance()));
+        if (this.targetClass != Player.class && this.targetClass != ServerPlayer.class) {
+            this.nearestTarget = this.mob.level.getNearestEntity(this.targetClass, this.targetEntitySelector, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ(), this.getTargetableArea(this.getFollowDistance()));
         } else {
             this.nearestTarget = this.mob.level.getNearestPlayer(this.targetEntitySelector, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
         }

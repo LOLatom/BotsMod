@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 
 public class PostMortalAltar extends Block {
@@ -35,7 +36,7 @@ public class PostMortalAltar extends Block {
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntityType createTileEntity(BlockState state, IBlockReader world) {
         return ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get().create();
     }
 }

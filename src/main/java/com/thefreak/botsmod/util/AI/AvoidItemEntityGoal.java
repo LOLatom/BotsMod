@@ -1,49 +1,41 @@
 package com.thefreak.botsmod.util.AI;
 
-import com.thefreak.botsmod.util.Predicate.ItemEntityPredicate;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.ai.util.RandomPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class AvoidItemEntityGoal<T extends ItemEntity> extends Goal {
-    protected final CreatureEntity entity;
+    protected final PathfinderMob entity;
     private final double farSpeed;
     private final double nearSpeed;
     protected List<T> avoidTarget;
     protected final float avoidDistance;
     protected Path path;
-    protected final PathNavigator navigation;
+    protected final PathNavigation navigation;
     /** Class of entity this behavior seeks to avoid */
     protected final Class<T> classToAvoid;
     protected final Predicate<ItemEntity> avoidTargetSelector;
     protected final Predicate<ItemEntity> predicateOnAvoidEntity;
     private final EntityPredicate builtTargetSelector;
 
-    public AvoidItemEntityGoal(CreatureEntity entityIn, Class<T> classToAvoidIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {
+    public AvoidItemEntityGoal(PathfinderMob entityIn, Class<T> classToAvoidIn, float avoidDistanceIn, double farSpeedIn, double nearSpeedIn) {
         this(entityIn, classToAvoidIn, (p_200828_0_) -> {
             return true;
-        }, avoidDistanceIn, farSpeedIn, nearSpeedIn, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test);
+        }, avoidDistanceIn, farSpeedIn, nearSpeedIn, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test);
     }
 
-    public AvoidItemEntityGoal(CreatureEntity entityIn, Class<T> avoidClass, Predicate<ItemEntity> targetPredicate, float distance, double nearSpeedIn, double farSpeedIn, Predicate<ItemEntity> p_i48859_9_) {
+    public AvoidItemEntityGoal(PathfinderMob entityIn, Class<T> avoidClass, Predicate<ItemEntity> targetPredicate, float distance, double nearSpeedIn, double farSpeedIn, Predicate<ItemEntity> p_i48859_9_) {
         this.entity = entityIn;
         this.classToAvoid = avoidClass;
         this.avoidTargetSelector = targetPredicate;
@@ -53,10 +45,11 @@ public class AvoidItemEntityGoal<T extends ItemEntity> extends Goal {
         this.predicateOnAvoidEntity = p_i48859_9_;
         this.navigation = entityIn.getNavigation();
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-        this.builtTargetSelector = (new ItemEntityPredicate()).range((double)distance).setCustomItemPredicate(p_i48859_9_.and(targetPredicate));
+        // TODO: fix this
+        this.builtTargetSelector = (TargetingConditions.forNonCombat()).range((double)distance).selector(p_i48859_9_.and(targetPredicate));
     }
 
-    public AvoidItemEntityGoal(CreatureEntity entityIn, Class<T> avoidClass, float distance, double nearSpeedIn, double farSpeedIn, Predicate<ItemEntity> targetPredicate) {
+    public AvoidItemEntityGoal(PathfinderMob entityIn, Class<T> avoidClass, float distance, double nearSpeedIn, double farSpeedIn, Predicate<ItemEntity> targetPredicate) {
         this(entityIn, avoidClass, (p_203782_0_) -> {
             return true;
         }, distance, nearSpeedIn, farSpeedIn, targetPredicate);
@@ -69,7 +62,8 @@ public class AvoidItemEntityGoal<T extends ItemEntity> extends Goal {
             if (itemEntity == null) {
                 return false;
             } else {
-                Vector3d vector3d = RandomPositionGenerator.getPosAvoid(this.entity, 16, 7, itemEntity.position());
+//                Vector3d vector3d = RandomPositionGenerator.getPosAvoid(this.entity, 16, 7, itemEntity.position());
+                Vec3 vector3d = RandomPos.generateRandomPos(this.entity, () -> itemEntity.blockPosition());
                 if (vector3d == null) {
                     return false;
                 } else if (itemEntity.distanceToSqr(vector3d.x, vector3d.y, vector3d.z) < itemEntity.distanceToSqr(this.entity)) {

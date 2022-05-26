@@ -6,12 +6,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
-public class ItemEntityPredicate extends  EntityPredicate{
+public class ItemEntityPredicate extends TargetingConditions {
     public static final ItemEntityPredicate DEFAULT = new ItemEntityPredicate();
     private double distance = -1.0D;
     private boolean allowInvulnerable;

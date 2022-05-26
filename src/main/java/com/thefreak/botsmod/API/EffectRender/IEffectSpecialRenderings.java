@@ -38,4 +38,14 @@ public interface IEffectSpecialRenderings {
         return (matrixStack1,effectInstance, minecraft) ->{};
     }
 
+    default boolean hasCustomIconBackground(EffectInstance effectInstance)
+    {return false;}
+
+    default ResourceLocation hasCustomIconBackgroundLocation(EffectInstance effectInstance)
+    {return new ResourceLocation("textures/gui/container/inventory.png");}
+
+    default int durationBring(EffectInstance effectInstance) {
+        return 0;
+    }
+
 }

@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.thefreak.botsmod.API.EffectRender.IEffectSpecialRenderings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IngameGui;
@@ -140,53 +141,133 @@ public abstract class IngameGuiMixin extends AbstractGui {
             List<Runnable> list = Lists.newArrayListWithExpectedSize(collection.size());
             this.minecraft.getTextureManager().bind(ContainerScreen.INVENTORY_LOCATION);
 
-            for(EffectInstance effectinstance : Ordering.natural().reverse().sortedCopy(collection)) {
+            for (EffectInstance effectinstance : Ordering.natural().reverse().sortedCopy(collection)) {
                 Effect effect = effectinstance.getEffect();
                 if (!effectinstance.shouldRenderHUD()) continue;
-                // Rebind in case previous renderHUDEffect changed texture
-                this.minecraft.getTextureManager().bind(ContainerScreen.INVENTORY_LOCATION);
-                if (effectinstance.showIcon()) {
-                    int k = this.screenWidth;
-                    int l = 1;
-                    if (this.minecraft.isDemo()) {
-                        l += 15;
-                    }
+                if (effect instanceof IEffectSpecialRenderings) {
+                    IEffectSpecialRenderings effectSpecialRenderings = (IEffectSpecialRenderings) effect;
+                    if (effectSpecialRenderings.hasCustomIconBackground(effectinstance)) {
+                        this.minecraft.getTextureManager().bind(effectSpecialRenderings.hasCustomIconBackgroundLocation(effectinstance));
 
-                    if (effect.isBeneficial()) {
-                        ++i;
-                        k = k - 25 * i;
-                    } else {
-                        ++j;
-                        k = k - 25 * j;
-                        l += 26;
-                    }
+                        if (effectinstance.showIcon()) {
+                            int k = this.screenWidth;
+                            int l = 1;
+                            if (this.minecraft.isDemo()) {
+                                l += 15;
+                            }
 
-                    RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    float f = 1.0F;
-                    if (effectinstance.isAmbient()) {
-                        this.blit(p_238444_1_, k, l, 165, 166, 24, 24);
+                            if (effect.isBeneficial()) {
+                                ++i;
+                                k = k - 25 * i;
+                            } else {
+                                ++j;
+                                k = k - 25 * j;
+                                l += 26;
+                            }
+
+                            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                            float f = 1.0F;
+                            this.blit(p_238444_1_, k, l, 0, 0, 24, 24);
+
+                            TextureAtlasSprite textureatlassprite = potionspriteuploader.get(effect);
+                            int j1 = k;
+                            int k1 = l;
+                            float f1 = f;
+                            list.add(() -> {
+                                this.minecraft.getTextureManager().bind(textureatlassprite.atlas().location());
+                                RenderSystem.color4f(1.0F, 1.0F, 1.0F, f1);
+                                blit(p_238444_1_, j1 + 3, k1 + 3, this.getBlitOffset(), 18, 18, textureatlassprite);
+                            });
+                            effectinstance.renderHUDEffect(this, p_238444_1_, k, l, this.getBlitOffset(), f);
+                        }
                     } else {
-                        this.blit(p_238444_1_, k, l, 141, 166, 24, 24);
-                        if (effectinstance.getDuration() <= 200) {
-                            int i1 = 10 - effectinstance.getDuration() / 20;
-                            f = MathHelper.clamp((float)effectinstance.getDuration() / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F) + MathHelper.cos((float)effectinstance.getDuration() * (float)Math.PI / 5.0F) * MathHelper.clamp((float)i1 / 10.0F * 0.25F, 0.0F, 0.25F);
+                        this.minecraft.getTextureManager().bind(ContainerScreen.INVENTORY_LOCATION);
+
+                        if (effectinstance.showIcon()) {
+                            int k = this.screenWidth;
+                            int l = 1;
+                            if (this.minecraft.isDemo()) {
+                                l += 15;
+                            }
+
+                            if (effect.isBeneficial()) {
+                                ++i;
+                                k = k - 25 * i;
+                            } else {
+                                ++j;
+                                k = k - 25 * j;
+                                l += 26;
+                            }
+
+                            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                            float f = 1.0F;
+                            if (effectinstance.isAmbient()) {
+                                this.blit(p_238444_1_, k, l, 165, 166, 24, 24);
+                            } else {
+                                this.blit(p_238444_1_, k, l, 141, 166, 24, 24);
+                                if (effectinstance.getDuration() <= 200) {
+                                    int i1 = 10 - effectinstance.getDuration() / 20;
+                                    f = MathHelper.clamp((float) effectinstance.getDuration() / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F) + MathHelper.cos((float) effectinstance.getDuration() * (float) Math.PI / 5.0F) * MathHelper.clamp((float) i1 / 10.0F * 0.25F, 0.0F, 0.25F);
+                                }
+                            }
+                            TextureAtlasSprite textureatlassprite = potionspriteuploader.get(effect);
+                            int j1 = k;
+                            int k1 = l;
+                            float f1 = f;
+                            list.add(() -> {
+                                this.minecraft.getTextureManager().bind(textureatlassprite.atlas().location());
+                                RenderSystem.color4f(1.0F, 1.0F, 1.0F, f1);
+                                blit(p_238444_1_, j1 + 3, k1 + 3, this.getBlitOffset(), 18, 18, textureatlassprite);
+                            });
+                            effectinstance.renderHUDEffect(this, p_238444_1_, k, l, this.getBlitOffset(), f);
                         }
                     }
+                }else {
+                    this.minecraft.getTextureManager().bind(ContainerScreen.INVENTORY_LOCATION);
 
-                    TextureAtlasSprite textureatlassprite = potionspriteuploader.get(effect);
-                    int j1 = k;
-                    int k1 = l;
-                    float f1 = f;
-                    list.add(() -> {
-                        this.minecraft.getTextureManager().bind(textureatlassprite.atlas().location());
-                        RenderSystem.color4f(1.0F, 1.0F, 1.0F, f1);
-                        blit(p_238444_1_, j1 + 3, k1 + 3, this.getBlitOffset(), 18, 18, textureatlassprite);
-                    });
-                    effectinstance.renderHUDEffect(this, p_238444_1_, k, l, this.getBlitOffset(), f);
+                    if (effectinstance.showIcon()) {
+                        int k = this.screenWidth;
+                        int l = 1;
+                        if (this.minecraft.isDemo()) {
+                            l += 15;
+                        }
+
+                        if (effect.isBeneficial()) {
+                            ++i;
+                            k = k - 25 * i;
+                        } else {
+                            ++j;
+                            k = k - 25 * j;
+                            l += 26;
+                        }
+
+                        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                        float f = 1.0F;
+                        if (effectinstance.isAmbient()) {
+                            this.blit(p_238444_1_, k, l, 165, 166, 24, 24);
+                        } else {
+                            this.blit(p_238444_1_, k, l, 141, 166, 24, 24);
+                            if (effectinstance.getDuration() <= 200) {
+                                int i1 = 10 - effectinstance.getDuration() / 20;
+                                f = MathHelper.clamp((float) effectinstance.getDuration() / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F) + MathHelper.cos((float) effectinstance.getDuration() * (float) Math.PI / 5.0F) * MathHelper.clamp((float) i1 / 10.0F * 0.25F, 0.0F, 0.25F);
+                            }
+                        }
+
+                        TextureAtlasSprite textureatlassprite = potionspriteuploader.get(effect);
+                        int j1 = k;
+                        int k1 = l;
+                        float f1 = f;
+                        list.add(() -> {
+                            this.minecraft.getTextureManager().bind(textureatlassprite.atlas().location());
+                            RenderSystem.color4f(1.0F, 1.0F, 1.0F, f1);
+                            blit(p_238444_1_, j1 + 3, k1 + 3, this.getBlitOffset(), 18, 18, textureatlassprite);
+                        });
+                        effectinstance.renderHUDEffect(this, p_238444_1_, k, l, this.getBlitOffset(), f);
+                    }
                 }
-            }
 
-            list.forEach(Runnable::run);
+                list.forEach(Runnable::run);
+            }
         }
     }
 }

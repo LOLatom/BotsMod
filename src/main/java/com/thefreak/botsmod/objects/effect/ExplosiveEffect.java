@@ -44,5 +44,13 @@ public class ExplosiveEffect extends Effect implements IEffectSpecialRenderings 
         return -4;
     }
 
+    @Override
+    public boolean hasCustomIconBackground(EffectInstance effectInstance) {
+        return true;
+    }
 
+    @Override
+    public ResourceLocation hasCustomIconBackgroundLocation(EffectInstance effectInstance) {
+        return new ResourceLocation("botsmod:textures/gui/effects/icons/explosiv_effect_i_background.png");
+    }
 }

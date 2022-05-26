@@ -112,5 +112,10 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> GEORITE_CRYSTAL = ITEMS.register("georite_crystal", () -> new GeoriteCrystal(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).setISTER(() -> GeoriteCrystalISTER::new)));
 
+    public static final RegistryObject<Item> DECAY_BERRY = ITEMS.register("decay_berry", () -> new Item(new Item.Properties()
+            .tab(BotsMod.BotsfoodItemGroup.food)
+            .food(new Food.Builder().nutrition(5).saturationMod(0.5F)
+                    .effect(() -> new EffectInstance(EffectInitNew.DECAYING.get(), 800, 0 ), 3).build())));
+
 }
 

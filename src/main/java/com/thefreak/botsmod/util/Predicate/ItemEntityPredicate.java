@@ -1,11 +1,5 @@
 package com.thefreak.botsmod.util.Predicate;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -22,7 +16,12 @@ public class ItemEntityPredicate extends TargetingConditions {
     private boolean skipAttackChecks;
     private boolean useVisibilityModifier = true;
     private Predicate<ItemEntity> customPredicate;
-
+    
+    public ItemEntityPredicate() {
+        // gonna need an AT here
+        super(false);
+    }
+    
     public ItemEntityPredicate range(double distanceIn) {
         this.distance = distanceIn;
         return this;

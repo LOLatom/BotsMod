@@ -1,42 +1,57 @@
 package com.thefreak.botsmod.objects.blocks;
 
 import com.thefreak.botsmod.init.ModTileEntityTypes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 
-public class PostMortalAltar extends Block {
+public class PostMortalAltar extends BaseEntityBlock {
 
     private static final VoxelShape POST_TEST = Block.box(15.0D, 0.0D, 15.0D, 1.0D, 16.0D, 1.0D);
 
     public PostMortalAltar(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
-
+    
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return POST_TEST;
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    public RenderShape getRenderShape(BlockState p_149645_1_) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
-
+    
+    @Nullable
     @Override
-    public BlockEntityType createTileEntity(BlockState state, IBlockReader world) {
-        return ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get().create();
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get().create(pPos, pState);
+    }
+    
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        // TODO:?
+        return super.getTicker(pLevel, pState, pBlockEntityType);
+    }
+    
+    @Nullable
+    @Override
+    public <T extends BlockEntity> GameEventListener getListener(Level pLevel, T pBlockEntity) {
+        return super.getListener(pLevel, pBlockEntity);
     }
 }

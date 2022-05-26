@@ -2,32 +2,32 @@ package com.thefreak.botsmod.objects.blocks;
 
 import com.thefreak.botsmod.API.TileEntity.ITileEntityBase;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
-import net.minecraft.block.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -44,11 +44,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.server.ServerWorld;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class CenoGoblinAnvil extends Block implements EntityBlock {
+public class CenoGoblinAnvil extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape BASEX = Block.box(2.0D, 0.0D, 4.0D, 14.0D, 4.0D, 12.0D);
     private static final VoxelShape X_LEG1 = Block.box(5.0D, 3.0D, 6.0D, 11.0D, 6.0D, 10.0D);
@@ -75,18 +75,13 @@ public class CenoGoblinAnvil extends Block implements EntityBlock {
         Direction direction = p_220053_1_.getValue(FACING);
         return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;
     }
-
+    
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return ModTileEntityTypes.CENO_GOBLIN_ANVIL_TILE_ENTITY.get().create(pPos, pState);
     }
-
-
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return ModTileEntityTypes.CENO_GOBLIN_ANVIL_TILE_ENTITY.get().create();
-    }
-
+    
     public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
         return this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getClockWise());
     }
@@ -94,16 +89,11 @@ public class CenoGoblinAnvil extends Block implements EntityBlock {
     public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
         return p_185499_1_.setValue(FACING, p_185499_2_.rotate(p_185499_1_.getValue(FACING)));
     }
-
+    
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
         p_206840_1_.add(FACING);
     }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockGetter blockReader) {
-        return null;
-    }
-
+    
 
 
 

@@ -4,6 +4,7 @@ import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.objects.blockpackage.ConnectedWoodBeam;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -16,6 +17,8 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -30,7 +33,7 @@ import net.minecraftforge.fml.common.Mod;
     @SubscribeEvent
     public static void WoodenBeamAddedRessistance(PlayerEvent.BreakSpeed event) {
         BlockPos pos = event.getPos();
-        World world = event.getEntity().level;
+        Level world = event.getEntity().level;
 
         if (world.getBlockState(pos.below()).getBlock() instanceof ConnectedWoodBeam || world.getBlockState(pos.above()).getBlock() instanceof ConnectedWoodBeam ||
                 world.getBlockState(pos.east()).getBlock() instanceof ConnectedWoodBeam || world.getBlockState(pos.west()).getBlock() instanceof ConnectedWoodBeam ||

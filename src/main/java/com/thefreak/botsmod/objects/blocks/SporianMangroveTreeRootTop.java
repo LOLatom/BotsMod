@@ -3,6 +3,7 @@ package com.thefreak.botsmod.objects.blocks;
 import com.thefreak.botsmod.init.BlockInitNew;
 import com.thefreak.botsmod.init.ItemInitNew;
 import net.minecraft.block.*;
+import net.minecraft.core.Direction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,11 +21,13 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class SporianMangroveTreeRootTop extends AbstractTopPlantBlock {
     int a;

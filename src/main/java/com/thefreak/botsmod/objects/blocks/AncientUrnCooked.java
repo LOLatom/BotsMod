@@ -1,20 +1,16 @@
 package com.thefreak.botsmod.objects.blocks;
 
-import com.thefreak.botsmod.init.BlockInitNew;
-import com.thefreak.botsmod.objects.blockpackage.FallingBushBlock;
-import net.minecraft.block.*;
-import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 
-import net.minecraft.block.AbstractBlock.Properties;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AncientUrnCooked extends FallingBlock {
     public static VoxelShape BASE = Block.box(5,0,5,11,12,11);
@@ -23,24 +19,21 @@ public class AncientUrnCooked extends FallingBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return BASE;
     }
 
     @Override
-    public void onLand(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
-        super.onLand(worldIn, pos, fallingState, hitState, fallingBlock);
+    public void onLand(Level level, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+        super.onLand(level, pos, fallingState, hitState, fallingBlock);
         FallingBlockEntity Entity = fallingBlock;
             if (Entity.time > 10){
 
 
-            worldIn.destroyBlock(pos, false);
+                level.destroyBlock(pos, false);
             }
     }
 
-    protected void falling(FallingBlockEntity fallingEntity) {
-        fallingEntity.setHurtsEntities(true);
-    }
 
 
 }

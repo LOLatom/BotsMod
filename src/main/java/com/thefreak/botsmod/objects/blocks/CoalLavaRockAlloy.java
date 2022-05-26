@@ -1,8 +1,7 @@
 package com.thefreak.botsmod.objects.blocks;
 
-import net.minecraft.block.Block;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.Block;
 
 public class CoalLavaRockAlloy extends Block {
     public CoalLavaRockAlloy(Properties properties) {

@@ -86,7 +86,7 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
 
 
     }
-}
+
 
 
     private void renderAdditionals(PoseStack matrixStack, int i, int j, MobEffectInstance effectInstances, MobEffect focusedEffect) {

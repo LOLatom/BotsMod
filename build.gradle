@@ -110,7 +110,7 @@ dependencies {
 //    implementation fg.deobf('com.github.LOLatom:DeltaLib:fd3fd65cae')
     implementation files("deltalib-1.0-SNAPSHOT-deobf.jar")
 
-    implementation 'org.spongepowered:mixin:0.8'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

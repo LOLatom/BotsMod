@@ -2,39 +2,37 @@ package com.thefreak.botsmod.objects.blocks;
 
 import com.mojang.datafixers.kinds.IdF;
 import com.thefreak.botsmod.init.BlockInitNew;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.world.BlockEvent;
-import sun.security.provider.SHA;
+
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
 
-public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLoggable {
+
+public class MudReeds extends RotatedPillarBlock implements BonemealableBlock, SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final IntegerProperty BRANCHES = IntegerProperty.create("branches", 0, 2);
     protected static final VoxelShape SHAPE_NORMAL = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
@@ -46,7 +44,7 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
         boolean vertical = state.getValue(AXIS) == Direction.Axis.Y;
         boolean HorizontalX = state.getValue(AXIS) == Direction.Axis.X;
         boolean HorizontalZ = state.getValue(AXIS) == Direction.Axis.Z;
@@ -62,7 +60,7 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
         BlockPos south1 = pos.south(2);
         BlockPos east1 = pos.east(2);
         BlockPos west1 = pos.west(2);
-        boolean SmthHereDown = worldIn.getBlockState(down).getBlock() instanceof AirBlock ;
+        boolean SmthHereDown = worldIn.getBlockState(down).getBlock() instanceof AirBlock;
         boolean SmthHereUp = worldIn.getBlockState(up).getBlock() instanceof AirBlock ;
         boolean SmthHereFoward = worldIn.getBlockState(north).getBlock() instanceof AirBlock ;
         boolean SmthHereBackward = worldIn.getBlockState(south).getBlock() instanceof AirBlock ;
@@ -150,7 +148,7 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
 
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack handItem = player.getItemInHand(handIn);
         Random rand = new Random();
         int a =  rand.nextInt(3);
@@ -163,7 +161,7 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch(state.getValue(AXIS)) {
             case X:
             default:
@@ -176,7 +174,7 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
       builder.add(WATERLOGGED).add(BRANCHES).add(AXIS);
     }
 
@@ -184,14 +182,14 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
 
 
 
-    public static boolean isInstanceOf(BlockPos pos, IWorld world) {
+    public static boolean isInstanceOf(BlockPos pos, LevelAccessor world) {
         boolean yesornolol = world.getBlockState(pos).getBlock() instanceof MudReeds;
         return yesornolol;
     }
 
 
     @Override
-    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         boolean vertical = state.getValue(AXIS) == Direction.Axis.Y;
         boolean HorizontalX = state.getValue(AXIS) == Direction.Axis.X;
         boolean HorizontalZ = state.getValue(AXIS) == Direction.Axis.Z;
@@ -221,17 +219,17 @@ public class MudReeds extends RotatedPillarBlock implements IGrowable, IWaterLog
     }
 
     @Override
-    public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return false;
     }
 
     @Override
-    public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
         return false;
     }
 
     @Override
-    public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
         boolean vertical = state.getValue(AXIS) == Direction.Axis.Y;
         if (vertical) {
             if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt(5) == 0) && worldIn.getBlockState(pos.above()).getBlock() instanceof AirBlock) {

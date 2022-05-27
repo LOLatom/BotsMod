@@ -2,36 +2,33 @@ package com.thefreak.botsmod.objects.items.Eggs;
 
 import com.thefreak.botsmod.entities.PuffWormEntity;
 import com.thefreak.botsmod.init.ModEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
+
 import net.minecraft.core.BlockPos;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
+import net.minecraft.core.Direction;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.MobSpawnerTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.spawner.AbstractSpawner;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.Objects;
 
@@ -49,9 +46,9 @@ public class PuffWormEggs extends Item {
             Direction direction = p_195939_1_.getClickedFace();
             BlockState blockstate = world.getBlockState(blockpos);
             if (blockstate.is(Blocks.SPAWNER)) {
-                TileEntity tileentity = world.getBlockEntity(blockpos);
+                BlockEntity tileentity = world.getBlockEntity(blockpos);
                 if (tileentity instanceof SpawnerBlockEntity) {
-                    AbstractSpawner abstractspawner = ((SpawnerBlockEntity)tileentity).getSpawner();
+                    BaseSpawner abstractspawner = ((SpawnerBlockEntity)tileentity).getSpawner();
                     EntityType<PuffWormEntity> entitytype1 = ModEntityTypes.PUFF_WORM.get();
                     abstractspawner.setEntityId(entitytype1);
                     tileentity.setChanged();
@@ -69,40 +66,40 @@ public class PuffWormEggs extends Item {
             }
 
             EntityType<PuffWormEntity> entitytype = ModEntityTypes.PUFF_WORM.get();
-            if (entitytype.spawn((ServerWorld)world, itemstack, p_195939_1_.getPlayer(), blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+            if (entitytype.spawn((ServerLevel) world, itemstack, p_195939_1_.getPlayer(), blockpos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
                 itemstack.shrink(1);
             }
 
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
     }
 
-    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
+    public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
         ItemStack itemstack = p_77659_2_.getItemInHand(p_77659_3_);
-        RayTraceResult raytraceresult = getPlayerPOVHitResult(p_77659_1_, p_77659_2_, RayTraceContext.FluidMode.SOURCE_ONLY);
-        if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.pass(itemstack);
-        } else if (!(p_77659_1_ instanceof ServerWorld)) {
-            return ActionResult.success(itemstack);
+        HitResult raytraceresult = getPlayerPOVHitResult(p_77659_1_, p_77659_2_, ClipContext.Fluid.SOURCE_ONLY);
+        if (raytraceresult.getType() != HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(itemstack);
+        } else if (!(p_77659_1_ instanceof ServerLevel)) {
+            return InteractionResultHolder.success(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
+            BlockHitResult blockraytraceresult = (BlockHitResult)raytraceresult;
             BlockPos blockpos = blockraytraceresult.getBlockPos();
-            if (!(p_77659_1_.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock)) {
-                return ActionResult.pass(itemstack);
+            if (!(p_77659_1_.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
+                return InteractionResultHolder.pass(itemstack);
             } else if (p_77659_1_.mayInteract(p_77659_2_, blockpos) && p_77659_2_.mayUseItemAt(blockpos, blockraytraceresult.getDirection(), itemstack)) {
                 EntityType<PuffWormEntity> entitytype = ModEntityTypes.PUFF_WORM.get();
-                if (entitytype.spawn((ServerWorld)p_77659_1_, itemstack, p_77659_2_, blockpos, SpawnReason.SPAWN_EGG, false, false) == null) {
-                    return ActionResult.pass(itemstack);
+                if (entitytype.spawn((ServerLevel) p_77659_1_, itemstack, p_77659_2_, blockpos, MobSpawnType.SPAWN_EGG, false, false) == null) {
+                    return InteractionResultHolder.pass(itemstack);
                 } else {
-                    if (!p_77659_2_.abilities.instabuild) {
+                    if (!p_77659_2_.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
 
                     p_77659_2_.awardStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.consume(itemstack);
+                    return InteractionResultHolder.consume(itemstack);
                 }
             } else {
-                return ActionResult.fail(itemstack);
+                return InteractionResultHolder.fail(itemstack);
             }
         }
     }

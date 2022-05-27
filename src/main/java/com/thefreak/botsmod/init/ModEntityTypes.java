@@ -4,14 +4,9 @@ import com.thefreak.botsmod.BotsMod;
 
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.entities.Projectile.SaltedArrow;
-import net.minecraft.entity.MobCategory;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.SpectralArrowEntity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

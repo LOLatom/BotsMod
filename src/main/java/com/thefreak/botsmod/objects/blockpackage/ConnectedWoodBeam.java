@@ -1,26 +1,18 @@
 package com.thefreak.botsmod.objects.blockpackage;
 
 
-
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
-import java.util.Random;
-
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ConnectedWoodBeam extends RotatedPillarBlock {
     public static final BooleanProperty C_UP = BooleanProperty.create("c_up");
@@ -36,7 +28,7 @@ public class ConnectedWoodBeam extends RotatedPillarBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(AXIS)) {
             case X:
             default:
@@ -53,7 +45,7 @@ public class ConnectedWoodBeam extends RotatedPillarBlock {
 
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos pos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos pos, BlockPos facingPos) {
 
         boolean vertical = stateIn.getValue(AXIS) == Direction.Axis.Y;
         boolean horizontalx = stateIn.getValue(AXIS) == Direction.Axis.X;
@@ -100,15 +92,15 @@ public class ConnectedWoodBeam extends RotatedPillarBlock {
 
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(C_DOWN).add(C_UP).add(ATTACH).add(AXIS);
     }
 
-    public static boolean isConnectedAt(BlockPos pos, IWorld worldIn) {
+    public static boolean isConnectedAt(BlockPos pos, LevelAccessor worldIn) {
         boolean COnnect = worldIn.getBlockState(pos).getBlock() instanceof ConnectedWoodBeam;
         return COnnect;
     }
-    public static boolean isAttachedAt(BlockPos pos, IWorld worldIn) {
+    public static boolean isAttachedAt(BlockPos pos, LevelAccessor worldIn) {
         boolean COnnect = worldIn.getBlockState(pos).getBlock() instanceof ConnectedWoodBeam;
         boolean ConnectedAir = worldIn.getBlockState(pos).getBlock() instanceof AirBlock;
         boolean ConeCt = !COnnect && !ConnectedAir;

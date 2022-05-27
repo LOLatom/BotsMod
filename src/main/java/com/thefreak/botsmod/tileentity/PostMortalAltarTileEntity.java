@@ -1,10 +1,7 @@
 package com.thefreak.botsmod.tileentity;
 
-import com.thefreak.botsmod.entities.DrainedChiefEntity;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;

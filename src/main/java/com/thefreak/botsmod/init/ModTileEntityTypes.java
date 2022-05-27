@@ -4,11 +4,7 @@ import com.thefreak.botsmod.BotsMod;
 
 import com.thefreak.botsmod.tileentity.CenoGoblinAnvilTileEntity;
 import com.thefreak.botsmod.tileentity.PostMortalAltarTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

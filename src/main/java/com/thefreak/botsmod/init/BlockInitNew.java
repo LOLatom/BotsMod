@@ -3,7 +3,6 @@ package com.thefreak.botsmod.init;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.objects.blockpackage.ConnectedTexturePillar;
 import com.thefreak.botsmod.objects.blockpackage.ConnectedWoodBeam;
-import com.thefreak.botsmod.objects.blockpackage.HeatBlock;
 import com.thefreak.botsmod.objects.blockpackage.SustainablePlantType;
 import com.thefreak.botsmod.objects.blocks.*;
 

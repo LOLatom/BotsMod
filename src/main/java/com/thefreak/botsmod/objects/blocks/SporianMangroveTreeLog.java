@@ -2,21 +2,19 @@ package com.thefreak.botsmod.objects.blocks;
 
 import com.thefreak.botsmod.init.BlockInitNew;
 import com.thefreak.botsmod.init.ItemInitNew;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.audio.Sound;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.Random;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class SporianMangroveTreeLog extends RotatedPillarBlock {
     public SporianMangroveTreeLog(Properties properties) {
@@ -24,11 +22,11 @@ public class SporianMangroveTreeLog extends RotatedPillarBlock {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack HeldItemIn = player.getItemInHand(handIn);
-        if (HeldItemIn.getItem() instanceof AxeItem  ) {
+        if (HeldItemIn.getItem() instanceof AxeItem) {
         worldIn.setBlockAndUpdate(pos, BlockInitNew.STRIPPED_SPORIAN_MANGROVE_TREE_LOG.get().defaultBlockState());
-        worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1F, 1F);
+        worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1F, 1F);
         popResource(worldIn,pos, new ItemStack(ItemInitNew.SPORIAN_MANGROVE_TREE_BARK.get(), 1));
         }
 

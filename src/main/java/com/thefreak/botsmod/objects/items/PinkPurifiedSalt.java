@@ -3,9 +3,9 @@ package com.thefreak.botsmod.objects.items;
 import com.thefreak.botsmod.entities.PinkPurifiedSaltItemEntity;
 import com.thefreak.botsmod.entities.WanderingSpecterEntity;
 import com.thefreak.botsmod.init.EffectInitNew;
-import com.thefreak.botsmod.init.ItemInitNew;
+
 import com.thefreak.botsmod.init.ModEntityTypes;
-import jdk.nashorn.internal.ir.Block;
+
 
 import java.util.Collection;
 

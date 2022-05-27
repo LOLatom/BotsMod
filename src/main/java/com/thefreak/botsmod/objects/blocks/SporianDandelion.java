@@ -1,31 +1,28 @@
 package com.thefreak.botsmod.objects.blocks;
 
 import com.thefreak.botsmod.init.BlockInitNew;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BushBlock;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class SporianDandelion extends BushBlock {
     public static final BooleanProperty POLLEN = BooleanProperty.create("pollen");
@@ -38,17 +35,17 @@ public class SporianDandelion extends BushBlock {
     Random rand = new Random();
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(POLLEN));
     }
 
     @Override
-    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
         boolean a = state.getValue(POLLEN) == false;
         if (!a) {
             double x = pos.getX() + 0.5D;
@@ -56,7 +53,7 @@ public class SporianDandelion extends BushBlock {
             double z = pos.getZ() + 0.5D;
             worldIn.addParticle(ParticleTypes.CLOUD, x, y, z, 0D, 0.3D, 0);
             worldIn.setBlock(pos, state.setValue(POLLEN, false), 2);
-            worldIn.playSound((PlayerEntity)null, pos, SoundEvents.WOOL_FALL, SoundCategory.BLOCKS, 1F, 0.25F);
+            worldIn.playSound((Player) null, pos, SoundEvents.WOOL_FALL, SoundSource.BLOCKS, 1F, 0.25F);
 
             if (rand.nextInt(10) == 0) {
                 worldIn.destroyBlock(pos,false);
@@ -66,7 +63,7 @@ public class SporianDandelion extends BushBlock {
     }
 
     @Override
-    public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile) {
+    public void onProjectileHit(Level worldIn, BlockState state, BlockHitResult hit, Projectile projectile) {
         boolean a = state.getValue(POLLEN) == false;
         if (!a) {
             double x = projectile.getX() + 0.5D;
@@ -74,7 +71,7 @@ public class SporianDandelion extends BushBlock {
             double z = projectile.getZ() + 0.5D;
             worldIn.addParticle(ParticleTypes.CLOUD, x, y, z, 0D, 0.3D, 0);
             worldIn.setBlock(projectile.blockPosition(), state.setValue(POLLEN, false), 2);
-            worldIn.playSound((PlayerEntity)null, projectile.blockPosition(), SoundEvents.WOOL_FALL, SoundCategory.BLOCKS, 1F, 0.25F);
+            worldIn.playSound((Player) null, projectile.blockPosition(), SoundEvents.WOOL_FALL, SoundSource.BLOCKS, 1F, 0.25F);
             if (rand.nextInt(10) == 0) {
             worldIn.destroyBlock(projectile.blockPosition(),false);
             }
@@ -84,7 +81,7 @@ public class SporianDandelion extends BushBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.PODZOL) || state.is(Blocks.FARMLAND) || state.is(BlockInitNew.SPORIAN_MOSS_GRASS.get());
     }
 }

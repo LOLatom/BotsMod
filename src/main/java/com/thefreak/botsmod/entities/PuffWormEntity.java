@@ -1,5 +1,6 @@
 package com.thefreak.botsmod.entities;
 
+import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.ai.util.RandomPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -59,7 +61,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
     public PuffWormEntity(EntityType<? extends PathfinderMob> p_i48575_1_, Level p_i48575_2_) {
         super(p_i48575_1_, p_i48575_2_);
         this.pathNavigator = new FlyingPathNavigation(this, this.level);
-        this.moveControl = new PuffMovementController(this, 1, true);
+        //this.moveControl = new PuffMovementController(this, 1, true);
     }
     private <E extends LadybugEntity> PlayState predicate(AnimationEvent<E> event) {
         AnimationController controller = event.getController();
@@ -216,7 +218,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
 
         @Override
         public boolean canUse() {
-            boolean ispuffed = (PuffWormEntity.this.getPuffState());
+           /* boolean ispuffed = (PuffWormEntity.this.getPuffState());
             boolean livingentitynotnull = this.livingentity != null;
             this.toAvoid = this.instance.level.getNearestEntity(this.livingentity, this.avoidEntityTargeting, this.instance, this.instance.getX(), this.instance.getY(), this.instance.getZ(), this.instance.getBoundingBox().inflate((double)this.maxDist, 3.0D, (double)this.maxDist));
             if (ispuffed && livingentitynotnull) {
@@ -224,7 +226,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
                     return false;
                 } else {
                     // TODO
-                    Vector3d vector3d = RandomPositionGenerator.getPosAvoid(this.instance, 16, 7, this.toAvoid.position());
+                    Vector3d vector3d = RandomPos.generateRandomPosTowardDirection(this.instance, 16, 7, this.toAvoid.position());
                     if (vector3d == null) {
                         return false;
                     } else if (this.toAvoid.distanceToSqr(vector3d.x, vector3d.y, vector3d.z) < this.toAvoid.distanceToSqr(this.instance)) {
@@ -236,7 +238,8 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
                 }
             } else {
                 return false;
-            }
+            } */
+            return false;
         }
         @Override
         public boolean canContinueToUse() {
@@ -277,7 +280,7 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
         }
     }
 
-    public class PuffMovementController extends MoveControl {
+   /* public class PuffMovementController extends MoveControl {
 
         private final int maxTurn;
         private final boolean hoversInPlace;
@@ -396,5 +399,5 @@ public class PuffWormEntity extends PathfinderMob implements IAnimatable {
             }
 
         }
-    }
+    } */
 }

@@ -39,7 +39,7 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
     public PinkPurifiedSaltItemEntity(Level world, double posX, double posY, double posZ, ItemStack itemstack) {
         super(world, posX, posY, posZ, itemstack);
         this.setItem(itemstack);
-        this.yRot = this.random.nextFloat() * 360.0F;
+        this.yRotO = this.random.nextFloat() * 360.0F;
         this.setDeltaMovement(this.random.nextDouble() * 0.2D - 0.1D, 0.2D, this.random.nextDouble() * 0.2D - 0.1D);
         this.lifespan = (itemstack.getItem() == null ? 6000 : itemstack.getEntityLifespan(world));
         this.pickupDelay = 80;
@@ -59,10 +59,10 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
             if (hook < 0) return;
 
             ItemStack copy = itemstack.copy();
-            if (this.pickupDelay == 0 && (this.owner == null || lifespan - this.age <= 200 || this.owner.equals(p_70100_1_.getUUID())) && (hook == 1 || i <= 0 || p_70100_1_.inventory.add(itemstack))) {
+            /*if (this.pickupDelay == 0 && (this.owner == null || lifespan - this.age <= 200 || this.owner.equals(p_70100_1_.getUUID())) && (hook == 1 || i <= 0 || p_70100_1_.inventory.add(itemstack))) {
                 copy.setCount(copy.getCount() - getItem().getCount());
                 // TODO: ?
-                net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerItemPickupEvent(p_70100_1_, this, copy);
+                //net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerItemPickupEvent(p_70100_1_, this, copy);
                 p_70100_1_.take(this, i);
                 if (itemstack.isEmpty()) {
                     this.remove(RemovalReason.DISCARDED); // TODO: ?
@@ -72,7 +72,7 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
                 p_70100_1_.awardStat(Stats.ITEM_PICKED_UP.get(item), i);
                 p_70100_1_.onItemPickup(this);
             }
-
+*/
         }
     }
 
@@ -92,8 +92,8 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
             }else {
 
                 this.spawnAtLocation(ItemInitNew.SALTED_ARROW.get());
-                arrowEntity.remove();
-                this.remove();
+                arrowEntity.remove(RemovalReason.CHANGED_DIMENSION);
+                this.remove(RemovalReason.CHANGED_DIMENSION);
             }
 
         }
@@ -105,7 +105,7 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
         if (entity != null) {
 
             if (source.getDirectEntity() instanceof Arrow) {
-                this.remove();
+                this.remove(RemovalReason.CHANGED_DIMENSION);
             }
 
         }

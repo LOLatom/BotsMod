@@ -25,11 +25,11 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
-    public static final RegistryObject<Item> COOKED_PILOVE_FRUIT = ITEMS.register("cooked_pilove_fruit", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(7).saturationMod(5F).build())));
+    public static final RegistryObject<Item> COOKED_PILOVE_FRUIT = ITEMS.register("cooked_pilove_fruit", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(7).saturationMod(5F).build())));
 
-    public static final RegistryObject<Item> PILOVE_FRUIT = ITEMS.register("pilove_fruit", () -> new PiloveFruitItem(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(5).saturationMod(3F).effect( () -> new MobEffectInstance(EffectInitNew.EXPLOSIVE_EFFECT.get(), 400, 1),1.0F).fast().build())));
+    public static final RegistryObject<Item> PILOVE_FRUIT = ITEMS.register("pilove_fruit", () -> new PiloveFruitItem(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(5).saturationMod(3F).effect( () -> new MobEffectInstance(EffectInitNew.EXPLOSIVE_EFFECT.get(), 400, 1),1.0F).fast().build())));
 
-    public static final RegistryObject<Item> DREAM_BERRY = ITEMS.register("dream_berry", () -> new DreamBerryItem(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).FoodProperties(new FoodProperties.Builder().nutrition(4).saturationMod(5F).alwaysEat().build())));
+    public static final RegistryObject<Item> DREAM_BERRY = ITEMS.register("dream_berry", () -> new DreamBerryItem(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(4).saturationMod(5F).alwaysEat().build())));
 
     public static final RegistryObject<Item> MOGROVE_NUT = ITEMS.register("mogrove_nut", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(16)));
 
@@ -111,7 +111,7 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> BIG_RUBY = ITEMS.register("big_ruby", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
-    public static final RegistryObject<Item> GEORITE_CRYSTAL = ITEMS.register("georite_crystal", () -> new GeoriteCrystal(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).setISTER(() -> GeoriteCrystalISTER::new)));
+    public static final RegistryObject<Item> GEORITE_CRYSTAL = ITEMS.register("georite_crystal", () -> new GeoriteCrystal(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
     public static final RegistryObject<Item> DECAY_BERRY = ITEMS.register("decay_berry", () -> new Item(new Item.Properties()
             .tab(BotsMod.BotsfoodItemGroup.food)

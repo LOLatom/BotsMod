@@ -30,7 +30,7 @@ public class ExplosiveEffectEvent {
         Level world = livingEntity.getCommandSenderWorld();
 
         if (entityHasEffect(livingEntity, EffectInitNew.EXPLOSIVE_EFFECT.get())) {
-          world.explode(livingEntity, livingEntity.xOld, livingEntity.yOld, livingEntity.zOld, 4.0F, false, Explosion.Mode.BREAK);
+          world.explode(livingEntity, livingEntity.xOld, livingEntity.yOld, livingEntity.zOld, 4.0F, false, Explosion.BlockInteraction.BREAK);
         }
     }
 }

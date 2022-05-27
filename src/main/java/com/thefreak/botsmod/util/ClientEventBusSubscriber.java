@@ -15,12 +15,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraftforge.fml.common.Mod;
@@ -54,7 +56,7 @@ public class ClientEventBusSubscriber {
         EntityRenderers.register(ModEntityTypes.PINK_PURIFIED_SALT_ITEM_ENTITY.get(), (renderManager) -> new ItemEntityRenderer(renderManager));
 
         //  TILE-ENTITIES  //
-        ClientRegistry.bindTileEntityRenderer((BlockEntityType)ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get(), PostMortalAltarRender::new);
+        //BlockEntityRenderers.register((BlockEntityType)ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get(), PostMortalAltarRender::new);
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutout());
     }
 

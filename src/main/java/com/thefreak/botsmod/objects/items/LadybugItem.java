@@ -94,9 +94,9 @@ public class LadybugItem extends Item {
                     return InteractionResultHolder.pass(itemstack);
                 } else {
                     // TODO
-                    if (!p_77659_2_.abilities.instabuild) {
-                        itemstack.shrink(1);
-                    }
+                   // if (!p_77659_2_.abilities.instabuild) {
+                      //  itemstack.shrink(1);
+                    //}
 
                     p_77659_2_.awardStat(Stats.ITEM_USED.get(this));
                     return InteractionResultHolder.consume(itemstack);

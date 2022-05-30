@@ -25,8 +25,8 @@ public class BranchBlock extends DirectionalBlock implements SimpleWaterloggedBl
     protected static final VoxelShape Z_AXIS_AABB = Block.box(6.5D, 13.0D, 3.0D, 9.5D, 16D, 16.0D);
     protected static final VoxelShape X_AXIS_AABB = Block.box(0.0D, 13.0D, 6.5D, 13.0D, 16D, 9.5D);
 
-    protected static final VoxelShape Z_AXIS_AABB_MIRROR = Block.box(6.5D, 16.0D, 0D, 9.5D, 13D, 13.0D);
-    protected static final VoxelShape X_AXIS_AABB_MIRROR = Block.box(3D, 16.0D, 6.5D, 16.0D, 13D, 9.5D);
+    protected static final VoxelShape Z_AXIS_AABB_MIRROR = Block.box(6.5D, 13.0D, 0D, 9.5D, 16D, 13.0D);
+    protected static final VoxelShape X_AXIS_AABB_MIRROR = Block.box(3D, 13.0D, 6.5D, 16.0D, 16D, 9.5D);
 
 
     public BranchBlock(Properties p_i48415_1_) {

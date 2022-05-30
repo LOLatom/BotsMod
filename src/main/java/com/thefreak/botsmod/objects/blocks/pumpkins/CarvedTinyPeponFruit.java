@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CarvedTinyPeponFruit extends RotationalFallingBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    protected static final VoxelShape SHAPE = Block.box(13.0D, 0.0D, 13.0D, 3.0D, 13, 3.0D);
+    protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 13, 13.0D);
 
 
     public CarvedTinyPeponFruit(Properties properties) {

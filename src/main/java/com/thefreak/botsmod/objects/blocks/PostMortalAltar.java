@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PostMortalAltar extends BaseEntityBlock {
 
-    private static final VoxelShape POST_TEST = Block.box(15.0D, 0.0D, 15.0D, 1.0D, 16.0D, 1.0D);
+    private static final VoxelShape POST_TEST = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 
     public PostMortalAltar(Properties p_i48440_1_) {
         super(p_i48440_1_);

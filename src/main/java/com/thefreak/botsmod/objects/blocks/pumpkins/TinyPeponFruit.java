@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TinyPeponFruit extends FallingBlock {
-    protected static final VoxelShape SHAPE = Block.box(13.0D, 0.0D, 13.0D, 3.0D, 13, 3.0D);
+    protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 13, 13.0D);
 
     public TinyPeponFruit(Properties properties) {
         super(properties);

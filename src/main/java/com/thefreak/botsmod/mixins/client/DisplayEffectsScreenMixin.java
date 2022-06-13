@@ -101,24 +101,29 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
 
         for(MobEffectInstance mobeffectinstance : p_194006_) {
             MobEffect mobeffect = mobeffectinstance.getEffect();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             if (mobeffect instanceof IEffectSpecialRenderings) {
                 IEffectSpecialRenderings effectSpecialRenderings = (IEffectSpecialRenderings) mobeffect;
                 if (effectSpecialRenderings.hasCustomBackground(mobeffectinstance)) {
-                    RenderSystem.setShaderTexture(0, effectSpecialRenderings.hasCustomIconBackgroundLocation(mobeffectinstance));
-                        this.blit(p_194003_, p_194004_, i + effectSpecialRenderings.hasCustomBackgroundHeight(mobeffectinstance), 0, 0, 120, 32);
+                    RenderSystem.setShaderTexture(0, effectSpecialRenderings.hasCustomBackgroundLocation(mobeffectinstance));
+                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                        this.blit(p_194003_, p_194004_, i + effectSpecialRenderings.customBackgroundHeightAdded(mobeffectinstance), 0, 0 , 120, 32 + effectSpecialRenderings.hasCustomBackgroundHeight(mobeffectinstance));
                     } else {
                     RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
+                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                     this.blit(p_194003_, p_194004_, i + effectSpecialRenderings.hasCustomBackgroundHeight(mobeffectinstance), 0, 166, 120, 32);
 
 
                 }
-            } else if (p_194007_) {
-                RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
-                this.blit(p_194003_, p_194004_, i, 0, 166, 120, 32);
             } else {
-                RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
-                this.blit(p_194003_, p_194004_, i, 0, 198, 32, 32);
+                if (p_194007_) {
+                    RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
+                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                    this.blit(p_194003_, p_194004_, i, 0, 166, 120, 32);
+                } else {
+                    RenderSystem.setShaderTexture(0, INVENTORY_LOCATION);
+                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                    this.blit(p_194003_, p_194004_, i, 0, 198, 32, 32);
+                }
             }
 
             i += p_194005_;

@@ -28,10 +28,9 @@ public class PostMortalAltarTileEntity extends BlockEntity implements IAnimatabl
         this(ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get(), pos, state);
     }
 
-    private <E extends PostMortalAltarTileEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController controller = event.getController();
-        AnimationBuilder anim = SPIN_ANIM;
-        controller.setAnimation(anim);
+    private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        event.getController().transitionLengthTicks = 0;
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("Botarium.anim.deploy", true));
         return PlayState.CONTINUE;
     }
 

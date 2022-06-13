@@ -107,15 +107,16 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.CARVED_STRECHED_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_STRECHED_PEPON_FRUIT.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
+     /*   ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_GROWTH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_HALF_GROWN.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_SPROUT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.CARVED_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped()); */
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.BAUMEA_LEAVES.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TAR_TORCH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.HEAT_ACCUMULATOR.get(), RenderType.cutoutMipped());
 
         ForgeModelBakery.addSpecialModel(new ResourceLocation("botsmod:item/delta_crystal_shard_model"));
     }
@@ -126,7 +127,6 @@ public class BotsMod
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_glow"));
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_part"));
     }
-
 
 
 

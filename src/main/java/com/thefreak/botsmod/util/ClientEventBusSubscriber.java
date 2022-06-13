@@ -55,8 +55,6 @@ public class ClientEventBusSubscriber {
 
         EntityRenderers.register(ModEntityTypes.PINK_PURIFIED_SALT_ITEM_ENTITY.get(), (renderManager) -> new ItemEntityRenderer(renderManager));
 
-        //  TILE-ENTITIES  //
-        //BlockEntityRenderers.register((BlockEntityType)ModTileEntityTypes.POST_MORTAL_ALTAR_TILE_ENTITY.get(), PostMortalAltarRender::new);
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutout());
     }
 

@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.example.block.tile.BotariumTileEntity;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
@@ -25,10 +26,10 @@ public class PostMortalAltarRender extends GeoBlockRenderer<PostMortalAltarTileE
     }
 
     @Override
-    public RenderType getRenderType(PostMortalAltarTileEntity animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
-
-        return RenderType.entityTranslucent(this.getTextureLocation(animatable));
+    public RenderType getRenderType(PostMortalAltarTileEntity animatable, float partialTicks, PoseStack stack,
+                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
+                                    ResourceLocation textureLocation) {
+        return RenderType.entityTranslucent(getTextureLocation(animatable));
     }
-
 
 }

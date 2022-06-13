@@ -32,7 +32,7 @@ public class TinyPeponFruitSprout extends DoublePlantBlock {
     }
 
 
-    @Override
+   /* @Override
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
         if (worldIn.getBlockState(pos.above()).getBlock() == Blocks.AIR && state.getValue(PUMPKIN) == true && state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             worldIn.setBlock(pos, state.setValue(HALF, DoubleBlockHalf.UPPER).setValue(PUMPKIN, false), 5);
@@ -59,7 +59,7 @@ public class TinyPeponFruitSprout extends DoublePlantBlock {
 
 
         super.tick(state, worldIn, pos, rand);
-    }
+    } */
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

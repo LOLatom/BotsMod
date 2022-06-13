@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "":  { "model": "botsmod:block/heat_accumulator" }
+
+    }
+}

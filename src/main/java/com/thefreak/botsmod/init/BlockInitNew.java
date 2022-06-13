@@ -8,6 +8,7 @@ import com.thefreak.botsmod.objects.blocks.*;
 
 import com.thefreak.botsmod.objects.blocks.Decorative.BranchBlock;
 import com.thefreak.botsmod.objects.blocks.Decorative.TarTorch;
+import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
 import com.thefreak.botsmod.objects.blocks.pumpkins.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;
@@ -521,7 +522,7 @@ public class BlockInitNew {
 	})));
 
 
-	public static final RegistryObject<Block> TINY_PEPON_FRUIT_SPROUT = BLOCKS.register("tiny_pepon_fruit_sprout", () -> new TinyPeponFruitSprout(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.WET_GRASS).strength(1F, 1F).noOcclusion().noCollission().randomTicks()));
+/*	public static final RegistryObject<Block> TINY_PEPON_FRUIT_SPROUT = BLOCKS.register("tiny_pepon_fruit_sprout", () -> new TinyPeponFruitSprout(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.WET_GRASS).strength(1F, 1F).noOcclusion().noCollission().randomTicks()));
 
 	public static final RegistryObject<Block> TINY_PEPON_FRUIT_GROWTH = BLOCKS.register("tiny_pepon_fruit_growth", () -> new TinyPeponFruitGrowth(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.SHROOMLIGHT).strength(1F, 1F).noOcclusion()));
 
@@ -533,7 +534,7 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> GLOWING_TINY_PEPON_FRUIT = BLOCKS.register("glowing_tiny_pepon_fruit", () -> new CarvedTinyPeponFruit(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.SHROOMLIGHT).strength(1F, 1F).noOcclusion().lightLevel((state) -> {
 		return 8;
-	})));
+	})));*/
 
 	//UPDATE 0.2a-alpha
 
@@ -608,6 +609,14 @@ public class BlockInitNew {
 	public static final RegistryObject<Block> NOBLIVIAN_VASE = BLOCKS.register("noblivian_vase", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 
 	public static final RegistryObject<Block> POST_MORTAL_ALTAR = BLOCKS.register("post_mortal_altar", () -> new PostMortalAltar(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
+
+	public static final RegistryObject<Block> HEAT_ACCUMULATOR = BLOCKS.register("heat_accumulator", () -> new HeatAccumulatorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
+
+	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BRICKS = BLOCKS.register("gold_bronze_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_VERTICAL_BRICKS = BLOCKS.register("gold_bronze_alloy_vertical_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BLOCK = BLOCKS.register("gold_bronze_alloy_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

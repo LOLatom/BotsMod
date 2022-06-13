@@ -118,5 +118,10 @@ public class ItemInitNew {
             .food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F)
                     .effect(() -> new MobEffectInstance(EffectInitNew.DECAYING.get(), 800, 0 ), 3).build())));
 
+    public static final RegistryObject<Item> GINGER_ROOT = ITEMS.register("ginger_root", () -> new Item(new Item.Properties()
+            .tab(BotsMod.BotsfoodItemGroup.food)
+            .food(new FoodProperties.Builder().nutrition(-1).saturationMod(-0.5F)
+                    .build())));
+
 }
 

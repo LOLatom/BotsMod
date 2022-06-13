@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "botsmod:blocks/gold_bronze_alloy_vertical_bricks"
+    }
+}

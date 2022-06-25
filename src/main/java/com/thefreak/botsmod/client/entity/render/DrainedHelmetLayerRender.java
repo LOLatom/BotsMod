@@ -2,7 +2,9 @@ package com.thefreak.botsmod.client.entity.render;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.entities.DrainedEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -29,8 +31,11 @@ public class DrainedHelmetLayerRender extends GeoLayerRenderer {
         if (drainedEntity.hasHelmet()) {
             this.getRenderer().render(this.getEntityModel().getModel(MODEL), entityLivingBaseIn, partialTicks, cameo, matrixStackIn, bufferIn, bufferIn.getBuffer(cameo), packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
-
-
         matrixStackIn.popPose();
+        render(matrixStackIn,bufferIn,packedLightIn,entityLivingBaseIn,limbSwing,limbSwingAmount,partialTicks,ageInTicks,netHeadYaw,headPitch);
+        BotsMod.glowTarget.bindRead();
+        render(matrixStackIn,bufferIn,packedLightIn,entityLivingBaseIn,limbSwing,limbSwingAmount,partialTicks,ageInTicks,netHeadYaw,headPitch);
+        BotsMod.glowTarget.unbindRead();
+        Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
     }
 }

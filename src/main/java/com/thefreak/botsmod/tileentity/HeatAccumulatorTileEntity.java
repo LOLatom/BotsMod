@@ -1,17 +1,25 @@
 package com.thefreak.botsmod.tileentity;
 
 import com.thefreak.botsmod.init.ModTileEntityTypes;
+import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatMaths;
+import com.thefreak.botsmod.tileentity.TileBases.HeatBlockEntityBase;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
-public class HeatAccumulatorTileEntity extends BlockEntity {
+import java.util.List;
+import java.util.Random;
 
-    private double heat = 22.5D;
+public class HeatAccumulatorTileEntity extends HeatBlockEntityBase implements BlockEntityTicker {
+
+
+    private HeatMaths heatMaths = new HeatMaths();
 
     public HeatAccumulatorTileEntity(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
@@ -21,37 +29,60 @@ public class HeatAccumulatorTileEntity extends BlockEntity {
         this(ModTileEntityTypes.HEAT_ACCUMULATOR_TILE_ENTITY.get(), pos, state);
     }
 
+    public HeatMaths getHeatMaths() {
+        return heatMaths;
+    }
+
+    public void setHeatMaths(HeatMaths heatMaths) {
+        this.heatMaths = heatMaths;
+    }
+
+
+    public Double HeatChange() {
+        return getHeatV() - 32D;
+    }
+
+
+
+
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    public void Activated(BlockState state, Level level, Player playerEntity, BlockPos pos) {
+        System.out.println(getHeatV());
+    }
+
+
+
+    public static void tickHeat(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity) {
+
+        HeatAccumulatorTileEntity heatAccumulatorTileEntity = (HeatAccumulatorTileEntity) pLevel.getBlockEntity(pPos);
+        if (heatAccumulatorTileEntity.getTickpassed() < 100 && heatAccumulatorTileEntity.getHeatMaths().getHeat(pLevel,pPos.below(),20,false) != heatAccumulatorTileEntity.getHeatV()) {
+            heatAccumulatorTileEntity.setTickpassed(heatAccumulatorTileEntity.getTickpassed() + 1);
+        } else {
+            heatAccumulatorTileEntity.setTickpassed(0);
+            heatAccumulatorTileEntity.setHeatV(heatAccumulatorTileEntity.getHeatMaths().getHeat(pLevel,pPos.below(),20,false));
+        }
+
+        if (heatAccumulatorTileEntity.getHeatV() - 15D > 60D) {
+            AABB heatbox = new AABB(pPos);
+            List<LivingEntity> nearestLivingEntity = pLevel.getEntitiesOfClass(LivingEntity.class, heatbox.inflate(1D));
+        for (LivingEntity livingEntity : nearestLivingEntity) {
+            livingEntity.hurt(DamageSource.ON_FIRE, 3);
+            if (heatAccumulatorTileEntity.getHeatV() - 15D >1200) {
+                livingEntity.setRemainingFireTicks(2);
+            }
+        }
+            if ((heatAccumulatorTileEntity.getHeatV() - 15) * 0.20D > 60D) {
+                AABB heatbox2 = new AABB(pPos);
+                List<LivingEntity> nearestLivingEntity2 = pLevel.getEntitiesOfClass(LivingEntity.class, heatbox2.inflate(2D));
+                for (LivingEntity livingEntity2 : nearestLivingEntity2) {
+                    livingEntity2.hurt(DamageSource.HOT_FLOOR, 1);
+                }
+            }
+        }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
-    }
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket(){
-        CompoundTag nbtTag = new CompoundTag();
-        saveAdditional(nbtTag);
-        return ClientboundBlockEntityDataPacket.create(this, (UwU) -> nbtTag);
-    }
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity) {
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
-        super.onDataPacket(net, pkt);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag nbtTag = new CompoundTag();
-        saveAdditional(nbtTag);
-        return nbtTag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        this.load(tag);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Random;
 
 public interface ITileEntityBase {
 
-    void Activated (BlockState state, Level level, Player playerEntity);
+    void Activated (BlockState state, Level level, Player playerEntity, BlockPos pos);
 
     void Ticking (BlockState state, ServerLevel serverLevel, BlockPos pos, Random random);
 

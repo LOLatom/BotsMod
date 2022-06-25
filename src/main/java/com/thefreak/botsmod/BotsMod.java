@@ -1,9 +1,15 @@
 package com.thefreak.botsmod;
 
+import com.deltateam.deltalib.API.rendering.shader.PostProcessingUtils;
+import com.deltateam.deltalib.accessors.ShaderAccessor;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.thefreak.botsmod.client.entity.render.PuffWormRender;
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.init.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.PostPass;
 import net.minecraft.client.renderer.RenderType;
 
 import net.minecraft.client.resources.model.ModelBakery;
@@ -19,8 +25,10 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 
 import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,6 +67,7 @@ public class BotsMod
     	BlockInitNew.BLOCKS.register(modEventBus);
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+        if (!FMLEnvironment.production) MinecraftForge.EVENT_BUS.addListener(this::tick);
     	ModEntityTypes.ENTITY.register(modEventBus);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerModel);
@@ -68,8 +77,27 @@ public class BotsMod
 
         instance = this;
         MinecraftForge.EVENT_BUS.register(this);
+
     }
-    
+    public static final RenderTarget glowTarget = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
+    public static final RenderTarget glowTargetSwap = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
+
+    public static void preRenderLevel() {
+
+        if (
+				glowTarget.width != Minecraft.getInstance().getWindow().getWidth() ||
+						glowTarget.height != Minecraft.getInstance().getWindow().getHeight()
+		) {
+			// TODO: check that this is actually the FBO size
+			glowTarget.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight(), Minecraft.ON_OSX);
+			glowTargetSwap.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight(), Minecraft.ON_OSX);
+		}
+        glowTarget.setClearColor(0, 0, 0, 0);
+		glowTarget.clear(Minecraft.ON_OSX);
+		glowTargetSwap.setClearColor(0, 0, 0, 0);
+		glowTargetSwap.clear(Minecraft.ON_OSX);
+    }
+
     public void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterEntity.setCustomAttributes().build());
@@ -129,8 +157,22 @@ public class BotsMod
     }
 
 
-
-
+    public void tick(TickEvent.ClientTickEvent event) {
+		if (event.phase == TickEvent.Phase.START) {
+			if (!PostProcessingUtils.hasPass(new ResourceLocation("deltalib:merge"))) {
+				PostPass shader;
+				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:glow"), new ResourceLocation("deltalib:blur"));
+				((ShaderAccessor) shader).addDepthTarget("VanillaDepth", Minecraft.getInstance().getMainRenderTarget());
+				((ShaderAccessor) shader).addDepthTarget("GlowDepth", glowTarget);
+				((ShaderAccessor) shader).setSourceBuffer(glowTarget);
+				((ShaderAccessor) shader).setTargetBuffer(glowTargetSwap);
+				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:merge"), new ResourceLocation("deltalib:draw"));
+				((ShaderAccessor) shader).addAuxTarget("glow", glowTargetSwap);
+				((ShaderAccessor) shader).addDepthTarget("GlowDepth", glowTarget);
+				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:blit"), new ResourceLocation("minecraft:blit"));
+			}
+		}
+    }
 
 
     @SubscribeEvent

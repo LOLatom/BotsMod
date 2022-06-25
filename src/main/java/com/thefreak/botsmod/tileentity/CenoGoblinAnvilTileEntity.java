@@ -59,7 +59,7 @@ public class CenoGoblinAnvilTileEntity extends BlockEntity implements ITileEntit
     }
 
     @Override
-    public void Activated(BlockState state, Level world, Player playerEntity) {
+    public void Activated(BlockState state, Level world, Player playerEntity, BlockPos pos) {
         if (!playerEntity.isCrouching()) {
             if (this.inventory.getStackInSlot(0) == ItemStack.EMPTY && !(playerEntity.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())) {
                 ItemStack stackcollected1 = playerEntity.getItemInHand(InteractionHand.MAIN_HAND).copy();
@@ -110,10 +110,10 @@ public class CenoGoblinAnvilTileEntity extends BlockEntity implements ITileEntit
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
-        super.onDataPacket(net, pkt);
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket pkt){
+        CompoundTag tag = pkt.getTag();
     }
+
 
     @Override
     public CompoundTag getUpdateTag() {

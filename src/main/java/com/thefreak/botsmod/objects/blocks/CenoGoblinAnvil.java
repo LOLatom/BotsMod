@@ -99,12 +99,13 @@ public class CenoGoblinAnvil extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult blockRayTraceResult) {
-        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity);
+        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity, pos);
         return super.use(state, world, pos, playerEntity, hand, blockRayTraceResult);
     }
 
     @Override
     public void tick(BlockState state, ServerLevel serverWorld, BlockPos pos, Random random) {
+        ((ITileEntityBase) serverWorld.getBlockEntity(pos)).Ticking(state,serverWorld,pos,new Random());
         super.tick(state, serverWorld, pos, random);
 
     }

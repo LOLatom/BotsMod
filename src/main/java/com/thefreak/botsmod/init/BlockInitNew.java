@@ -610,7 +610,7 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> POST_MORTAL_ALTAR = BLOCKS.register("post_mortal_altar", () -> new PostMortalAltar(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
 
-	public static final RegistryObject<Block> HEAT_ACCUMULATOR = BLOCKS.register("heat_accumulator", () -> new HeatAccumulatorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
+	public static final RegistryObject<Block> HEAT_ACCUMULATOR = BLOCKS.register("heat_accumulator", () -> new HeatAccumulatorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion().randomTicks()));
 
 	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BRICKS = BLOCKS.register("gold_bronze_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 

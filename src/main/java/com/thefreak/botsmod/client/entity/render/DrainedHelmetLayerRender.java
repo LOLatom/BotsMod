@@ -31,11 +31,13 @@ public class DrainedHelmetLayerRender extends GeoLayerRenderer {
         if (drainedEntity.hasHelmet()) {
             this.getRenderer().render(this.getEntityModel().getModel(MODEL), entityLivingBaseIn, partialTicks, cameo, matrixStackIn, bufferIn, bufferIn.getBuffer(cameo), packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
-        matrixStackIn.popPose();
-        render(matrixStackIn,bufferIn,packedLightIn,entityLivingBaseIn,limbSwing,limbSwingAmount,partialTicks,ageInTicks,netHeadYaw,headPitch);
+       matrixStackIn.popPose();
+        /*render(matrixStackIn,bufferIn,packedLightIn,entityLivingBaseIn,limbSwing,limbSwingAmount,partialTicks,ageInTicks,netHeadYaw,headPitch);
         BotsMod.glowTarget.bindRead();
         render(matrixStackIn,bufferIn,packedLightIn,entityLivingBaseIn,limbSwing,limbSwingAmount,partialTicks,ageInTicks,netHeadYaw,headPitch);
         BotsMod.glowTarget.unbindRead();
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
+        */
+
     }
 }

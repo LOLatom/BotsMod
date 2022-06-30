@@ -6,7 +6,6 @@ import com.thefreak.botsmod.API.Animation.IHandlePoseable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -49,7 +48,7 @@ public abstract class HeldItemLayerMixin<T extends LivingEntity, M extends Entit
        } else {
            if ( ((IHandlePoseable) p_117186_.getItem()).isItemAnimatedD(p_117185_.getUsedItemHand(),p_117186_, p_117185_)) {
                if(p_117185_ instanceof Player) {
-                   LocalPlayer clientPlayerEntity = (LocalPlayer) p_117185_;
+                   Player clientPlayerEntity = (Player) p_117185_;
                    p_117189_.pushPose();
                    this.getParentModel().translateToHand(p_117188_, p_117189_);
                    ((IHandlePoseable) p_117186_.getItem()).getItemPoser(p_117185_.getUsedItemHand(), p_117186_, p_117185_).accept(p_117189_, clientPlayerEntity);

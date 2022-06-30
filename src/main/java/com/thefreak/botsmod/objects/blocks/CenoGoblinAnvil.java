@@ -99,7 +99,7 @@ public class CenoGoblinAnvil extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult blockRayTraceResult) {
-        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity, pos);
+        ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity, pos, hand);
         return super.use(state, world, pos, playerEntity, hand, blockRayTraceResult);
     }
 

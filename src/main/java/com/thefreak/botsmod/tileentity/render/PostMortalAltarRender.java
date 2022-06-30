@@ -21,15 +21,7 @@ import javax.annotation.Nullable;
 public class PostMortalAltarRender extends GeoBlockRenderer<PostMortalAltarTileEntity> {
 
 
-    public PostMortalAltarRender(BlockEntityRendererProvider.Context rendererDispatcherIn, AnimatedGeoModel<PostMortalAltarTileEntity> modelProvider) {
-        super(rendererDispatcherIn, modelProvider);
+    public PostMortalAltarRender(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+        super(rendererDispatcherIn, new PostMortalAltarModel());
     }
-
-    @Override
-    public RenderType getRenderType(PostMortalAltarTileEntity animatable, float partialTicks, PoseStack stack,
-                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        return RenderType.entityTranslucent(getTextureLocation(animatable));
-    }
-
 }

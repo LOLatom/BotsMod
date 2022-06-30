@@ -59,7 +59,7 @@ public class CenoGoblinAnvilTileEntity extends BlockEntity implements ITileEntit
     }
 
     @Override
-    public void Activated(BlockState state, Level world, Player playerEntity, BlockPos pos) {
+    public void Activated(BlockState state, Level world, Player playerEntity, BlockPos pos, InteractionHand hand) {
         if (!playerEntity.isCrouching()) {
             if (this.inventory.getStackInSlot(0) == ItemStack.EMPTY && !(playerEntity.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())) {
                 ItemStack stackcollected1 = playerEntity.getItemInHand(InteractionHand.MAIN_HAND).copy();

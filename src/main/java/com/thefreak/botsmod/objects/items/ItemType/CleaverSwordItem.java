@@ -6,7 +6,6 @@ import com.mojang.math.Vector3f;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
 
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +28,7 @@ public class CleaverSwordItem extends SwordItem implements IHandlePoseable {
 
 
     @Override
-    public <T extends AbstractClientPlayer> BiConsumer<HumanoidModel, T> getLeftArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+    public <T extends Player> BiConsumer<HumanoidModel, T> getLeftArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
 
         Player playerEntity = (Player) livingEntity;
         if (this.isused == false) {
@@ -55,7 +54,7 @@ public class CleaverSwordItem extends SwordItem implements IHandlePoseable {
 
 
     @Override
-    public <T extends AbstractClientPlayer> BiConsumer<HumanoidModel, T> getRightArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+    public <T extends Player> BiConsumer<HumanoidModel, T> getRightArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
 
         Player playerEntity = (Player) livingEntity;
         if (this.isused == false) {
@@ -82,7 +81,7 @@ public class CleaverSwordItem extends SwordItem implements IHandlePoseable {
 
 
     @Override
-    public <T extends AbstractClientPlayer> BiConsumer<PoseStack, T> getItemPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+    public <T extends Player> BiConsumer<PoseStack, T> getItemPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
         return side == InteractionHand.MAIN_HAND ? ((matrixStack, t) -> {
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(-45.0F));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));

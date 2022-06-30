@@ -9,6 +9,7 @@ import com.thefreak.botsmod.objects.blocks.*;
 import com.thefreak.botsmod.objects.blocks.Decorative.BranchBlock;
 import com.thefreak.botsmod.objects.blocks.Decorative.TarTorch;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
+import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
 import com.thefreak.botsmod.objects.blocks.pumpkins.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;
@@ -611,6 +612,8 @@ public class BlockInitNew {
 	public static final RegistryObject<Block> POST_MORTAL_ALTAR = BLOCKS.register("post_mortal_altar", () -> new PostMortalAltar(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion()));
 
 	public static final RegistryObject<Block> HEAT_ACCUMULATOR = BLOCKS.register("heat_accumulator", () -> new HeatAccumulatorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion().randomTicks()));
+
+	public static final RegistryObject<Block> HEAT_CAPACITOR = BLOCKS.register("heat_capacitor", () -> new HeatCapacitorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion().randomTicks()));
 
 	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BRICKS = BLOCKS.register("gold_bronze_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 

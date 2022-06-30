@@ -4,6 +4,7 @@ import com.thefreak.botsmod.BotsMod;
 
 import com.thefreak.botsmod.tileentity.CenoGoblinAnvilTileEntity;
 import com.thefreak.botsmod.tileentity.HeatAccumulatorTileEntity;
+import com.thefreak.botsmod.tileentity.HeatCapacitorTileEntity;
 import com.thefreak.botsmod.tileentity.PostMortalAltarTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,5 +27,9 @@ public class ModTileEntityTypes {
 	public static final RegistryObject<BlockEntityType<HeatAccumulatorTileEntity>> HEAT_ACCUMULATOR_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("heat_accumulator", () -> BlockEntityType.Builder
 					.of(HeatAccumulatorTileEntity::new, BlockInitNew.HEAT_ACCUMULATOR.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<HeatCapacitorTileEntity>> HEAT_CAPACITOR_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("heat_capacitor", () -> BlockEntityType.Builder
+					.of(HeatCapacitorTileEntity::new, BlockInitNew.HEAT_CAPACITOR.get()).build(null));
 }
 

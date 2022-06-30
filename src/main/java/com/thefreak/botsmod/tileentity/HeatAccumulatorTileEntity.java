@@ -4,6 +4,8 @@ import com.thefreak.botsmod.init.ModTileEntityTypes;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatMaths;
 import com.thefreak.botsmod.tileentity.TileBases.HeatBlockEntityBase;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,10 +48,16 @@ public class HeatAccumulatorTileEntity extends HeatBlockEntityBase implements Bl
 
 
     @Override
-    public void Activated(BlockState state, Level level, Player playerEntity, BlockPos pos) {
-        System.out.println(getHeatV());
+    public void Activated(BlockState state, Level level, Player playerEntity, BlockPos pos, InteractionHand hand) {
+        if (level.isClientSide()) {
+            System.out.println(getHeatV());
+        }
     }
 
+    @Override
+    public void Ticking(BlockState state, ServerLevel serverLevel, BlockPos pos, Random random) {
+
+    }
 
 
     public static void tickHeat(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity) {

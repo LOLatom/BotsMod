@@ -3,10 +3,8 @@ package com.thefreak.botsmod.objects.blocks.HeatBlockMechanics;
 import com.thefreak.botsmod.API.TileEntity.ITileEntityBase;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
 import com.thefreak.botsmod.tileentity.HeatAccumulatorTileEntity;
-import com.thefreak.botsmod.tileentity.TileBases.HeatBlockEntityBase;
+import com.thefreak.botsmod.tileentity.HeatCapacitorTileEntity;
 import net.minecraft.core.BlockPos;
-
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,11 +19,9 @@ import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
 
-
-public class HeatAccumulatorBlock extends BaseEntityBlock{
-    public HeatAccumulatorBlock(Properties p_49795_) {
+public class HeatCapacitorBlock extends BaseEntityBlock{
+    public HeatCapacitorBlock(Properties p_49795_) {
         super(p_49795_);
     }
 
@@ -33,20 +29,20 @@ public class HeatAccumulatorBlock extends BaseEntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-       return ModTileEntityTypes.HEAT_ACCUMULATOR_TILE_ENTITY.get().create(pPos, pState);
+       return ModTileEntityTypes.HEAT_CAPACITOR_TILE_ENTITY.get().create(pPos, pState);
     }
 
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult blockRayTraceResult) {
         ((ITileEntityBase) world.getBlockEntity(pos)).Activated(state, world, playerEntity, pos, hand);
-        return super.use(state, world, pos, playerEntity, hand, blockRayTraceResult);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return pBlockEntityType == ModTileEntityTypes.HEAT_ACCUMULATOR_TILE_ENTITY.get() ? HeatAccumulatorTileEntity::tickHeat : null;
+        return pBlockEntityType == ModTileEntityTypes.HEAT_CAPACITOR_TILE_ENTITY.get() ? HeatCapacitorTileEntity::tickHeat : null;
     }
 
     @Override

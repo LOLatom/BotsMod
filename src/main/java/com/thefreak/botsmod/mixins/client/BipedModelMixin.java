@@ -6,7 +6,6 @@ import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -63,11 +62,11 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
             if (stack1.getItem() instanceof IHandlePoseable) {
 
 
-                ((IHandlePoseable) stack1.getItem()).getLeftArmPoser(off, stack1, livingEntity).accept((HumanoidModel) (Object) this, (AbstractClientPlayer) playerEntity);
+                ((IHandlePoseable) stack1.getItem()).getLeftArmPoser(off, stack1, livingEntity).accept((HumanoidModel) (Object) this, (Player) playerEntity);
 
             } else if (stack.getItem() instanceof IHandlePoseable) {
 
-                ((IHandlePoseable) stack.getItem()).getLeftArmPoser(main, stack, livingEntity).accept((HumanoidModel) (Object) this, (AbstractClientPlayer) playerEntity);
+                ((IHandlePoseable) stack.getItem()).getLeftArmPoser(main, stack, livingEntity).accept((HumanoidModel) (Object) this, (Player) playerEntity);
 
             }
         }
@@ -98,12 +97,12 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 
 
 
-                ((IHandlePoseable) stack1.getItem()).getRightArmPoser(off, stack1, livingEntity).accept((HumanoidModel) (Object) this, (AbstractClientPlayer) playerEntity);
+                ((IHandlePoseable) stack1.getItem()).getRightArmPoser(off, stack1, livingEntity).accept((HumanoidModel) (Object) this, (Player) playerEntity);
 
             } else if (stack.getItem() instanceof IHandlePoseable) {
 
 
-                ((IHandlePoseable) stack.getItem()).getRightArmPoser(main, stack, livingEntity).accept((HumanoidModel) (Object) this, (AbstractClientPlayer) playerEntity);
+                ((IHandlePoseable) stack.getItem()).getRightArmPoser(main, stack, livingEntity).accept((HumanoidModel) (Object) this, (Player) playerEntity);
 
             }
         }

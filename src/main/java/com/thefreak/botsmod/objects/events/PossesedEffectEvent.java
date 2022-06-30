@@ -1,6 +1,7 @@
 package com.thefreak.botsmod.objects.events;
 
 import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.entities.WanderingSpecterEntity;
 import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
@@ -54,7 +55,7 @@ public class PossesedEffectEvent {
     @SubscribeEvent
     public static void RenderWithPossesion(TickEvent.RenderTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        final AbstractClientPlayer playerEntity = mc.player;
+        final Player playerEntity = mc.player;
         if (playerEntity != null) {
             if (entityHasEffect((LivingEntity) playerEntity/*.getEntity()*/, EffectInitNew.POSSESION.get())) {
                     // TODO: check

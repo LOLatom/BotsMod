@@ -79,11 +79,11 @@ public class BotsMod
         MinecraftForge.EVENT_BUS.register(this);
 
     }
-    public static final RenderTarget glowTarget = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
-    public static final RenderTarget glowTargetSwap = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
+   // public static final RenderTarget glowTarget = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
+   // public static final RenderTarget glowTargetSwap = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
 
     public static void preRenderLevel() {
-
+/*
         if (
 				glowTarget.width != Minecraft.getInstance().getWindow().getWidth() ||
 						glowTarget.height != Minecraft.getInstance().getWindow().getHeight()
@@ -95,7 +95,7 @@ public class BotsMod
         glowTarget.setClearColor(0, 0, 0, 0);
 		glowTarget.clear(Minecraft.ON_OSX);
 		glowTargetSwap.setClearColor(0, 0, 0, 0);
-		glowTargetSwap.clear(Minecraft.ON_OSX);
+		glowTargetSwap.clear(Minecraft.ON_OSX);*/
     }
 
     public void registerEntityAttributes(EntityAttributeCreationEvent event) {
@@ -145,6 +145,7 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TAR_TORCH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.HEAT_ACCUMULATOR.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.HEAT_CAPACITOR.get(), RenderType.cutoutMipped());
 
         ForgeModelBakery.addSpecialModel(new ResourceLocation("botsmod:item/delta_crystal_shard_model"));
     }
@@ -158,7 +159,7 @@ public class BotsMod
 
 
     public void tick(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.START) {
+	/*	if (event.phase == TickEvent.Phase.START) {
 			if (!PostProcessingUtils.hasPass(new ResourceLocation("deltalib:merge"))) {
 				PostPass shader;
 				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:glow"), new ResourceLocation("deltalib:blur"));
@@ -171,7 +172,7 @@ public class BotsMod
 				((ShaderAccessor) shader).addDepthTarget("GlowDepth", glowTarget);
 				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:blit"), new ResourceLocation("minecraft:blit"));
 			}
-		}
+		}*/
     }
 
 

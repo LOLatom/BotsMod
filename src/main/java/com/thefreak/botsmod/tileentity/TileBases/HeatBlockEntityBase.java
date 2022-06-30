@@ -36,10 +36,12 @@ public abstract class HeatBlockEntityBase extends BlockEntity implements ITileEn
 
     public Double getHeatV() {
         return heat;
+
     }
 
     public void setHeatV(Double heat) {
         this.heat = heat;
+        setChanged();
     }
 
     @Override
@@ -81,13 +83,5 @@ public abstract class HeatBlockEntityBase extends BlockEntity implements ITileEn
     }
 
 
-    @Override
-    public void Activated(BlockState state, Level level, Player playerEntity, BlockPos pos) {
 
-    }
-
-    @Override
-    public void Ticking(BlockState state, ServerLevel serverLevel, BlockPos pos, Random random) {
-
-    }
 }

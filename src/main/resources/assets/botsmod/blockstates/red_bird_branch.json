@@ -1,0 +1,78 @@
+{
+    "variants": {
+        "facing=down,grow=0": {
+            "model": "botsmod:block/red_bird_branch"
+        },
+        "facing=east,grow=0": {
+            "model": "botsmod:block/red_bird_branch",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north,grow=0": {
+            "model": "botsmod:block/red_bird_branch",
+            "x": 90
+        },
+        "facing=south,grow=0": {
+            "model": "botsmod:block/red_bird_branch",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up,grow=0": {
+            "model": "botsmod:block/red_bird_branch"
+        },
+        "facing=west,grow=0": {
+            "model": "botsmod:block/red_bird_branch",
+            "x": 90,
+            "y": 270
+        },"facing=down,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1_up"
+        },
+        "facing=east,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1",
+            "x": 90
+        },
+        "facing=south,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1_up"
+        },
+        "facing=west,grow=1": {
+            "model": "botsmod:block/red_bird_branch_grow1",
+            "x": 90,
+            "y": 270
+        },"facing=down,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2_up"
+        },
+        "facing=east,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2",
+            "x": 90
+        },
+        "facing=south,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2_up"
+        },
+        "facing=west,grow=2": {
+            "model": "botsmod:block/red_bird_branch_grow2",
+            "x": 90,
+            "y": 270
+        }
+    }
+
+}

@@ -3,6 +3,7 @@ package com.thefreak.botsmod.mixins.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
+import com.thefreak.botsmod.ClassReferences;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
@@ -42,7 +43,8 @@ public abstract class HeldItemLayerMixin<T extends LivingEntity, M extends Entit
                p_117189_.mulPose(Vector3f.YP.rotationDegrees(180.0F));
                boolean flag = p_117188_ == HumanoidArm.LEFT;
                p_117189_.translate((double) ((float) (flag ? -1 : 1) / 16.0F), 0.125D, -0.625D);
-               Minecraft.getInstance().getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
+
+               ClassReferences.getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
                p_117189_.popPose();
            }
        } else {
@@ -53,7 +55,7 @@ public abstract class HeldItemLayerMixin<T extends LivingEntity, M extends Entit
                    this.getParentModel().translateToHand(p_117188_, p_117189_);
                    ((IHandlePoseable) p_117186_.getItem()).getItemPoser(p_117185_.getUsedItemHand(), p_117186_, p_117185_).accept(p_117189_, clientPlayerEntity);
                    boolean flag = p_117188_ == HumanoidArm.LEFT;
-                   Minecraft.getInstance().getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
+                   ClassReferences.getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
                    p_117189_.popPose();
                }
            } else {
@@ -64,7 +66,7 @@ public abstract class HeldItemLayerMixin<T extends LivingEntity, M extends Entit
                    p_117189_.mulPose(Vector3f.YP.rotationDegrees(180.0F));
                    boolean flag = p_117188_ == HumanoidArm.LEFT;
                    p_117189_.translate((double) ((float) (flag ? -1 : 1) / 16.0F), 0.125D, -0.625D);
-                   Minecraft.getInstance().getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
+                   ClassReferences.getItemInHandRenderer().renderItem(p_117185_, p_117186_, p_117187_, flag, p_117189_, p_117190_, p_117191_);
                    p_117189_.popPose();
                }
            }

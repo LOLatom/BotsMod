@@ -44,22 +44,5 @@ public class PinkPurifiedSalt extends Item {
         return super.finishUsingItem(stack, world, entityLiving);
     }
 
-    @Override
-    public boolean hasCustomEntity(ItemStack stack) {
-        return true;
-    }
-
-
-
-    public PinkPurifiedSaltItemEntity createEntity(Level world, Entity location, ItemStack itemstack)
-    {
-        return new PinkPurifiedSaltItemEntity(world, location.getX(), location.getY(), location.getZ(), itemstack) {
-            @Override
-            public boolean hasPickUpDelay() {
-                return true;
-            }
-
-        };
-    }
 
 }

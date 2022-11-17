@@ -1,9 +1,8 @@
 package com.thefreak.botsmod.entities;
 
-import com.thefreak.botsmod.init.ItemInit;
-import com.thefreak.botsmod.init.ItemInitNew;
+import com.thefreak.botsmod.init.iteminit.FoodItemInit;
+import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
-import net.minecraft.advancements.critereon.PlayerHurtEntityTrigger;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -136,7 +135,7 @@ public class TippyLizardEntity extends PathfinderMob implements IAnimatable {
 
     @Override
     public InteractionResult interactAt(Player playerEntity, Vec3 vector3d, InteractionHand hand) {
-        if (playerEntity.getItemInHand(hand).getItem() == ItemInitNew.YELLOW_CANDY.get()) {
+        if (playerEntity.getItemInHand(hand).getItem() == FoodItemInit.YELLOW_CANDY.get()) {
             this.entityData.set(VARIENT, "gecko1");
             System.out.println(TippyLizardEntity.this.entityData.get(VARIENT));
         }
@@ -144,7 +143,7 @@ public class TippyLizardEntity extends PathfinderMob implements IAnimatable {
             this.entityData.set(VARIENT, "devil1");
             System.out.println(TippyLizardEntity.this.entityData.get(VARIENT));
         }
-        if (playerEntity.getItemInHand(hand).getItem() == ItemInitNew.BLUE_CANDY.get()) {
+        if (playerEntity.getItemInHand(hand).getItem() == FoodItemInit.BLUE_CANDY.get()) {
             this.entityData.set(VARIENT, "b1");
             System.out.println(TippyLizardEntity.this.entityData.get(VARIENT));
         }

@@ -21,7 +21,7 @@ public class WhereDoIReferenceClientLevel {
                         outputStream.close();
                         outputStream.flush();
                         reader.close();
-                        if (str.contains("LocalPlayer")) System.out.println(listFile);
+                        if (str.contains("Minecraft.getInstance")) System.out.println(listFile);
                     }
                 }
             }

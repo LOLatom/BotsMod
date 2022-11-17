@@ -2,12 +2,13 @@ package com.thefreak.botsmod.API.EffectRender;
 
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
+
 
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.TriConsumer;
 
 public interface IEffectSpecialRenderings {
@@ -36,8 +37,8 @@ public interface IEffectSpecialRenderings {
     //Toggle !Show Effect Icon
     default boolean showEffectIcon(MobEffectInstance MobEffectInstance) {return true;}
 
-    default TriConsumer<PoseStack, MobEffectInstance, Minecraft> addAdditionalToRender(PoseStack matrixStack, int i, int j, MobEffectInstance MobEffectInstances, MobEffect focusedEffect) {
-        return (matrixStack1,MobEffectInstance, minecraft) ->{};
+    default BiConsumer<PoseStack, MobEffectInstance> addAdditionalToRender(PoseStack matrixStack, int i, int j, MobEffectInstance MobEffectInstances, MobEffect focusedEffect) {
+        return (matrixStack1,MobEffectInstance) ->{};
     }
 
     default boolean hasCustomIconBackground(MobEffectInstance MobEffectInstance)

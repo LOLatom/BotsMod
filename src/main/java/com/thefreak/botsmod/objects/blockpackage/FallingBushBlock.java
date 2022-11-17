@@ -20,7 +20,7 @@ public class FallingBushBlock extends Block implements net.minecraftforge.common
 
     protected boolean isValidGround(BlockState state, BlockGetter worldIn, BlockPos pos) {
         Block block = state.getBlock();
-        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND || block == BlockInitNew.MOGROVE_GRASS_BLOCK.get() || block == BlockInitNew.MOGROVE_DIRT.get() || block == BlockInitNew.MOGROVE_ROCK.get() || block == BlockInitNew.MOGROVE_GRASS_BLOCK_FULL.get() || block == BlockInitNew.MOGROVE_WOOD.get();
+        return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
     }
 
 

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "botsmod:blocks/medusa_grove_log_top",
+        "side": "botsmod:blocks/medusa_grove_log_side"
+    }
+}

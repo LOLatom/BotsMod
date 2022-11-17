@@ -1,0 +1,40 @@
+{
+    "variants": {
+        "facing=down,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=east,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=north,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=south,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=up,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=west,age=0": {
+            "model": "botsmod:block/luxure_melon"
+        },
+        "facing=down,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        },
+        "facing=east,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        },
+        "facing=north,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        },
+        "facing=south,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        },
+        "facing=up,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        },
+        "facing=west,age=1": {
+            "model": "botsmod:block/luxure_melon_grown"
+        }
+    }
+}

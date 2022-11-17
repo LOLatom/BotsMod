@@ -8,7 +8,9 @@
     "client.BipedModelMixin",
     "client.HeldItemLayerMixin",
     "client.IngameGuiMixin",
-    "client.DisplayEffectsScreenMixin"
+    "client.DisplayEffectsScreenMixin",
+    "client.ScreenMixin",
+    "client.HumanoidRendererMixin"
   ],
   "mixins": [
     "server.LivingEntityMixin"

@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/brown_insomnian_mushroom",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/brown_insomnian_mushroom",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/brown_insomnian_mushroom",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/brown_insomnian_mushroom",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/brown_insomnian_mushroom"
+        },
+        "facing=west": {
+            "model": "botsmod:block/brown_insomnian_mushroom",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

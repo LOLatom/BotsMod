@@ -1,21 +1,14 @@
 package com.thefreak.botsmod;
 
-import com.deltateam.deltalib.API.rendering.shader.PostProcessingUtils;
-import com.deltateam.deltalib.accessors.ShaderAccessor;
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.pipeline.TextureTarget;
-import com.thefreak.botsmod.client.entity.render.PuffWormRender;
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.init.*;
-import net.minecraft.client.Minecraft;
+import com.thefreak.botsmod.init.blockinit.NoItemBlockInit;
+import com.thefreak.botsmod.init.iteminit.FoodItemInit;
+import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.PostPass;
 import net.minecraft.client.renderer.RenderType;
 
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -24,7 +17,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 
 import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -42,7 +34,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -58,13 +49,16 @@ public class BotsMod
     public static final String MOD_ID = "botsmod";
     public static BotsMod instance;
 
+
     public BotsMod() {
     	final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	modEventBus.addListener(this::registerEntityAttributes);
     	modEventBus.addListener(this::doClientStuff);
         EffectInitNew.EFFECTS.register(modEventBus);
         ItemInitNew.ITEMS.register(modEventBus);
+        FoodItemInit.ITEMS.register(modEventBus);
     	BlockInitNew.BLOCKS.register(modEventBus);
+        NoItemBlockInit.BLOCKS.register(modEventBus);
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
         if (!FMLEnvironment.production) MinecraftForge.EVENT_BUS.addListener(this::tick);
@@ -72,7 +66,9 @@ public class BotsMod
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerModel);
         });
-    	
+
+
+
 
 
         instance = this;
@@ -81,6 +77,9 @@ public class BotsMod
     }
    // public static final RenderTarget glowTarget = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
    // public static final RenderTarget glowTargetSwap = new TextureTarget(1, 1, true, Minecraft.ON_OSX);
+
+
+
 
     public static void preRenderLevel() {
 /*
@@ -99,34 +98,19 @@ public class BotsMod
     }
 
     public void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntityTypes.GIANT_TARDIGRADE.get(), GiantTardigradeEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.WANDERING_SPECTER.get(), WanderingSpecterEntity.setCustomAttributes().build());
-        event.put(ModEntityTypes.BANSHEE_SCREAM.get(), BansheeScreamEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.LADYBUG.get(), LadybugEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.TIPPY_LIZARD.get(), TippyLizardEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.PUFF_WORM.get(), PuffWormEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.DRAINED.get(), DrainedEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefEntity.setCustomAttributes().build());
+        event.put(ModEntityTypes.WICKED_ONE.get(), WickedOne.createAttributes().build());
+        event.put(ModEntityTypes.KRASIA.get(), KrasiaEntity.createAttributes().build());
+        event.put(ModEntityTypes.CAVE_ANGELIA_GUPPIE.get(), CaveAngeliaGuppie.createAttributes().build());
+
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MOGROVE_BUBBLE_MUSHROOM.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORE_PAD.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MOGROVE_BUSH.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.BRONZE_ALLOY_CRYSTAL.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_SPIKY_LONGUS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_SPIKY_LONGUS_PLANT.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_MOSS_GRASS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_MANGROVE_BULB.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_MANGROVE_TREE_VINES_TOP.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPORIAN_MANGROVE_TREE_VINES.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MUD_REED.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MUD_REED_LEAVES.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MUD_REED_PLANKS.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPROUTED_MUD.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.LONG_SPROUTED_MUD.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TUBER_BUSH.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TUBER_CROP.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MOLDENWOOD_DOOR.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.AUTUMN_TREE_LEAVES.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.PEPON_FRUIT.get(), RenderType.cutoutMipped());
@@ -146,13 +130,30 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.HEAT_ACCUMULATOR.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.HEAT_CAPACITOR.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MEDUSA_GROVE_FLOWER.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.MEDUSA_GROVE_LEAVES.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.LOG_MUSHROOM.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.BROWN_INSOMNIAN_MUSHROOM.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.LUXIOUS_PINK_MUSHROOM.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWY_NUT_MUSHROOM.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.LIVER_LOG_BUSH.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.RED_BIRD_GROWTH.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.RED_BIRD_BRANCH.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.FLESH_COLUMN.get(), RenderType.cutoutMipped());
+
+
+
 
         ForgeModelBakery.addSpecialModel(new ResourceLocation("botsmod:item/delta_crystal_shard_model"));
     }
 
+
     public void registerModel(ModelRegistryEvent event) {
 
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model"));
+        ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/banhir_head_model"));
+        ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/banhir_head_item_model"));
+        ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/banhir_head_model_glow"));
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_glow"));
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_part"));
     }
@@ -201,7 +202,7 @@ public class BotsMod
     	@Override
     	public ItemStack makeIcon()
     	{
-    		return new ItemStack(BlockInitNew.BRONZE_ALLOY_BRICKS.get());
+    		return new ItemStack(BlockInitNew.OXYNE_ROCK_BRICKS.get());
     	}
     }
 
@@ -216,8 +217,13 @@ public class BotsMod
         @Override
         public ItemStack makeIcon()
         {
-            return new ItemStack(ItemInitNew.PINK_PURIFIED_SALT.get());
+            return new ItemStack(FoodItemInit.PINK_PURIFIED_SALT.get());
         }
+    }
+
+
+    public static BotsMod getInstance() {
+        return instance;
     }
 
 }

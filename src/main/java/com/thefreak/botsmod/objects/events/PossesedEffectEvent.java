@@ -8,7 +8,6 @@ import com.thefreak.botsmod.init.ModEntityTypes;
 import com.thefreak.botsmod.util.AI.AttackWhenPossesedGoal;
 import com.thefreak.botsmod.util.AI.TargetNearestWhenPossesed;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,11 +17,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -54,8 +50,7 @@ public class PossesedEffectEvent {
 
     @SubscribeEvent
     public static void RenderWithPossesion(TickEvent.RenderTickEvent event) {
-        Minecraft mc = Minecraft.getInstance();
-        final Player playerEntity = mc.player;
+        final Player playerEntity = ClassReferences.getPlayer();
         if (playerEntity != null) {
             if (entityHasEffect((LivingEntity) playerEntity/*.getEntity()*/, EffectInitNew.POSSESION.get())) {
                     // TODO: check
@@ -76,12 +71,10 @@ public class PossesedEffectEvent {
 
     @SubscribeEvent
     public static void T(LivingDeathEvent event) {
-        System.out.println("DIED !");
         LivingEntity livingEntity = event.getEntityLiving();
         Entity entity = event.getEntity();
         BlockPos pos = entity.blockPosition();
         Level world = livingEntity.getCommandSenderWorld();
-        boolean isInstanceOfPlayer = livingEntity/*.getEntity()*/ instanceof Player;
 
         if (entityHasEffect(livingEntity, EffectInitNew.POSSESION.get())) {
             WanderingSpecterEntity wanderingSpecterEntity = ModEntityTypes.WANDERING_SPECTER.get().create(world);

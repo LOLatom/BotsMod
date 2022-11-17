@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "down": "botsmod:blocks/medusa_grove_tatchlog_bottom",
+        "up": "botsmod:blocks/medusa_grove_log_top",
+        "side": "botsmod:blocks/medusa_grove_tatchlog_side"
+    }
+}

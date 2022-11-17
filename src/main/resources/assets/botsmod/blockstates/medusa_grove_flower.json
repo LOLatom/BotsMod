@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/medusa_grove_flower",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/medusa_grove_flower",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/medusa_grove_flower",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/medusa_grove_flower",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/medusa_grove_flower"
+        },
+        "facing=west": {
+            "model": "botsmod:block/medusa_grove_flower",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

@@ -1,27 +1,16 @@
 package com.thefreak.botsmod.entities;
 
-import com.thefreak.botsmod.init.ItemInitNew;
-import com.thefreak.botsmod.init.ModEntityTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.stats.Stats;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.FluidAttributes;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class PinkPurifiedSaltItemEntity extends ItemEntity {
@@ -91,7 +80,6 @@ public class PinkPurifiedSaltItemEntity extends ItemEntity {
 
             }else {
 
-                this.spawnAtLocation(ItemInitNew.SALTED_ARROW.get());
                 arrowEntity.remove(RemovalReason.CHANGED_DIMENSION);
                 this.remove(RemovalReason.CHANGED_DIMENSION);
             }

@@ -1,0 +1,75 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.cave_angelia_guppie.swim": {
+			"loop": true,
+			"bones": {
+				"Body": {
+					"rotation": {
+						"vector": [0, "math.cos(query.anim_time * 100) *10", 0]
+					}
+				},
+				"RightFin": {
+					"rotation": {
+						"vector": [-5, 0, 40]
+					}
+				},
+				"LeftFin": {
+					"rotation": {
+						"vector": [-5, 0, -40]
+					}
+				},
+				"Dorsal": {
+					"rotation": {
+						"vector": [7.5, 0, 0]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": [0, "-math.cos(query.anim_time * 100) *10", 0]
+					}
+				},
+				"LeftWhiskers": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) * 10"]
+					}
+				},
+				"RightWhiskers": {
+					"rotation": {
+						"vector": [0, 0, "math.cos(query.anim_time * 100) * 10"]
+					}
+				},
+				"Tail": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 100) *20", 0]
+					}
+				},
+				"SecondJunction": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 100) *20", 0]
+					}
+				},
+				"ThirdJunction": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 100) *20", 0]
+					}
+				}
+			}
+		},
+		"animation.cave_angelia_guppie.idle": {
+			"loop": true,
+			"bones": {
+				"RightFin": {
+					"rotation": {
+						"vector": [0, 0, "17.5 + math.sin(query.anim_time * 100) * 10"]
+					}
+				},
+				"LeftFin": {
+					"rotation": {
+						"vector": [0, 0, "-17.5 - math.sin(query.anim_time * 100) * 10"]
+					}
+				}
+			}
+		}
+	}
+}

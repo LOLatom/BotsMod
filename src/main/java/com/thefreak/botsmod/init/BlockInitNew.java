@@ -1,6 +1,9 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.objectpackage.blocktypes.GrowingBranchBlock;
+import com.thefreak.botsmod.objectpackage.blocktypes.LogBlock;
+import com.thefreak.botsmod.objectpackage.blocktypes.LogPlantBlock;
 import com.thefreak.botsmod.objects.blockpackage.ConnectedTexturePillar;
 import com.thefreak.botsmod.objects.blockpackage.ConnectedWoodBeam;
 import com.thefreak.botsmod.objects.blockpackage.SustainablePlantType;
@@ -8,8 +11,12 @@ import com.thefreak.botsmod.objects.blocks.*;
 
 import com.thefreak.botsmod.objects.blocks.Decorative.BranchBlock;
 import com.thefreak.botsmod.objects.blocks.Decorative.TarTorch;
+import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.CookingPotBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
+import com.thefreak.botsmod.objects.blocks.plants.LogMushroom;
+import com.thefreak.botsmod.objects.blocks.plants.MedusaGroveFlower;
+import com.thefreak.botsmod.objects.blocks.plants.RedBirdBranchBlock;
 import com.thefreak.botsmod.objects.blocks.pumpkins.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.*;
@@ -26,204 +33,6 @@ public class BlockInitNew {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BotsMod.MOD_ID);
 
 	public static final RegistryObject<Block> JADE_BLOCK = BLOCKS.register("jade_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.STONE).strength(3F, 6F)));
-
-	public static final RegistryObject<Block> MOGROVE_ROCK = BLOCKS.register("mogrove_rock", () -> new SustainablePlantType(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> DRIPPING_MOGROVE_ROCK = BLOCKS.register("dripping_mogrove_rock", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_ROCK_NEST = BLOCKS.register("mogrove_rock_nest", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_ROCK_NEST_NECTAR_FULL = BLOCKS.register("mogrove_rock_nest_nectar_full", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.SLIME_BLOCK).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_ROCK_NEST_BUILD = BLOCKS.register("mogrove_rock_nest_build", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_DIRT = BLOCKS.register("mogrove_dirt", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.GRAVEL).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_WOOD = BLOCKS.register("mogrove_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_STRIPPED_WOOD = BLOCKS.register("mogrove_stripped_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_GRASS_BLOCK = BLOCKS.register("mogrove_grass_block", () -> new SustainablePlantType(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.SLIME_BLOCK).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_GRASS_BLOCK_FULL = BLOCKS.register("mogrove_grass_block_full", () -> new SustainablePlantType(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.SLIME_BLOCK).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_WOOD_PLANKS = BLOCKS.register("mogrove_wood_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOGROVE_MUSHROOM = BLOCKS.register("mogrove_mushroom", () -> new MogroveRoofMushrooms(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.WET_GRASS).strength(0.2F, 0.3F).randomTicks()));
-
-	public static final RegistryObject<Block> MOGORVE_NUT_MUSHROOM = BLOCKS.register("mogrove_nut_mushroom", () -> new MogroveNutMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.WET_GRASS).strength(0.2F, 0.2F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> MOGROVE_BUBBLE_MUSHROOM = BLOCKS.register("mogrove_bubble_mushroom", () -> new MogroveBubbleMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BAMBOO).strength(2F, 2F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> SPORE_BULB = BLOCKS.register("spore_bulb", () -> new SporeBulb(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.CORAL_BLOCK).strength(2F, 0.5F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> SPORE_PAD = BLOCKS.register("spore_pad", () -> new SporePad(BlockBehaviour.Properties.of(Material.GRASS).strength(0.2F, 0.2F).noOcclusion()));
-
-	public static final RegistryObject<Block> MOGROVE_BUSH = BLOCKS.register("mogrove_bush", () -> new MogroveBush(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).strength(0.3F, 0.3F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> RAW_ANCIENT_POTTERY_POT = BLOCKS.register("raw_ancient_pottery_pot", () -> new RawAncientPotteryPot(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(1.5F, 2F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> ANCIENT_POTTERY_POT = BLOCKS.register("ancient_pottery_pot", () -> new RawAncientPotteryPot(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.GLASS).strength(1.5F, 2F).noOcclusion()));
-
-	public static final RegistryObject<Block> RAW_ANCIENT_POTTERY_URN = BLOCKS.register("raw_ancient_pottery_urn", () -> new AncientUrnRaw(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(1.5F, 2F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> ANCIENT_POTTERY_URN = BLOCKS.register("ancient_pottery_urn", () -> new AncientUrnCooked(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.GLASS).strength(1.5F, 2F).noOcclusion()));
-
-	public static final RegistryObject<Block> ANCIENT_BRICKS = BLOCKS.register("ancient_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> ANCIENT_PILLAR = BLOCKS.register("ancient_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> CRACKED_ANCIENT_BRICKS = BLOCKS.register("cracked_ancient_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> MOSSY_ANCIENT_BRICKS = BLOCKS.register("mossy_ancient_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> TRAPPED_ANCIENT_BRICKS = BLOCKS.register("trapped_ancient_bricks", () -> new TrappedAncientBricks(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F).randomTicks()));
-
-	public static final RegistryObject<Block> ANCIENT_SMOOTH_BRICKS = BLOCKS.register("ancient_smooth_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> ANCIENT_SMOOTH_PILLAR = BLOCKS.register("ancient_smooth_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> ANCIENT_CHISELED_SMOOTH_BRICKS = BLOCKS.register("ancient_chiseled_smooth_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.STONE).strength(2F, 4F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_CHUNK = BLOCKS.register("bronze_alloy_chunk", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.5F, 5.5F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_BRICKS = BLOCKS.register("bronze_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.5F, 7.5F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_CHISELED_BRICKS = BLOCKS.register("bronze_alloy_chiseled_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.5F, 7.5F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_BRICKS_HORIZONTAL = BLOCKS.register("bronze_alloy_bricks_horizontal", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.5F, 7.5F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_BLOCK = BLOCKS.register("bronze_alloy_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.5F, 7.5F)));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_CRYSTAL = BLOCKS.register("bronze_alloy_crystal", () -> new BronzeAlloyCrystal(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.5F, 7.5F).randomTicks()));
-
-	public static final RegistryObject<Block> BRONZE_ALLOY_CHUNK_CRACKED = BLOCKS.register("bronze_alloy_chunk_cracked", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.5F, 5.5F).randomTicks()));
-
-	public static final RegistryObject<Block> LAVA_ROCK_ALLOY = BLOCKS.register("lava_rock_alloy", () -> new LavaRockAlloy(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.5F, 0.5F)));
-
-	public static final RegistryObject<Block> LAVA_ROCK_ALLOY_BRICKS = BLOCKS.register("lava_rock_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(2.5F, 2F)));
-
-	public static final RegistryObject<Block> LAVA_ROCK_ALLOY_PILLAR = BLOCKS.register("lava_rock_alloy_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.5F, 0.5F)));
-
-	public static final RegistryObject<Block> COAL_LAVA_ROCK_ALLOY = BLOCKS.register("coal_lava_rock_alloy", () -> new CoalLavaRockAlloy(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> POLISHED_LAVA_ROCK_ALLOY = BLOCKS.register("polished_lava_rock_alloy", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> CHISELED_LAVA_ROCK_ALLOY = BLOCKS.register("chiseled_lava_rock_alloy", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> CHISELED_LAVA_ROCK_ALLOY_BRICKS = BLOCKS.register("chiseled_lava_rock_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F)));
-
-	public static final RegistryObject<Block> CHISELED_POLISHED_LAVA_ROCK_ALLOY = BLOCKS.register("chiseled_polished_lava_rock_alloy", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F)));
-
-	public static final RegistryObject<Block> POLISHED_LAVA_ROCK_ALLOY_PILLAR = BLOCKS.register("polished_lava_rock_alloy_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F)));
-
-	public static final RegistryObject<Block> LAVA_ROCK_ALLOY_DIRT = BLOCKS.register("lava_rock_alloy_dirt", () -> new LavaRockAlloyDirt(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.SAND).strength(1F, 0.6F)));
-
-	public static final RegistryObject<Block> COAL_LAVA_ROCK_ALLOY_DIRT = BLOCKS.register("coal_lava_rock_alloy_dirt", () -> new CoalLavaRockAlloyDirt(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.SAND).strength(1F, 0.6F)));
-
-	public static final RegistryObject<Block> COAL_LAVA_ROCK_ALLOY_PILLAR = BLOCKS.register("coal_lava_rock_alloy_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1F, 0.6F)));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_LOG = BLOCKS.register("sporian_mangrove_tree_log", () -> new SporianMangroveTreeLog(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F, 3.0F)));
-
-	public static final RegistryObject<Block> STRIPPED_SPORIAN_MANGROVE_TREE_LOG = BLOCKS.register("stripped_sporian_mangrove_tree_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F, 3.0F)));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_PLANKS = BLOCKS.register("sporian_mangrove_tree_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F, 3.0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_SPIKY_LONGUS = BLOCKS.register("sporian_spiky_longus", () -> new SporianSpikyLongusTop(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).noCollission().strength(0F, 0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_SPIKY_LONGUS_PLANT = BLOCKS.register("sporian_spiky_longus_plant", () -> new SporianSpikyLongusPlant(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).noCollission().strength(0F, 0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_DANDELION = BLOCKS.register("sporian_dandelion", () -> new SporianDandelion(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).noCollission().strength(0F, 0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MOSS_GRASS = BLOCKS.register("sporian_moss_grass", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_BULB = BLOCKS.register("sporian_mangrove_bulb", () -> new SporianMangroveBulb(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.BASALT).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_ROOT = BLOCKS.register("sporian_mangrove_tree_root", () -> new SporianMangroveTreeRoot(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_ROOT_TOP = BLOCKS.register("sporian_mangrove_tree_root_top", () -> new SporianMangroveTreeRootTop(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(1.7F, 0.6F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_VINES_TOP = BLOCKS.register("sporian_mangrove_tree_vines_top", () -> new SporianMangroveTreeVinesTop(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).noCollission().strength(0F, 0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_VINES = BLOCKS.register("sporian_mangrove_tree_vines", () -> new SporianMangroveTreeVines(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).noCollission().strength(0F, 0F).randomTicks()));
-
-	public static final RegistryObject<Block> SPORIAN_MANGROVE_TREE_LEAVES = BLOCKS.register("sporian_mangrove_tree_leaves", () -> new SporianMangroveTreeLeaves(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.GRASS).strength(1.0F, 1.0F)));
-
-	public static final RegistryObject<Block> WET_MUD_BLOCK1 = BLOCKS.register("wet_mud_block1", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> WET_MUD_BLOCK2 = BLOCKS.register("wet_mud_block2", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> WET_MUD_BLOCK2_GLIDED = BLOCKS.register("wet_mud_block2_glided", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> WET_MUD_BLOCK2_BRICKS = BLOCKS.register("wet_mud_block2_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> CHISELED_WET_MUD_BLOCK2 = BLOCKS.register("chiseled_wet_mud_block2", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> POLISHED_WET_MUD_BLOCK2 = BLOCKS.register("polished_wet_mud_block2", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> DOUBLED_WET_MUD_BLOCK2 = BLOCKS.register("doubled_wet_mud_block2", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> WET_MUD_BLOCK2_PILLAR = BLOCKS.register("wet_mud_block2_pillar", () -> new ConnectedTexturePillar(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> DRY_MUD_BLOCK1 = BLOCKS.register("dry_mud_block1", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> DRY_MUD_BLOCK1_GLIDED = BLOCKS.register("dry_mud_block1_glided", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> CHISELED_DRY_MUD_BLOCK1 = BLOCKS.register("chiseled_dry_mud_block1", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> DRY_MUD_BLOCK1_BRICKS = BLOCKS.register("dry_mud_block1_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> DRY_MUD_BLOCK1_TILE = BLOCKS.register("dry_mud_block1_tile", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> FRAMED_DRY_MUD_BLOCK1_TILE = BLOCKS.register("framed_dry_mud_block1_tile", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> POLISHED_DRY_MUD_BLOCK1_TILE = BLOCKS.register("polished_dry_mud_block1_tile", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> CHISELED_DRY_MUD_BLOCK1_TILE = BLOCKS.register("chiseled_dry_mud_block1_tile", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-			public static final RegistryObject<Block> DRY_MUD_BLOCK1_PILLAR = BLOCKS.register("dry_mud_block1_pillar", () -> new ConnectedTexturePillar(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> DRY_MUD_BLOCK2 = BLOCKS.register("dry_mud_block2", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> DRY_MUD_BLOCK3 = BLOCKS.register("dry_mud_block3", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> DRY_MUD_BLOCK4 = BLOCKS.register("dry_mud_block4", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(4f, 1.0f)));
-
-	public static final RegistryObject<Block> MUD_REED = BLOCKS.register("mud_reed", () -> new MudReeds(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.BAMBOO).strength(2F, 1F).randomTicks()));
-
-    public static final RegistryObject<Block> MUD_REED_LEAVES = BLOCKS.register("mud_reed_leaves", () -> new Block(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.GRASS).strength(0.5F, 0F).noOcclusion()));
-
-    public static final RegistryObject<Block> MUD_REED_PLANKS = BLOCKS.register("mud_reed_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F, 1F).noOcclusion()));
-
-	public static final RegistryObject<Block> MUD_REED_PLANKS_SLAB = BLOCKS.register("mud_reed_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(MUD_REED_PLANKS.get())));
-
-	public static final RegistryObject<Block> MUD_REED_PLANKS_STAIRS = BLOCKS.register("mud_reed_stairs", () -> new StairBlock(MUD_REED_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(MUD_REED_PLANKS.get())));
-
-	public static final RegistryObject<Block> MUD_REED_DOOR = BLOCKS.register("mud_reed_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F, 1F).noOcclusion()));
-
-	public static final RegistryObject<Block> MUD_REED_TRAPDOOR = BLOCKS.register("mud_reed_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F, 1F).noOcclusion()));
-
-	public static final RegistryObject<Block> MUD_REED_EMPTY_BOOKSHELF = BLOCKS.register("mud_reed_empty_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F, 1F).noOcclusion()));
-
-	public static final RegistryObject<Block> MUD_REED_BOOKSHELF = BLOCKS.register("mud_reed_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F, 1F).noOcclusion()));
-
-	public static final RegistryObject<Block> CATTAIL = BLOCKS.register("cattail", () -> new Cattail(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).sound(SoundType.GRASS).strength(0F, 0F).noOcclusion().noCollission()));
-
-	public static final RegistryObject<Block> SPROUTED_MUD = BLOCKS.register("sprouted_mud", () -> new SproutedMud(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(2F, 0.5F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> LONG_SPROUTED_MUD = BLOCKS.register("long_sprouted_mud", () -> new LongSproutedMud(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(2F, 0.5F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> TRUFFLE_BLOCK = BLOCKS.register("truffle_block", () -> new Truffle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).sound(SoundType.GRASS).strength(0.25F, 0F).noOcclusion()));
-
-	public static final RegistryObject<Block> TUBER_CROP = BLOCKS.register("tuber_crop", () -> new TuberCrop(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).sound(SoundType.GRASS).strength(0.25F, 0F).noOcclusion().noCollission().randomTicks()));
-
-	public static final RegistryObject<Block> TUBER_BUSH = BLOCKS.register("tuber_bush", () -> new TuberBush(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).sound(SoundType.GRASS).strength(0.25F, 0F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> TUBER_LOG = BLOCKS.register("tuber_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 0.5F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> STRIPPED_TUBER_LOG = BLOCKS.register("stripped_tuber_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 0.5F).noOcclusion().randomTicks()));
-
-	public static final RegistryObject<Block> TUBER_PLANKS = BLOCKS.register("tuber_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2F, 0.5F).noOcclusion().randomTicks()));
 
 	public static final RegistryObject<Block> LIMESTONE = BLOCKS.register("limestone", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(1.5F, 6.0F)));
 
@@ -615,11 +424,41 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> HEAT_CAPACITOR = BLOCKS.register("heat_capacitor", () -> new HeatCapacitorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion().randomTicks()));
 
+	public static final RegistryObject<Block> COOKING_POT = BLOCKS.register("cooking_pot", () -> new CookingPotBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE).noOcclusion().randomTicks()));
+
 	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BRICKS = BLOCKS.register("gold_bronze_alloy_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 
 	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_VERTICAL_BRICKS = BLOCKS.register("gold_bronze_alloy_vertical_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
 
 	public static final RegistryObject<Block> GOLD_BRONZE_ALLOY_BLOCK = BLOCKS.register("gold_bronze_alloy_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_LOG  = BLOCKS.register("medusa_grove_log", () -> new LogBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_FLOWER = BLOCKS.register("medusa_grove_flower", () -> new MedusaGroveFlower(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission().randomTicks(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_LEAVES = BLOCKS.register("medusa_grove_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).sound(SoundType.VINE).noOcclusion()));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_ROOTS  = BLOCKS.register("medusa_grove_roots", () -> new LogBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_TATCHLOG = BLOCKS.register("medusa_grove_tatchlog", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.STONE)));
+
+	public static final RegistryObject<Block> LOG_MUSHROOM = BLOCKS.register("log_mushroom", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> BROWN_INSOMNIAN_MUSHROOM = BLOCKS.register("brown_insomnian_mushroom", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> LUXIOUS_PINK_MUSHROOM = BLOCKS.register("luxious_pink_mushroom", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> GLOWY_NUT_MUSHROOM = BLOCKS.register("glowy_nut_mushroom", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission().emissiveRendering((p_61036_, p_61037_, p_61038_) -> {return true;}).lightLevel((value -> {return 10;})), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> RED_BIRD_GROWTH = BLOCKS.register("red_bird_growth", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> LIVER_LOG_BUSH = BLOCKS.register("liver_log_bush", () -> new LogMushroom(BlockBehaviour.Properties.of(Material.GRASS).sound(SoundType.BIG_DRIPLEAF).requiresCorrectToolForDrops().noCollission(), 3,0,3,13,5,13));
+
+	public static final RegistryObject<Block> MEDUSA_GROVE_PLANKS = BLOCKS.register("medusa_grove_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(1F,1F)));
+
+	public static final RegistryObject<Block> RED_BIRD_BRANCH  = BLOCKS.register("red_bird_branch", () -> new RedBirdBranchBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).randomTicks(),4.5F,0,4.5F,11.5F,16,11.5F));
+
+	public static final RegistryObject<Block> FLESH_COLUMN  = BLOCKS.register("flesh_column", () -> new GrowingBranchBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).randomTicks(),0,0,0,16,16,16));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

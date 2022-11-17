@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/flesh_column",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/flesh_column",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/flesh_column",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/flesh_column",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/flesh_column"
+        },
+        "facing=west": {
+            "model": "botsmod:block/flesh_column",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

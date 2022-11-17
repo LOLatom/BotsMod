@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/liver_log_bush",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/liver_log_bush",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/liver_log_bush",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/liver_log_bush",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/liver_log_bush"
+        },
+        "facing=west": {
+            "model": "botsmod:block/liver_log_bush",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

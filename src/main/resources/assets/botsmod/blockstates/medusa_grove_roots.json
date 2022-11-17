@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "botsmod:block/medusa_grove_roots" },
+        "axis=z":   { "model": "botsmod:block/medusa_grove_roots", "x": 90 },
+        "axis=x":   { "model": "botsmod:block/medusa_grove_roots", "x": 90, "y": 90 }
+    }
+}

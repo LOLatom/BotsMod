@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "":  { "model": "botsmod:block/gold_bronze_alloy_block" }
+
+    }
+}

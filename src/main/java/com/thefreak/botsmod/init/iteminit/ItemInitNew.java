@@ -1,0 +1,79 @@
+package com.thefreak.botsmod.init.iteminit;
+
+import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.init.EffectInitNew;
+import com.thefreak.botsmod.objects.items.*;
+import com.thefreak.botsmod.objects.items.Eggs.PuffWormEggs;
+import com.thefreak.botsmod.objects.items.ItemType.CleaverSwordItem;
+import com.thefreak.botsmod.objects.items.ItemType.HammerItem;
+
+import com.thefreak.botsmod.objects.items.ItemType.Scraper;
+import com.thefreak.botsmod.objects.items.loreandclueitems.BanhirHead;
+import com.thefreak.botsmod.objects.items.loreandclueitems.TabletItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BowlFoodItem;
+import net.minecraft.world.item.Item;
+
+import net.minecraft.world.item.Tiers;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+
+
+public class ItemInitNew {
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BotsMod.MOD_ID);
+
+    public static final RegistryObject<Item> BELL_METAL_GREATSWORD = ITEMS.register("bell_metal_greatsword", () -> new CleaverSwordItem(Tiers.GOLD, 1, 2F, new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> BELL_METAL_HAMMER = ITEMS.register("bell_metal_hammer", () -> new HammerItem(Tiers.GOLD, new Item.Properties()));
+
+    public static final RegistryObject<Item> LADYBUG = ITEMS.register("ladybug", () -> new LadybugItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> RAW_TIPPY_LIZARD = ITEMS.register("raw_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).build())));
+
+    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD = ITEMS.register("cooked_tippy_lizard", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(4).saturationMod(3F).build())));
+
+    public static final RegistryObject<Item> RAW_TIPPY_LIZARD_BITS = ITEMS.register("raw_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(1).saturationMod(0F).effect( () -> new MobEffectInstance(MobEffects.HUNGER, 400, 2),1.0F).fast().build())));
+
+    public static final RegistryObject<Item> COOKED_TIPPY_LIZARD_BITS = ITEMS.register("cooked_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(3).saturationMod(2.5F).fast().build())));
+
+    public static final RegistryObject<Item> GLAZED_TIPPY_LIZARD_BITS = ITEMS.register("glazed_tippy_lizard_bits", () -> new Item(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(4).saturationMod(3.5F).fast().build())));
+
+    public static final RegistryObject<Item> PUFF_WORM_EGGS = ITEMS.register("puff_worm_eggs", () -> new PuffWormEggs(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).food(new FoodProperties.Builder().nutrition(1).saturationMod(1.5F).effect( () -> new MobEffectInstance(MobEffects.CONFUSION, 200, 1),1.0F).fast().build())));
+
+    public static final RegistryObject<Item> GRAY_NOTE = ITEMS.register("gray_note", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> BIG_RUBY = ITEMS.register("big_ruby", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> GEORITE_CRYSTAL = ITEMS.register("georite_crystal", () -> new GeoriteCrystal(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> GOLD_BRONZE_LADLE = ITEMS.register("gold_bronze_ladle", () -> new LiquidHolder(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> SCRAPER = ITEMS.register("scraper", () -> new Scraper(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> POWDERED_MILK = ITEMS.register("powdered_milk", () -> new BowlFoodItem(new Item.Properties().tab(BotsMod.BotsfoodItemGroup.food).stacksTo(1).food(new FoodProperties.Builder().nutrition(2).saturationMod(-5)
+            .build())));
+
+    public static final RegistryObject<Item> CAVE_ANGELIA_GUPPIE_SCALE = ITEMS.register("cave_angelia_guppie_scale", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+
+
+    //Important items :
+
+    public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new TabletItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1), new ResourceLocation("botsmod:" +"textures/gui/tablet/tablet_screen.png")));
+
+    public static final RegistryObject<Item> HELP_ME_TABLET = ITEMS.register("help_me_tablet", () -> new TabletItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1), new ResourceLocation("botsmod:" +"textures/gui/tablet/helpme_tablet_screen.png")));
+
+    public static final RegistryObject<Item> LOVE_ESCAPED_TABLET = ITEMS.register("love_escaped_tablet", () -> new TabletItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1), new ResourceLocation("botsmod:" +"textures/gui/tablet/lover_escaped_tablet_screen.png")));
+
+    public static final RegistryObject<Item> DD_TABLET = ITEMS.register("dd_tablet", () -> new TabletItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1), new ResourceLocation("botsmod:" +"textures/gui/tablet/dd_tablet_screen.png")));
+
+    public static final RegistryObject<Item> BANHIR_HEAD = ITEMS.register("banhir_head", () -> new BanhirHead(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+
+}
+

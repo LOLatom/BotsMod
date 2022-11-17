@@ -1,10 +1,10 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
-import com.thefreak.botsmod.objects.effect.DecayingEffect;
-import com.thefreak.botsmod.objects.effect.ExplosiveEffect;
-import com.thefreak.botsmod.objects.effect.MogroveToxinsEffect;
-import com.thefreak.botsmod.objects.effect.PossesionEffect;
+import com.thefreak.botsmod.objects.blocks.effect.DecayingEffect;
+import com.thefreak.botsmod.objects.blocks.effect.ExplosiveEffect;
+import com.thefreak.botsmod.objects.blocks.effect.MogroveToxinsEffect;
+import com.thefreak.botsmod.objects.blocks.effect.PossesionEffect;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

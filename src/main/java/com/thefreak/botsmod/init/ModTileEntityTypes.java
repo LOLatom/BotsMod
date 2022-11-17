@@ -2,16 +2,11 @@ package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
 
-import com.thefreak.botsmod.tileentity.CenoGoblinAnvilTileEntity;
-import com.thefreak.botsmod.tileentity.HeatAccumulatorTileEntity;
-import com.thefreak.botsmod.tileentity.HeatCapacitorTileEntity;
-import com.thefreak.botsmod.tileentity.PostMortalAltarTileEntity;
+import com.thefreak.botsmod.tileentity.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import software.bernie.example.block.tile.BotariumTileEntity;
-import software.bernie.example.registry.BlockRegistry;
 
 public class ModTileEntityTypes {
 	
@@ -31,5 +26,9 @@ public class ModTileEntityTypes {
 	public static final RegistryObject<BlockEntityType<HeatCapacitorTileEntity>> HEAT_CAPACITOR_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("heat_capacitor", () -> BlockEntityType.Builder
 					.of(HeatCapacitorTileEntity::new, BlockInitNew.HEAT_CAPACITOR.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<CookingPotTileEntity>> COOKING_POT_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("cooking_pot", () -> BlockEntityType.Builder
+					.of(CookingPotTileEntity::new, BlockInitNew.COOKING_POT.get()).build(null));
 }
 

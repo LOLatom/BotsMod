@@ -33,10 +33,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -184,6 +181,7 @@ public class DrainedEntity extends Monster implements IAnimatable {
 
     public class ScaredOfLightGoal extends Goal {
 
+        Random random = new Random();
 
         public ScaredOfLightGoal(Monster entity) {
 
@@ -204,6 +202,7 @@ public class DrainedEntity extends Monster implements IAnimatable {
         public void start() {
             super.start();
             if (DrainedEntity.this.entityData.get(IS_SCARED) == false) {
+
                 DrainedEntity.this.entityData.set(IS_SCARED,true);
             }
 
@@ -212,7 +211,7 @@ public class DrainedEntity extends Monster implements IAnimatable {
         @Override
         public void tick() {
             super.tick();
-            if (DrainedEntity.this.entityData.get(IS_SCARED) == false) {
+            if (DrainedEntity.this.entityData.get(IS_SCARED) == false && random.nextInt(3) == 2) {
                 DrainedEntity.this.entityData.set(IS_SCARED,true);
             }
         }

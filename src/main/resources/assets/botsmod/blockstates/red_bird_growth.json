@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/red_bird_growth",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/red_bird_growth",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/red_bird_growth",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/red_bird_growth",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/red_bird_growth"
+        },
+        "facing=west": {
+            "model": "botsmod:block/red_bird_growth",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

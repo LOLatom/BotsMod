@@ -1,5 +1,6 @@
 package com.thefreak.botsmod.tileentity;
 
+import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatMaths;
@@ -46,9 +47,6 @@ public class HeatCapacitorTileEntity extends HeatBlockEntityBase implements Bloc
             if (playerEntity.isCrouching()) {
                 if (getCapacity() > 0) {
                     setCapacity(getCapacity() - 0.5F);
-
-                    if (Minecraft.getInstance().level.isClientSide);
-                } else {
 
                 }
             } else if (!playerEntity.isCrouching()) {
@@ -129,6 +127,10 @@ public class HeatCapacitorTileEntity extends HeatBlockEntityBase implements Bloc
             HeatBlockEntityBase heatBlockEntityBase = (HeatBlockEntityBase) pLevel.getBlockEntity(pPos.below());
             HeatCapacitorTileEntity heatCapacitorTileEntity = (HeatCapacitorTileEntity) pLevel.getBlockEntity(pPos);
             heatCapacitorTileEntity.setHeatV(heatBlockEntityBase.getHeatV());
+            Random random = new Random();
+            if (heatCapacitorTileEntity.getCapacity() >= 50 && random.nextInt(20) == 6) {
+
+            }
         }
     }
 

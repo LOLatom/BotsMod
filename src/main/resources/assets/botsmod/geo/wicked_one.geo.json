@@ -1,0 +1,90 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.wicked_one",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 5.5,
+				"visible_bounds_offset": [0, 2.25, 0]
+			},
+			"bones": [
+				{
+					"name": "Body",
+					"pivot": [0, 38, 0],
+					"rotation": [7.5, 0, 0],
+					"cubes": [
+						{"origin": [-5, 33, -3], "size": [10, 10, 6], "uv": [0, 19]}
+					]
+				},
+				{
+					"name": "Jaw",
+					"parent": "Body",
+					"pivot": [0, 43, 0.75],
+					"rotation": [-5, 0, 0],
+					"cubes": [
+						{"origin": [-3, 43, -5.25], "size": [6, 4, 9], "uv": [23, 26]}
+					]
+				},
+				{
+					"name": "Head",
+					"parent": "Jaw",
+					"pivot": [0, 46.5, 3.75],
+					"rotation": [5, 0, 0],
+					"cubes": [
+						{"origin": [-5, 46, -6], "size": [10, 9, 10], "uv": [0, 0]},
+						{"origin": [-7, 51, -3.5], "size": [2, 8, 2], "uv": [30, 0]},
+						{"origin": [5, 51, -3.5], "size": [2, 8, 2], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "RightArm",
+					"parent": "Body",
+					"pivot": [-5.25, 41.75, 0],
+					"rotation": [-7.5, 0, 0],
+					"cubes": [
+						{"origin": [-8, 38, -2], "size": [3, 6, 4], "uv": [44, 21]},
+						{"origin": [-7, 15, -1], "size": [2, 23, 2], "uv": [36, 39]}
+					]
+				},
+				{
+					"name": "LeftArm",
+					"parent": "Body",
+					"pivot": [5.25, 41.75, 0],
+					"rotation": [-7.5, 0, 0],
+					"cubes": [
+						{"origin": [5, 38, -2], "size": [3, 6, 4], "uv": [44, 39]},
+						{"origin": [5, 15, -1], "size": [2, 23, 2], "uv": [40, 0]}
+					]
+				},
+				{
+					"name": "Abdomen",
+					"parent": "Body",
+					"pivot": [0, 33, 0.5],
+					"rotation": [-7.5, 0, 0],
+					"cubes": [
+						{"origin": [-3, 23, -1.5], "size": [6, 10, 4], "uv": [0, 35]}
+					]
+				},
+				{
+					"name": "LeftLeg",
+					"parent": "Abdomen",
+					"pivot": [1, 23, 0.5],
+					"cubes": [
+						{"origin": [0, 0, -0.5], "size": [2, 23, 2], "uv": [28, 39]}
+					]
+				},
+				{
+					"name": "RightLeg",
+					"parent": "Abdomen",
+					"pivot": [-1, 23, 0.5],
+					"cubes": [
+						{"origin": [-2, 0, -0.5], "size": [2, 23, 2], "uv": [20, 39]}
+					]
+				}
+			]
+		}
+	]
+}

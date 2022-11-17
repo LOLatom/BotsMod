@@ -93,7 +93,7 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
     private void renderAdditionals(PoseStack matrixStack, int i, int j, MobEffectInstance effectInstances, MobEffect focusedEffect) {
         int TopPos = this.topPos;
         IEffectSpecialRenderings effectSpecialRenderings = (IEffectSpecialRenderings) focusedEffect;
-        effectSpecialRenderings.addAdditionalToRender(matrixStack,i,j,effectInstances,focusedEffect).accept(matrixStack,effectInstances,this.minecraft);
+        effectSpecialRenderings.addAdditionalToRender(matrixStack,i,j,effectInstances,focusedEffect).accept(matrixStack,effectInstances);
     }
 
 

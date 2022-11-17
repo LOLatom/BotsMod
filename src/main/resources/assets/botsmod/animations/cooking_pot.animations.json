@@ -1,0 +1,26 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.cooking_pot.mixing": {
+			"loop": true,
+			"bones": {
+				"Stick": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 40) * 2", "math.sin(query.anim_time * 2)* 390.5", 0]
+					}
+				}
+			}
+		},
+		"animation.cooking_pot.shake_pot": {
+			"loop": true,
+			"bones": {
+				"CookingPot": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time*700)*0.5", "math.cos(query.anim_time*500)*0.2", "math.sin(query.anim_time*700)*0.5"]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

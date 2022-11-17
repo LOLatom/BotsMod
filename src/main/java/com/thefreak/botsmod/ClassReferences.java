@@ -5,6 +5,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.network.PacketListener;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.MinecraftServer;
@@ -17,13 +18,14 @@ public class ClassReferences {
         return Minecraft.getInstance().level;
     }
 
+    public static Minecraft getClientMC() {
+        return Minecraft.getInstance();
+    }
+
     public static MinecraftServer getIntegratedServer() {
         return Minecraft.getInstance().getSingleplayerServer();
     }
 
-    public static AbstractClientPlayer getAbstractClientPlayer() {
-        return Minecraft.getInstance().player;
-    }
 
     public static String getVersion() {
         return Minecraft.getInstance().getLaunchedVersion();
@@ -36,6 +38,7 @@ public class ClassReferences {
     public static boolean isClientPacketListener(PacketListener listener) {
         return listener instanceof ClientGamePacketListener;
     }
+
 
     public static Player getPlayer() {
         return Minecraft.getInstance().player;
@@ -56,6 +59,10 @@ public class ClassReferences {
 
     public static Vec3 getCameraPos() {
         return camera.getPosition();
+    }
+
+    public static ItemInHandRenderer getItemInHandRenderer() {
+        return Minecraft.getInstance().getItemInHandRenderer();
     }
 
 

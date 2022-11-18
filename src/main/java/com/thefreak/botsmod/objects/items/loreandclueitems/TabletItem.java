@@ -18,6 +18,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -33,11 +35,12 @@ public class TabletItem extends Item {
 
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
         if (pLevel.isClientSide) {
-            Minecraft minecraft = ClassReferences.getClientMC();
-            minecraft.setScreen(new TabletScreen(TEXTURE));
+            ClassReferences.getClientMC().setScreen(new TabletScreen(TEXTURE));
         }
-        return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());    }
+        return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());
+    }
 }

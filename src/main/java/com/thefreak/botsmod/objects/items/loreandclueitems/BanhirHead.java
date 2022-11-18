@@ -31,7 +31,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialTooltip {
-    Minecraft mc = ClassReferences.getClientMC();
 
     public BanhirHead(Properties pProperties) {
         super(pProperties);
@@ -83,7 +82,7 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
             @Override
             public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
 
-                return new BanhirHeadBEWLR(mc.getBlockEntityRenderDispatcher(),mc.getEntityModels());
+                return new BanhirHeadBEWLR(ClassReferences.getClientMC().getBlockEntityRenderDispatcher(),ClassReferences.getClientMC().getEntityModels());
             }
         });
     }

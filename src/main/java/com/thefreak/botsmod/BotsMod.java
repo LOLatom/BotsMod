@@ -161,7 +161,7 @@ public class BotsMod
 
     public void tick(TickEvent.ClientTickEvent event) {
 	/*	if (event.phase == TickEvent.Phase.START) {
-			if (!PostProcessingUtils.hasPass(new ResourceLocation("deltalib:merge"))) {
+			if (!PostProcessingUtils.hasPass(new ResourceLocation("deltalib:blur"))) {
 				PostPass shader;
 				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:glow"), new ResourceLocation("deltalib:blur"));
 				((ShaderAccessor) shader).addDepthTarget("VanillaDepth", Minecraft.getInstance().getMainRenderTarget());

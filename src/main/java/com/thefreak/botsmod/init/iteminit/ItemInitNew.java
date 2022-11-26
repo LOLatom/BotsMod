@@ -1,7 +1,9 @@
 package com.thefreak.botsmod.init.iteminit;
 
 import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.fluids.BOTSFluids;
 import com.thefreak.botsmod.init.EffectInitNew;
+import com.thefreak.botsmod.init.FluidInit;
 import com.thefreak.botsmod.objects.items.*;
 import com.thefreak.botsmod.objects.items.Eggs.PuffWormEggs;
 import com.thefreak.botsmod.objects.items.ItemType.CleaverSwordItem;
@@ -9,7 +11,9 @@ import com.thefreak.botsmod.objects.items.ItemType.HammerItem;
 
 import com.thefreak.botsmod.objects.items.ItemType.Scraper;
 import com.thefreak.botsmod.objects.items.loreandclueitems.BanhirHead;
+import com.thefreak.botsmod.objects.items.loreandclueitems.GodKillerHand;
 import com.thefreak.botsmod.objects.items.loreandclueitems.TabletItem;
+import com.thefreak.botsmod.objects.items.organs.FleshBucket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -18,6 +22,7 @@ import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -74,6 +79,11 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> BANHIR_HEAD = ITEMS.register("banhir_head", () -> new BanhirHead(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
+    public static final RegistryObject<Item> FLESH_BUCKET = ITEMS.register("flesh_bucket", () -> new FleshBucket(Fluids.EMPTY,new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(4)));
 
+    public static final RegistryObject<Item> GOD_KILLER_HAND = ITEMS.register("god_killer_hand", () -> new GodKillerHand(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+
+    //public static final RegistryObject<Item> CELL_FLUID_BUCKET = ITEMS.register("cell_fluid_bucket", () -> new FleshBucket(BOTSFluids.CELL.get(), new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 }
 

@@ -29,7 +29,6 @@ public class MainMenutScreenEvent {
     private static final ResourceLocation ACCESSIBILITY_TEXTURE = new ResourceLocation(BotsMod.MOD_ID,"textures/gui/secret_button.png");
     public boolean accesible = false;
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onMenuRender(ScreenEvent.InitScreenEvent event) {
         Screen screen = event.getScreen();

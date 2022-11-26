@@ -3,6 +3,8 @@ package com.thefreak.botsmod.util;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.thefreak.botsmod.util.botsevent.TooltipDisplayEvent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 
 public class BOTSEvent {

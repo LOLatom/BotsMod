@@ -108,7 +108,15 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
 
 //    implementation fg.deobf('com.github.LOLatom:DeltaLib:fd3fd65cae')
-    implementation files("deltalib-1.0-SNAPSHOT-deobf.jar")
+    if (new File("libs").exists()) {
+        for (File f : new File("libs").listFiles()) {
+            String name = f.getName().replace(".jar", "")
+            String[] split = name.split("-", 2)
+            String lib = "flatdir.lib:" + split[0] + ":" + split[1]
+            System.out.println("| " + lib)
+            implementation fg.deobf(lib)
+        }
+    }
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
@@ -130,8 +138,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     //Required mods
-    implementation fg.deobf('software.bernie.geckolib:geckolib-1.18-forge:3.0.18')
-
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
 }
 
 apply plugin: 'org.spongepowered.mixin'
@@ -142,6 +149,9 @@ mixin {
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    if (new File("libs").exists()) {
+        flatDir { dirs 'libs' }
+    }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

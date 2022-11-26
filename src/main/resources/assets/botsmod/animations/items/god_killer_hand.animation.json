@@ -1,0 +1,189 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.god_killer_hand.firstfinger": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger1": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [-23.40106, 17.98129, 82.25271],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [-23.4, 17.98, 82.25]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.secondfinger": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger2": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [0, 0, 85],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [0, 0, 85]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.thirdfinger": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger3": {
+					"rotation": {
+						"0.0": {
+							"vector": [-2.95254, 0.77127, 3.88166]
+						},
+						"0.52": {
+							"vector": [-0.0773, 2.3684, 89.07954],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [-0.08, 2.37, 89.08]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.fourthfinger": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger4": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [18.21993, -12.6303, 94.03945],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [18.22, -12.63, 94.04]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.blade": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"blade": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [0, -8, 0],
+							"easing": "easeInOutElastic",
+							"easingArgs": [1.1]
+						},
+						"1.04": {
+							"vector": [0, -8, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.firstfingerup": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger1": {
+					"rotation": {
+						"vector": [-23.4, 17.98, 82.25]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.secondfingerup": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger2": {
+					"rotation": {
+						"vector": [0, 0, 85]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.thirdfingerup": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger3": {
+					"rotation": {
+						"vector": [-0.08, 2.37, 89.08]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.fourthfingerup": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger4": {
+					"rotation": {
+						"vector": [18.22, -12.63, 94.04]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.bladeout": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"blade": {
+					"position": {
+						"vector": [0, -8, 0]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.bladearm": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04167,
+			"override_previous_animation": true,
+			"bones": {
+				"ArmPart": {
+					"position": {
+						"0.125": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": [0, 0, -1],
+							"easing": "easeInBack"
+						},
+						"0.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

@@ -1,5 +1,9 @@
 package com.thefreak.botsmod.API;
 
+import com.thefreak.botsmod.BotsMod;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
 import java.awt.*;
 
 public interface IHaveSpecialTooltip {
@@ -22,5 +26,12 @@ public interface IHaveSpecialTooltip {
 
     default public boolean hasCustomBackGroundColor() {
         return false;
+    }
+
+    default public boolean hasAdvancedCustomToolTip(ItemStack stack) {return false;}
+
+    default public ResourceLocation AdvancedCustomToolTipLocation(ItemStack stack) {
+        return new ResourceLocation(BotsMod.MOD_ID,
+                "textures/gui/tooltip/" + stack.getItem().getRegistryName().getPath() + ".png");
     }
 }

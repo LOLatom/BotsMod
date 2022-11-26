@@ -46,6 +46,11 @@ this.pPlayerRender = pRenderer;
 
 
     @Override
+    public MultiBufferSource getCurrentRTB() {
+        return null;
+    }
+
+    @Override
     public GeoModelProvider getGeoModelProvider() {
         return null;
     }

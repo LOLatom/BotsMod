@@ -1,6 +1,9 @@
 package com.thefreak.botsmod.mixins.client;
 
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
+import com.thefreak.botsmod.API.Animation.PlayerAnimation.BasicKeyframe;
+import com.thefreak.botsmod.API.Animation.PlayerAnimation.Keyframe;
+import com.thefreak.botsmod.API.Animation.PlayerAnimation.PartAnimator;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
@@ -10,11 +13,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.function.Function;
 
 @Mixin(HumanoidModel.class)
 public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableListModel<T> implements ArmedModel, HeadedModel {
@@ -40,6 +46,34 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
     public boolean crouching;
     @Shadow
     public float swimAmount;
+
+    PartAnimator animator;
+
+
+    @Inject(method = "<init>(Lnet/minecraft/client/model/geom/ModelPart;Ljava/util/function/Function;)V", at = @At("TAIL"))
+    private void contructorinj(ModelPart pRoot, Function pRenderType, CallbackInfo ci) {
+            /* this part for constructing the animation will be replaced later on with an animation builder */
+            Keyframe first = new BasicKeyframe(null,null, new Vec3(0,0,0), new Vec3(0,0,0), 40);
+            Keyframe last = first;
+            last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0,0), new Vec3(0,0,0), 400);
+            last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0.1,0), new Vec3(0,0,0), 400);
+            last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0.5,0), new Vec3(0,0,0), 400);
+            last.nextframe = first;
+            first.prevframe = last;
+            this.animator = new PartAnimator(first,Vec3.ZERO, Vec3.ZERO, rightArm);
+    }
+    @Inject(method = "<init>(Lnet/minecraft/client/model/geom/ModelPart;)V", at = @At("TAIL"))
+    private void contructorinj2(ModelPart pRoot, CallbackInfo ci) {
+        /* this part for constructing the animation will be replaced later on with an animation builder */
+        Keyframe first = new BasicKeyframe(null,null, new Vec3(0,0,0), new Vec3(0,0,0), 40);
+        Keyframe last = first;
+        last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0,0), new Vec3(0,0,0), 400);
+        last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0.1,0), new Vec3(0,0,0), 400);
+        last = last.nextframe = new BasicKeyframe(null,null, new Vec3(0,0.5,0), new Vec3(0,0,0), 400);
+        last.nextframe = first;
+        first.prevframe = last;
+        this.animator = new PartAnimator(first,Vec3.ZERO, Vec3.ZERO, rightArm);
+    }
 
     @Inject(method = "poseLeftArm", at = @At("TAIL"))
     private void leftArmpos(T p_241655_1_, CallbackInfo ci) {
@@ -106,6 +140,12 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 
             }
         }
+    }
+    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
+    private void setupNewAnimations(T entity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch, CallbackInfo ci) {
+        //this.animator.tick(entity);
+        //if (animator.isPaused()) animator.play();
+
     }
 
 }

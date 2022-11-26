@@ -24,14 +24,14 @@ import java.awt.*;
 
 @Mod.EventBusSubscriber(modid = BotsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TooltipEvents {
-    @OnlyIn(Dist.CLIENT)
+
     @SubscribeEvent
     public static void renderPostTooltip(TooltipDisplayEvent event) {
         ItemStack stack = event.getStack();
         if (!(stack.getItem() instanceof IHaveSpecialTooltip)) {
             return;
         }
-
+        IHaveSpecialTooltip stStack = (IHaveSpecialTooltip) stack.getItem();
         PoseStack poseStack = event.getPoseStack();
 
         int width = event.getWidth();
@@ -42,6 +42,9 @@ public class TooltipEvents {
 
         ResourceLocation texture = new ResourceLocation(BotsMod.MOD_ID,
                 "textures/gui/tooltip/" + stack.getItem().getRegistryName().getPath() + ".png");
+        if (stStack.hasAdvancedCustomToolTip(stack)) {
+            texture = stStack.AdvancedCustomToolTipLocation(stack);
+        }
 
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         RenderSystem.setShaderTexture(0, texture);
@@ -76,7 +79,6 @@ public class TooltipEvents {
 
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onTooltipColorEvent(RenderTooltipEvent.Color event) {
         ItemStack stack = event.getItemStack();

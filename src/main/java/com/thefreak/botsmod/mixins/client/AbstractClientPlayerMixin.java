@@ -1,8 +1,10 @@
 package com.thefreak.botsmod.mixins.client;
 
 import com.deltateam.deltalib.API.animation.keyframes.IAnimatableObject;
+import com.deltateam.deltalib.API.animation.keyframes.animator.AnimationSet;
 import com.deltateam.deltalib.API.animation.keyframes.animator.ModelAnimator;
 import com.deltateam.deltalib.API.animation.keyframes.animator.PartAnimator;
+import com.thefreak.botsmod.client.access.IAnimationHolder;
 import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -11,6 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(AbstractClientPlayer.class)
 public class AbstractClientPlayerMixin implements IBotsModAnimatable<AbstractClientPlayer, HumanoidModel<AbstractClientPlayer>> {
+	AnimationSet animations;
+	
 	IAnimatableObject<AbstractClientPlayer, HumanoidModel<AbstractClientPlayer>> object = new IAnimatableObject<AbstractClientPlayer, HumanoidModel<AbstractClientPlayer>>() {
 		@Override
 		public AbstractClientPlayer getObject() {
@@ -22,18 +26,20 @@ public class AbstractClientPlayerMixin implements IBotsModAnimatable<AbstractCli
 			return animator;
 		}
 		
-		boolean isSetup = false;
+		HumanoidModel<AbstractClientPlayer> currentModel = null;
 		
 		@Override
 		public void setup(HumanoidModel<AbstractClientPlayer> model) {
-			isSetup = true;
+			currentModel = model;
+			animations = ((IAnimationHolder) model).getSet();
 			// if you want to animate another part, add it here
-			animator.addPartAnimator(model.rightArm, new PartAnimator(null, Vec3.ZERO, Vec3.ZERO, model.rightArm));
+			if (!animator.hasPart(model.rightArm))
+				animator.addPartAnimator(model.rightArm, new PartAnimator(null, Vec3.ZERO, Vec3.ZERO, model.rightArm));
 		}
 		
 		@Override
-		public boolean isSetup() {
-			return isSetup;
+		public boolean isSetup(HumanoidModel<AbstractClientPlayer> model) {
+			return currentModel == model;
 		}
 	};
 	
@@ -42,5 +48,10 @@ public class AbstractClientPlayerMixin implements IBotsModAnimatable<AbstractCli
 	@Override
 	public IAnimatableObject<AbstractClientPlayer, HumanoidModel<AbstractClientPlayer>> getObject() {
 		return object;
+	}
+	
+	@Override
+	public AnimationSet getSet() {
+		return animations;
 	}
 }

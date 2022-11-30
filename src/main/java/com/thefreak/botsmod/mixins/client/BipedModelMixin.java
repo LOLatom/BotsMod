@@ -6,6 +6,7 @@ import com.deltateam.deltalib.API.animation.keyframes.animator.builders.Animatio
 import com.deltateam.deltalib.API.animation.keyframes.animator.builders.AnimationSetBuilder;
 import com.deltateam.deltalib.API.animation.keyframes.animator.builders.KeyframeSequenceBuilder;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
+import com.thefreak.botsmod.client.access.IAnimationHolder;
 import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ArmedModel;
@@ -26,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Function;
 
 @Mixin(HumanoidModel.class)
-public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableListModel<T> implements ArmedModel, HeadedModel {
+public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableListModel<T> implements ArmedModel, HeadedModel, IAnimationHolder {
 	@Shadow
 	public ModelPart head;
 	@Shadow
@@ -143,39 +144,20 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 			}
 		}
 	}
-
-//	private static final Keyframe first;
-	
-	static {
-//		first = new BasicKeyframe(null, null, new Vec3(0, 0, 0), new Vec3(0, 0, 0), 20);
-//		Keyframe last = first;
-//		last = last.nextframe = new BasicKeyframe(null, null, new Vec3(0, 0, 0), new Vec3(0, Math.toRadians(90), 0), 20);
-//		last = last.nextframe = new BasicKeyframe(null, null, new Vec3(0, 0, 0), new Vec3(0, Math.toRadians(90), Math.toRadians(90)), 20);
-//		last = last.nextframe = new BasicKeyframe(null, null, new Vec3(0, 0, 0), new Vec3(0, 0, Math.toRadians(90)), 20);
-//		last.nextframe = first;
-//		first.prevframe = last;
-	}
 	
 	@Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
 	private void setupNewAnimations(T entity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch, CallbackInfo ci) {
 		if (entity instanceof IBotsModAnimatable animatableObject) {
 			ModelAnimator animator = animatableObject.getObject().animator();
-			if (!animatableObject.getObject().isSetup()) {
-				if (pLimbSwing != 0)
-					animatableObject.getObject().setup(this);
-				else return;
-				animations.startAnimation("botsmod.test", animatableObject.getObject().animator());
-			}
-//			if (!animatableObject.getObject().isSetup()) {
-//				if (pLimbSwing != 0) {
-//					animatableObject.getObject().setup(this);
-//					animator.animatePart(20, EasingTypes.LINEAR, EasingDirection.NEITHER, rightArm, first);
-//				} else {
-//					return;
-//				}
-//			}
+			if (!animatableObject.getObject().isSetup(this))
+				animatableObject.getObject().setup(this);
 			// TODO: figure out how to get partial ticks to work right
 			animator.tick(entity, (pAgeInTicks % 1 /* idk how modulo works on decimals, but */));
 		}
+	}
+	
+	@Override
+	public AnimationSet getSet() {
+		return animations;
 	}
 }

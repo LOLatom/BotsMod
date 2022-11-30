@@ -12,7 +12,8 @@
     "client.ScreenMixin",
     "client.HumanoidRendererMixin",
     "client.AbstractClientPlayerMixin",
-    "client.EntityRendererMixin"
+    "client.EntityRendererMixin",
+    "client.LivingEntityMixin"
   ],
   "mixins": [
     "server.LivingEntityMixin"

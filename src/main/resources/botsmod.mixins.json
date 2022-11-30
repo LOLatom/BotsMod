@@ -10,7 +10,9 @@
     "client.IngameGuiMixin",
     "client.DisplayEffectsScreenMixin",
     "client.ScreenMixin",
-    "client.HumanoidRendererMixin"
+    "client.HumanoidRendererMixin",
+    "client.AbstractClientPlayerMixin",
+    "client.EntityRendererMixin"
   ],
   "mixins": [
     "server.LivingEntityMixin"

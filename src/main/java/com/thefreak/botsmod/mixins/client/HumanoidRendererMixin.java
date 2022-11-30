@@ -1,9 +1,13 @@
 package com.thefreak.botsmod.mixins.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import com.thefreak.botsmod.client.entity.render.HumanoidLayer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -36,5 +40,12 @@ public class HumanoidRendererMixin extends LivingEntityRenderer<AbstractClientPl
     @Override
     public ResourceLocation getTextureLocation(AbstractClientPlayer pEntity) {
         return pEntity.getSkinTextureLocation();
+    }
+    
+    @Inject(at = @At("TAIL"), method = "renderHand")
+    public void postRenderHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm, ModelPart pRendererArmwear, CallbackInfo ci) {
+        if (pPlayer instanceof IBotsModAnimatable botsModAnimatable) {
+            botsModAnimatable.getObject().animator().resetAnimation();
+        }
     }
 }

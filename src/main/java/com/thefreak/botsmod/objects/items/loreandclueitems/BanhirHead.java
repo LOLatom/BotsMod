@@ -40,7 +40,7 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
     @Override
     public <T extends Player> BiConsumer<HumanoidModel, T> getLeftArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
         return side == InteractionHand.OFF_HAND ? ((bipedModel, t) -> {
-            bipedModel.leftArm.xRot = -51.8F + bipedModel.head.xRot;
+            bipedModel.leftArm.xRot = -1.534516779623857f + bipedModel.head.xRot;
             bipedModel.leftArm.yRot = 0.3F + bipedModel.head.yRot;
         }) : ((bipedModel, t) -> {
             bipedModel.leftArm.xRot = bipedModel.leftArm.xRot;
@@ -51,7 +51,7 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
     @Override
     public <T extends Player> BiConsumer<HumanoidModel, T> getRightArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
         return side == InteractionHand.MAIN_HAND ? ((bipedModel, t) -> {
-            bipedModel.rightArm.xRot =  -51.8F + bipedModel.head.xRot;
+            bipedModel.rightArm.xRot =  -1.534516779623857f + bipedModel.head.xRot;
             bipedModel.rightArm.yRot = (-0.3F) + bipedModel.head.yRot;
         }) : ((bipedModel, t) -> {
             bipedModel.rightArm.xRot = bipedModel.rightArm.xRot;

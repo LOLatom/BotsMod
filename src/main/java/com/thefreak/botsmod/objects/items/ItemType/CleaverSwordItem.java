@@ -33,7 +33,7 @@ public class CleaverSwordItem extends SwordItem implements IHandlePoseable {
         Player playerEntity = (Player) livingEntity;
         if (this.isused == false) {
             return side == InteractionHand.OFF_HAND ? ((bipedModel, t) -> {
-                bipedModel.leftArm.xRot = -45;
+                bipedModel.leftArm.xRot = -1.0177028497428964f;
                 bipedModel.leftArm.yRot = 0.3F + bipedModel.head.yRot;
             }) : ((bipedModel, t) -> {
                 bipedModel.leftArm.xRot = bipedModel.leftArm.xRot;
@@ -41,7 +41,7 @@ public class CleaverSwordItem extends SwordItem implements IHandlePoseable {
             });
     } else {
             return side == InteractionHand.OFF_HAND ? ((bipedModel, t) -> {
-                bipedModel.leftArm.xRot = -110;
+                bipedModel.leftArm.xRot = -3.1858497779469843f;
             }) : ((bipedModel, t) -> {
                 bipedModel.leftArm.xRot = bipedModel.leftArm.xRot;
                 bipedModel.leftArm.yRot = bipedModel.leftArm.yRot;

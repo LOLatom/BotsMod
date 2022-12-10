@@ -21,8 +21,6 @@ public abstract class LivingEntityMixin {
 	
 	@Inject(at = @At("TAIL"), method = "swing(Lnet/minecraft/world/InteractionHand;Z)V")
 	public void postSwing(InteractionHand pHand, boolean pUpdateSelf, CallbackInfo ci) {
-		if (((Object) this) instanceof IBotsModAnimatable animatable) {
-			animatable.getSet().startAnimation("botsmod.test", animatable.getObject().animator());
-		}
+
 	}
 }

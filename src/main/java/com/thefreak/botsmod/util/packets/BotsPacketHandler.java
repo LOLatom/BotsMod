@@ -1,5 +1,9 @@
 package com.thefreak.botsmod.util.packets;
 
+import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
+import com.thefreak.botsmod.util.packets.interractionpackets.LeftClickPacket;
+import com.thefreak.botsmod.util.packets.interractionpackets.OpenCloseGodKHPacket;
+import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.SomeoneClickedDivineKeyPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,24 +32,36 @@ public class BotsPacketHandler {
         
         //ServerBound
 
+        //
+        INSTANCE.messageBuilder(OpenCloseGodKHPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(OpenCloseGodKHPacket::encode)
+                .decoder(OpenCloseGodKHPacket::decode)
+                .consumer(OpenCloseGodKHPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(LeftClickPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(LeftClickPacket::encode)
+                .decoder(LeftClickPacket::decode)
+                .consumer(LeftClickPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(DivineKeyClick.class,ID++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(DivineKeyClick::encode)
+                .decoder(DivineKeyClick::decode)
+                .consumer(DivineKeyClick::handle)
+                .add();
+
 
         //ClientBound
 
+        INSTANCE.messageBuilder(SomeoneClickedDivineKeyPacket.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SomeoneClickedDivineKeyPacket::encode)
+                .decoder(SomeoneClickedDivineKeyPacket::decode)
+                .consumer(SomeoneClickedDivineKeyPacket::handle)
+                .add();
+
 
     }
 
-    private static <T> BiConsumer<T, Supplier<NetworkEvent.Context>> makeServerBoundHandler(TriConsumer<T, MinecraftServer, ServerPlayer> handler) {
-        return (m, ctx) -> {
-            handler.accept(m, ctx.get().getSender().getServer(), ctx.get().getSender());
-            ctx.get().setPacketHandled(true);
-        };
-    }
-
-    private static <T> BiConsumer<T, Supplier<NetworkEvent.Context>> makeClientBoundHandler(Consumer<T> consumer) {
-        return (m, ctx) -> {
-            consumer.accept(m);
-            ctx.get().setPacketHandled(true);
-        };
-    }
 
 }

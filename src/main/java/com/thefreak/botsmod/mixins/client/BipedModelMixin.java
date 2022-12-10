@@ -75,6 +75,7 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 										.addRotation(40, new Vec3(0, 90, 90), true)
 										.addRotation(60, new Vec3(0, 0, 90), true)
 										.addRotation(80, new Vec3(0, 0, 0), true)
+										.addPosition(10, new Vec3(0, 0, 0))
 										.build()
 						).build()
 				).build();

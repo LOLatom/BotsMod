@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "botsmod:blocks/tremoring_stone_table_top",
+        "side": "botsmod:blocks/tremoring_stone_table_side"
+    }
+}

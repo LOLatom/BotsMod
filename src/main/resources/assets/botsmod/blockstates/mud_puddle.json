@@ -1,0 +1,11 @@
+{
+    "variants": {
+            "state=0":  { "model": "botsmod:block/mud_puddle1" },
+            "state=1":   { "model": "botsmod:block/mud_puddle2"},
+            "state=2":   { "model": "botsmod:block/mud_puddle3"},
+            "state=3":  { "model": "botsmod:block/mud_puddle4" },
+            "state=4":   { "model": "botsmod:block/mud_puddle5"},
+            "state=5":   { "model": "botsmod:block/mud_puddle6"},
+            "state=6":  { "model": "botsmod:block/mud_puddle7"}
+    }
+}

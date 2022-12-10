@@ -16,4 +16,18 @@ public class BOTSEvent {
 
     }
 
+    public class BOTSPlayerEvent {
+        public class RenderEvent {
+
+
+
+        }
+
+
+
+
+
+
+    }
+
 }

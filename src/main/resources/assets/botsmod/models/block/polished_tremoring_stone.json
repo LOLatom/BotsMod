@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "particle": "botsmod:blocks/tremoring_stone",
+        "north": "botsmod:blocks/polished_tremoring_stone",
+        "south": "botsmod:blocks/polished_tremoring_stone",
+        "east": "botsmod:blocks/polished_tremoring_stone",
+        "west": "botsmod:blocks/polished_tremoring_stone",
+        "up": "botsmod:blocks/tremoring_stone",
+        "down": "botsmod:blocks/polished_tremoring_stone_bottom"
+    }
+}

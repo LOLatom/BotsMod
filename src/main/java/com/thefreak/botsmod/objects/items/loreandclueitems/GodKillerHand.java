@@ -1,11 +1,18 @@
 package com.thefreak.botsmod.objects.items.loreandclueitems;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.thefreak.botsmod.API.Animation.IHandlePoseable;
 import com.thefreak.botsmod.ClassReferences;
+import com.thefreak.botsmod.client.access.IBotsModAnimatable;
+import com.thefreak.botsmod.client.gui.gkhguis.FingerScreen;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.objects.items.bewlr.BanhirHeadBEWLR;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandBEWLR;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
 import com.thefreak.botsmod.objects.items.bewlr.models.GodKillerHandModel;
+import com.thefreak.botsmod.spells.SpellIdentifier;
+import com.thefreak.botsmod.spells.spellclass.AbstractSpell;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -15,7 +22,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,17 +50,26 @@ import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.awt.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class GodKillerHand extends Item implements IAnimatable, ISyncable {
-    private static final int F1 = 1;
-    private static final int F2 = 2;
-    private static final int F3 = 3;
-    private static final int F4 = 4;
+public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHandlePoseable {
+    public static final int F1 = 1;
+    public static final int F2 = 2;
+    public static final int F3 = 3;
+    public static final int F4 = 4;
 
-    private static final int ARM = 6;
+    public static final int ARM = 6;
 
-    private static final int BLADE_OUT = 5;
+    public static final int BLADE_OUT = 5;
+
+    public static final int C1 = 7;
+    public static final int C2 = 8;
+    public static final int C3 = 9;
+    public static final int C4 = 10;
+
+    public static final int CB = 11;
+
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder();
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public GodKillerHand(Properties pProperties) {
@@ -98,6 +119,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
             nbt.putBoolean("secondfing",false);
             nbt.putBoolean("thirdfing",false);
             nbt.putBoolean("fourthfing",false);
+            nbt.putInt("spellid",0);
 
             nbt.putBoolean("blade",false);
         } else {
@@ -105,6 +127,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
             nbt.putBoolean("secondfing",nbt.getBoolean("secondfing"));
             nbt.putBoolean("thirdfing",nbt.getBoolean("thirdfing"));
             nbt.putBoolean("fourthfing",nbt.getBoolean("fourthfing"));
+            nbt.putInt("spellid",nbt.getInt("spellid"));
 
             nbt.putBoolean("blade",nbt.getBoolean("blade"));
         }
@@ -139,23 +162,41 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         CompoundTag nbt = stack.getOrCreateTag();
+        boolean finger1 = nbt.getBoolean("firstfing");
+        boolean finger2 = nbt.getBoolean("secondfing");
+        boolean finger3 = nbt.getBoolean("thirdfing");
+        boolean finger4 = nbt.getBoolean("fourthfing");
+        boolean blade = nbt.getBoolean("blade");
+        int spellID = nbt.getInt("spellid");
+        System.out.println(finger1 + " " + finger2 + " " + finger3 + " " + finger4);
+        //if (pPlayer instanceof IBotsModAnimatable animatable) {
+        //    animatable.getSet().startAnimation("botsmod.test", animatable.getObject().animator());
+        //}
 
+        if (pLevel.isClientSide && pPlayer.isCrouching()) ClassReferences.getClientMC().setScreen(new FingerScreen(pLevel, pPlayer, stack, pUsedHand));
         if (!pLevel.isClientSide) {
-            // Gets the item that the player is holding, should be a JackInTheBoxItem
-
             final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerLevel) pLevel);
-            // Tell all nearby clients to trigger this JackInTheBoxItem
             final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> pPlayer);
-            GeckoLibNetwork.syncAnimation(target, this, id, BLADE_OUT);
-            GeckoLibNetwork.syncAnimation(target, this, id, F1);
-            GeckoLibNetwork.syncAnimation(target, this, id, F2);
-            GeckoLibNetwork.syncAnimation(target, this, id, F3);
-            GeckoLibNetwork.syncAnimation(target, this, id, F4);
 
-            GeckoLibNetwork.syncAnimation(target, this, id, ARM);
 
         }
+        if (!pPlayer.isCrouching()) {
+            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack);
+            AbstractSpell spell = SI.getSpellFromID(spellID);
+            spell.startExecuting(pPlayer, pLevel, pUsedHand);
+        }
         return InteractionResultHolder.pass(stack);
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        CompoundTag nbt = pStack.getOrCreateTag();
+        boolean blade = nbt.getBoolean("blade");
+        if (blade) {
+            pTarget.hurt(DamageSource.mobAttack(pAttacker), 5F);
+            System.out.println("BLADEDAMAGE");
+        }
+        return super.hurtEnemy(pStack, pTarget, pAttacker);
     }
 
     @Override
@@ -167,12 +208,18 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
         boolean finger3 = nbt.getBoolean("thirdfing");
         boolean finger4 = nbt.getBoolean("fourthfing");
         boolean blade = nbt.getBoolean("blade");
-        Player player = pContext.getPlayer();
-        Level level = pContext.getLevel();
-        BlockPos clickpos = pContext.getClickedPos();
+        int spellID = nbt.getInt("spellid");
+        System.out.println("CLICKCLICKCLICK");
+
+        if (!pContext.getPlayer().isCrouching()) {
+            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack);
+            AbstractSpell spell = SI.getUseOnSpellFromID(spellID);
+            spell.startExecuting(pContext.getPlayer(), pContext.getLevel(), pContext.getHand());
+        }
 
         return super.useOn(pContext);
     }
+
 
     @Override
     public AnimationFactory getFactory() {
@@ -184,12 +231,16 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
         super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
         CompoundTag nbt = pStack.getOrCreateTag();
         if (pStack.hasTag()) {
+            boolean blade = nbt.getBoolean("blade");
+            if (blade) {
 
+            }
         } else {
             nbt.putBoolean("firstfing",false);
             nbt.putBoolean("secondfing",false);
             nbt.putBoolean("thirdfing",false);
             nbt.putBoolean("fourthfing",false);
+            nbt.putInt("spellid",0);
 
             nbt.putBoolean("blade",false);
         }
@@ -207,6 +258,13 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.blade", ILoopType.EDefaultLoopTypes.PLAY_ONCE)
                         .addAnimation("animation.god_killer_hand.bladeout", ILoopType.EDefaultLoopTypes.LOOP));
             }
+        } else if (state == CB) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "blade");
+
+                controller.clearAnimationCache();
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.hideblade", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+
         }
         if (state == F1) {
             final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger1");
@@ -215,6 +273,13 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.firstfinger", ILoopType.EDefaultLoopTypes.PLAY_ONCE)
                         .addAnimation("animation.god_killer_hand.firstfingerup", ILoopType.EDefaultLoopTypes.LOOP));
             }
+        } else if (state == C1) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger1");
+
+                controller.clearAnimationCache();
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.closefirst", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+
         }
         if (state == F2) {
             final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger2");
@@ -223,6 +288,13 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.secondfinger", ILoopType.EDefaultLoopTypes.PLAY_ONCE)
                         .addAnimation("animation.god_killer_hand.secondfingerup", ILoopType.EDefaultLoopTypes.LOOP));
             }
+        } else if (state == C2) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger2");
+
+                controller.clearAnimationCache();
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.closesecond", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+
         }
         if (state == F3) {
             final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger3");
@@ -231,6 +303,13 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.thirdfinger", ILoopType.EDefaultLoopTypes.PLAY_ONCE)
                         .addAnimation("animation.god_killer_hand.thirdfingerup", ILoopType.EDefaultLoopTypes.LOOP));
             }
+        } else if (state == C3) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger3");
+
+                controller.clearAnimationCache();
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.closethird", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+
         }
         if (state == F4) {
             final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger4");
@@ -239,6 +318,13 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.fourthfinger", ILoopType.EDefaultLoopTypes.PLAY_ONCE)
                         .addAnimation("animation.god_killer_hand.fourthfingerup", ILoopType.EDefaultLoopTypes.LOOP));
             }
+        } else if (state == C4) {
+            final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "finger4");
+
+                controller.clearAnimationCache();
+                controller.markNeedsReload();
+                controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.closefourth", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+
         }
         if (state == ARM) {
             final AnimationController controller = GeckoLibUtil.getControllerForID(this.factory, id, "arm");
@@ -247,5 +333,57 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable {
                 controller.setAnimation(new AnimationBuilder().addAnimation("animation.god_killer_hand.bladearm", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             }
         }
+    }
+    @Override
+    public boolean isRightArmAnimatedD(InteractionHand side, ItemStack stack) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        boolean firstfingonly = nbt.getBoolean("firstfing") && !nbt.getBoolean("secondfing") && !nbt.getBoolean("thirdfing")
+                && !nbt.getBoolean("fourthfing") && !nbt.getBoolean("blade");
+        return side == InteractionHand.MAIN_HAND && firstfingonly;
+    }
+
+    @Override
+    public boolean isLeftArmAnimatedD(InteractionHand side, ItemStack stack) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        boolean firstfingonly = nbt.getBoolean("firstfing") && !nbt.getBoolean("secondfing") && !nbt.getBoolean("thirdfing")
+                && !nbt.getBoolean("fourthfing") && !nbt.getBoolean("blade");
+        return side == InteractionHand.OFF_HAND && firstfingonly;
+    }
+
+    @Override
+    public <T extends Player> BiConsumer<HumanoidModel, T> getLeftArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        boolean firstfingonly = nbt.getBoolean("firstfing") && !nbt.getBoolean("secondfing") && !nbt.getBoolean("thirdfing")
+                && !nbt.getBoolean("fourthfing") && !nbt.getBoolean("blade");
+        if (firstfingonly) {
+        return side == InteractionHand.OFF_HAND ? ((bipedModel, t) -> {
+            bipedModel.leftArm.xRot = -51.8F + bipedModel.head.xRot;
+            bipedModel.leftArm.yRot = 0.3F + bipedModel.head.yRot;
+        }) : ((bipedModel, t) -> {
+            bipedModel.leftArm.xRot = bipedModel.leftArm.xRot;
+            bipedModel.leftArm.yRot = bipedModel.leftArm.yRot;
+        });
+        } else return (bipedModel, t) ->{};
+    }
+
+    @Override
+    public <T extends Player> BiConsumer<HumanoidModel, T> getRightArmPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        boolean firstfingonly = nbt.getBoolean("firstfing") && !nbt.getBoolean("secondfing") && !nbt.getBoolean("thirdfing")
+                && !nbt.getBoolean("fourthfing") && !nbt.getBoolean("blade");
+        if (firstfingonly) {
+            return side == InteractionHand.MAIN_HAND ? ((bipedModel, t) -> {
+                bipedModel.rightArm.xRot = -51.8F + bipedModel.head.xRot;
+                bipedModel.rightArm.yRot = (-0.3F) + bipedModel.head.yRot;
+            }) : ((bipedModel, t) -> {
+                bipedModel.rightArm.xRot = bipedModel.rightArm.xRot;
+                bipedModel.rightArm.yRot = bipedModel.rightArm.yRot;
+            });
+        } else return (bipedModel, t) ->{};
+    }
+
+    @Override
+    public <T extends Player> BiConsumer<PoseStack, T> getItemPoser(InteractionHand side, ItemStack stack, LivingEntity livingEntity) {
+        return (poseStack, t) -> {};
     }
 }

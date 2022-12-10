@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "botsmod:block/polished_tremoring_stone",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "botsmod:block/polished_tremoring_stone",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "botsmod:block/polished_tremoring_stone",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "botsmod:block/polished_tremoring_stone",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "botsmod:block/polished_tremoring_stone"
+        },
+        "facing=west": {
+            "model": "botsmod:block/polished_tremoring_stone",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

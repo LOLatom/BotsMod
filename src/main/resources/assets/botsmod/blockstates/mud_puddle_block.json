@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "":  { "model": "botsmod:block/mud_puddle_block" }
+
+    }
+}

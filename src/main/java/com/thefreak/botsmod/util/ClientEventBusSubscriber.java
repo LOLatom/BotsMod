@@ -46,8 +46,10 @@ public class ClientEventBusSubscriber {
         EntityRenderers.register(ModEntityTypes.KRASIA.get(), KrasiaRender::new);
         EntityRenderers.register(ModEntityTypes.CAVE_ANGELIA_GUPPIE.get(), CaveAngeliaGuppieRender::new);
 
-        //      SPECIAL       //
 
+
+        //      SPECIAL       //
+        EntityRenderers.register(ModEntityTypes.SHADOW_LIGHTNING_BOLT.get(), ShadowLightningBoltRenderer::new);
         //      ITEMS       //
 
 

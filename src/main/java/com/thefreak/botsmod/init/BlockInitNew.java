@@ -10,6 +10,7 @@ import com.thefreak.botsmod.objects.blockpackage.SustainablePlantType;
 import com.thefreak.botsmod.objects.blocks.*;
 
 import com.thefreak.botsmod.objects.blocks.Decorative.BranchBlock;
+import com.thefreak.botsmod.objects.blocks.Decorative.MudPuddleBlock;
 import com.thefreak.botsmod.objects.blocks.Decorative.TarTorch;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.CookingPotBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
@@ -459,6 +460,20 @@ public class BlockInitNew {
 	public static final RegistryObject<Block> RED_BIRD_BRANCH  = BLOCKS.register("red_bird_branch", () -> new RedBirdBranchBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).randomTicks(),4.5F,0,4.5F,11.5F,16,11.5F));
 
 	public static final RegistryObject<Block> FLESH_COLUMN  = BLOCKS.register("flesh_column", () -> new GrowingBranchBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).randomTicks(),0,0,0,16,16,16));
+
+	public static final RegistryObject<Block> TREMORING_STONE  = BLOCKS.register("tremoring_stone", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> TREMORING_STONE_BRICKS  = BLOCKS.register("tremoring_stone_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> CHISELED_TREMORING_STONE  = BLOCKS.register("chiseled_tremoring_stone", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> TREMORING_STONE_TABLE  = BLOCKS.register("tremoring_stone_table", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> POLISHED_TREMORING_STONE  = BLOCKS.register("polished_tremoring_stone", () -> new GrowingBranchBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F),0,0,0,16,16,16));
+
+	public static final RegistryObject<Block> TREMORING_STONE_PILLAR  = BLOCKS.register("tremoring_stone_pillar", () -> new ConnectedTexturePillar(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> MUD_PUDDLE  = BLOCKS.register("mud_puddle", () -> new MudPuddleBlock(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.ROOTED_DIRT).strength(2.0F)));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

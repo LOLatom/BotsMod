@@ -183,6 +183,116 @@
 					}
 				}
 			}
+		},
+		"animation.god_killer_hand.closefirst": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger1": {
+					"rotation": {
+						"0.0": {
+							"vector": [-23.4, 17.98, 82.25]
+						},
+						"0.52": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.closesecond": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger2": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 85],
+							"easing": "easeInElastic"
+						},
+						"0.52": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.closethird": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger3": {
+					"rotation": {
+						"0.0": {
+							"vector": [-0.0773, 2.3684, 89.07954],
+							"easing": "easeInElastic"
+						},
+						"0.52": {
+							"vector": [-2.95254, 0.77127, 3.88166],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [-2.95254, 0.77127, 3.88166]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.closefourth": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger4": {
+					"rotation": {
+						"0.0": {
+							"vector": [18.21993, -12.6303, 94.03945],
+							"easing": "easeInElastic"
+						},
+						"0.52": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						},
+						"1.04": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.hideblade": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 1.04,
+			"override_previous_animation": true,
+			"bones": {
+				"blade": {
+					"position": {
+						"0.0": {
+							"vector": [0, -8, 0],
+							"easing": "easeInOutElastic",
+							"easingArgs": [1.1]
+						},
+						"0.52": {
+							"vector": [0, 0, 0],
+							"easing": "easeInExpo"
+						},
+						"1.04": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

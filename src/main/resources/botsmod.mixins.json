@@ -13,10 +13,14 @@
     "client.HumanoidRendererMixin",
     "client.AbstractClientPlayerMixin",
     "client.EntityRendererMixin",
-    "client.LivingEntityMixin"
+    "client.LivingEntityMixin",
+    "client.WindowMixin"
   ],
   "mixins": [
-    "server.LivingEntityMixin"
+    "server.LivingEntityMixin",
+    "server.EntityMixin",
+    "server.LevelMixin",
+    "server.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

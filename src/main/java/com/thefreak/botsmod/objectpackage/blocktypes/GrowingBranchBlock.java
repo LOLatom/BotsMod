@@ -75,6 +75,7 @@ public class GrowingBranchBlock extends DirectionalBlock {
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         super.tick(pState, pLevel, pPos, pRandom);
         grow(pState,pLevel,pPos,pRandom);
+
     }
 
     @Override

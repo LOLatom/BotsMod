@@ -2,7 +2,6 @@ package com.thefreak.botsmod;
 
 import com.deltateam.deltalib.API.rendering.shader.PostProcessingUtils;
 import com.deltateam.deltalib.accessors.ShaderAccessor;
-import com.mojang.blaze3d.shaders.Shader;
 import com.thefreak.botsmod.client.Rendering.RenderTargets;
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.fluids.BOTSFluids;
@@ -13,7 +12,6 @@ import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.keys.KeyInitiation;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.client.renderer.RenderType;
@@ -197,7 +195,7 @@ public class BotsMod
 
 
             boolean a = ClassReferences.getClientMC().getEntityRenderDispatcher().camera.getBlockAtCamera().getBlock() == FluidInit.CELL_FLUID.get();
-
+            a = a && ClassReferences.getClientMC().getEntityRenderDispatcher().camera.getFluidInCamera().equals(FogType.WATER);
 
              if (!inCellFluid && a) {
                  inCellFluid = true;
@@ -236,25 +234,32 @@ public class BotsMod
                     PostProcessingUtils.removePass(new ResourceLocation("botsmod:blur_blit"));
                 }
             }
-           /* if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_x"))) {
+
+            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_x"))) {
                 PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_x"), new ResourceLocation("minecraft:blur"));
                 shader.getEffect().getUniform("BlurDir").set(1f, 0f);
                 shader.getEffect().getUniform("Radius").set(10f);
-                ((ShaderAccessor)shader).setFramebufferIn(RenderTargets.FreakPlayer);
-                ((ShaderAccessor)shader).setFramebufferOut(RenderTargets.FreakPlayer2);
+                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayer);
+                ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayerSwap);
             }
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_y"))) {
                 PostPass  shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_y"), new ResourceLocation("minecraft:blur"));
                 shader.getEffect().getUniform("BlurDir").set(0f, 1f);
                 shader.getEffect().getUniform("Radius").set(10f);
-                ((ShaderAccessor)shader).setFramebufferIn(RenderTargets.FreakPlayer2);
-                ((ShaderAccessor)shader).setFramebufferOut(RenderTargets.FreakPlayer);
+                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayerSwap);
+                ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayer);
+            }
+            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_merge"))) {
+                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_merge"), new ResourceLocation("botsmod:merge"));
+                ((ShaderAccessor)shader).addAuxTarget("FreakBlur", RenderTargets.FreakPlayer);
+                ((ShaderAccessor)shader).addDepthTarget("FreakBlurDepth", RenderTargets.FreakPlayer);
+//                ((ShaderAccessor)shader).setTargetBuffer(Minecraft.getInstance().getMainRenderTarget());
             }
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_blit"))) {
                 PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_blit"), new ResourceLocation("minecraft:blit"));
-                ((ShaderAccessor)shader).setFramebufferIn(RenderTargets.FreakPlayer);
-                ((ShaderAccessor)shader).setFramebufferOut(Minecraft.getInstance().getMainRenderTarget());
-            }*/
+//                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayer);
+//                ((ShaderAccessor)shader).setTargetBuffer(Minecraft.getInstance().getMainRenderTarget());
+            }
             }
         }
 

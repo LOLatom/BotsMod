@@ -54,7 +54,8 @@ public class HumanoidRendererMixin{
         boolean isme = pEntity.getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || pEntity.getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
         if (pEntity instanceof IAmDivine divine) {
             if (divine.isDivine() && isme) {
-               // RenderTargets.FreakPlayer.bindWrite(true);
+                Minecraft.getInstance().getMainRenderTarget().unbindWrite();
+                RenderTargets.FreakPlayer.bindWrite(true);
             }
         }
     }
@@ -64,8 +65,8 @@ public class HumanoidRendererMixin{
         boolean isme = pEntity.getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || pEntity.getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
         if (pEntity instanceof IAmDivine divine) {
             if (divine.isDivine() && isme) {
-               // RenderTargets.FreakPlayer.unbindWrite();
-                //Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
+                RenderTargets.FreakPlayer.unbindWrite();
+                Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
             }
         }
     }

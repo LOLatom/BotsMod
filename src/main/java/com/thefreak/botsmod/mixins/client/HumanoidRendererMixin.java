@@ -66,6 +66,8 @@ public class HumanoidRendererMixin{
         if (pEntity instanceof IAmDivine divine) {
             if (divine.isDivine() && isme) {
                 RenderTargets.FreakPlayer.unbindWrite();
+                RenderTargets.FreakPlayerDepth.copyDepthFrom(RenderTargets.FreakPlayer);
+                RenderTargets.FreakPlayerDepth.unbindWrite();
                 Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
             }
         }

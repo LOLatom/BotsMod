@@ -5,7 +5,7 @@
         "dstrgb": "1-srcalpha"
     },
     "vertex": "blit",
-    "fragment": "blit",
+    "fragment": "botsmod:redview",
     "attributes": [ "Position" ],
     "samplers": [
         { "name": "DiffuseSampler" }

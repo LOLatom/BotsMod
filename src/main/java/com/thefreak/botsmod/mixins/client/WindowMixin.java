@@ -15,7 +15,7 @@ public class WindowMixin {
 
     @Shadow private int framebufferHeight;
 
-    @Inject(at = @At("HEAD"), method = "onFramebufferResize")
+    @Inject(at = @At("TAIL"), method = "onFramebufferResize")
     public void preUpdateFBOSize(CallbackInfo ci) {
         RenderTargets.updateFBOSize(framebufferWidth, framebufferHeight);
     }

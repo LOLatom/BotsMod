@@ -236,23 +236,24 @@ public class BotsMod
             }
 
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_x"))) {
-                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_x"), new ResourceLocation("minecraft:blur"));
+                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_x"), new ResourceLocation("blur"));
                 shader.getEffect().getUniform("BlurDir").set(1f, 0f);
-                shader.getEffect().getUniform("Radius").set(10f);
+                shader.getEffect().getUniform("Radius").set(5f);
                 ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayer);
                 ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayerSwap);
             }
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_y"))) {
-                PostPass  shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_y"), new ResourceLocation("minecraft:blur"));
+                PostPass  shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_y"), new ResourceLocation("blur"));
                 shader.getEffect().getUniform("BlurDir").set(0f, 1f);
-                shader.getEffect().getUniform("Radius").set(10f);
+                shader.getEffect().getUniform("Radius").set(5f);
                 ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayerSwap);
                 ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayer);
             }
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_merge"))) {
                 PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_merge"), new ResourceLocation("botsmod:merge"));
+//                ((ShaderAccessor)shader).addDepthTarget("DiffuseDepthSampler", ClassReferences.getClientMC().getMainRenderTarget());
                 ((ShaderAccessor)shader).addAuxTarget("FreakBlur", RenderTargets.FreakPlayer);
-                ((ShaderAccessor)shader).addDepthTarget("FreakBlurDepth", RenderTargets.FreakPlayer);
+                ((ShaderAccessor)shader).addDepthTarget("FreakBlurDepth", RenderTargets.FreakPlayerDepth);
 //                ((ShaderAccessor)shader).setTargetBuffer(Minecraft.getInstance().getMainRenderTarget());
             }
             if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_blit"))) {

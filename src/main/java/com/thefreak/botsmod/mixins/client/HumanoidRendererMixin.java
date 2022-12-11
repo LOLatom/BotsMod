@@ -49,33 +49,9 @@ public class HumanoidRendererMixin{
         }
 
     }
-    @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
-    public void preRender(AbstractClientPlayer pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
-        boolean isme = pEntity.getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || pEntity.getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
-        if (pEntity instanceof IAmDivine divine) {
-            if (divine.isDivine() && isme) {
-                Minecraft.getInstance().getMainRenderTarget().unbindWrite();
-                RenderTargets.FreakPlayer.bindWrite(true);
-            }
-        }
-    }
-
-    @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("TAIL"))
-    public void postRender(AbstractClientPlayer pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
-        boolean isme = pEntity.getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || pEntity.getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
-        if (pEntity instanceof IAmDivine divine) {
-            if (divine.isDivine() && isme) {
-                RenderTargets.FreakPlayer.unbindWrite();
-                RenderTargets.FreakPlayerDepth.copyDepthFrom(RenderTargets.FreakPlayer);
-                RenderTargets.FreakPlayerDepth.unbindWrite();
-                Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
-            }
-        }
-    }
 
 
 
-    
     @Inject(at = @At("TAIL"), method = "renderHand")
     public void postRenderHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm, ModelPart pRendererArmwear, CallbackInfo ci) {
         if (pPlayer instanceof IBotsModAnimatable botsModAnimatable) {

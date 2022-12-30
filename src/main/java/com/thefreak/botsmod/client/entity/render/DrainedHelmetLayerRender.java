@@ -1,10 +1,7 @@
 package com.thefreak.botsmod.client.entity.render;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.entities.DrainedEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;

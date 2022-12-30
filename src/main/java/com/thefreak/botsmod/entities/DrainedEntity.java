@@ -1,6 +1,5 @@
 package com.thefreak.botsmod.entities;
 
-import com.thefreak.botsmod.init.BlockInitNew;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -33,9 +32,9 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Random;
 
 public class DrainedEntity extends Monster implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);

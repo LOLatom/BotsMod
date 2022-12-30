@@ -2,7 +2,6 @@ package com.thefreak.botsmod.tileentity.model;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.tileentity.CookingPotTileEntity;
-import com.thefreak.botsmod.tileentity.PostMortalAltarTileEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

@@ -1,10 +1,7 @@
 package com.thefreak.botsmod.init;
 
-import java.util.function.Supplier;
-
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.BotsMod.BotsItemGroup;
-
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -13,6 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.function.Supplier;
 
 
 

@@ -2,10 +2,7 @@ package com.thefreak.botsmod.util.packets.interractionpackets.serverpackets;
 
 import com.thefreak.botsmod.API.IAmDivine;
 import com.thefreak.botsmod.ClassReferences;
-import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 

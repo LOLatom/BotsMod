@@ -1,39 +1,19 @@
 package com.thefreak.botsmod.client.gui.secrets;
 
-import com.ibm.icu.impl.coll.UVector32;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.util.misc.SecretOptions;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
-import net.minecraft.client.Option;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.LockIconButton;
-import net.minecraft.client.gui.narration.NarratedElementType;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.narration.NarrationThunk;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.client.main.GameConfig;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
-import java.util.UUID;
-import java.util.Vector;
 
 public class SecretTitleScreen extends Screen {
     public static final ResourceLocation SECRET_BACKGROUND = new ResourceLocation(BotsMod.MOD_ID,"textures/gui/secrets_background.png");

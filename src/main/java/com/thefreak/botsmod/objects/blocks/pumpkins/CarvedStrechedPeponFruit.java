@@ -2,11 +2,6 @@ package com.thefreak.botsmod.objects.blocks.pumpkins;
 
 import com.thefreak.botsmod.init.BlockInitNew;
 import com.thefreak.botsmod.objects.blockpackage.RotationalFallingBlock;
-
-
-import javax.annotation.Nullable;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +21,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class CarvedStrechedPeponFruit extends RotationalFallingBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

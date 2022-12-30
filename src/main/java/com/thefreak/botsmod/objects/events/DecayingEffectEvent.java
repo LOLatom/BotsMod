@@ -2,8 +2,8 @@ package com.thefreak.botsmod.objects.events;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.init.EffectInitNew;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.TickEvent;

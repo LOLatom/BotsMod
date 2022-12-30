@@ -1,22 +1,27 @@
 package com.thefreak.botsmod.spells.spellclass.spelltype;
 
+import com.deltateam.deltalib.API.animation.keyframes.animator.Animation;
 import com.thefreak.botsmod.API.ISFreezable;
+import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import com.thefreak.botsmod.spells.spellclass.AbstractSpell;
-import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 
 public class FreezeSpell extends AbstractSpell {
 
-    public FreezeSpell(ItemStack usedItemStack, boolean f1state, boolean f2state, boolean f3state, boolean f4state, boolean blade) {
-        super(usedItemStack, f1state, f2state, f3state, f4state, blade);
+
+    public FreezeSpell(ItemStack usedItemStack, boolean f1state, boolean f2state, boolean f3state, boolean f4state, boolean blade, @Nullable UseOnContext context) {
+        super(usedItemStack, f1state, f2state, f3state, f4state, blade, context);
     }
 
     @Override
@@ -25,13 +30,15 @@ public class FreezeSpell extends AbstractSpell {
     }
 
     @Override
-    public boolean shouldContinueExecuting(Player player, Level level, InteractionHand hand) {
+    public boolean shouldContinueExecuting(Player player, Level level, InteractionHand hand,@Nullable UseOnContext context) {
         return false;
     }
 
     @Override
-    public void Execute(Player player, Level level, InteractionHand hand) {
+    public void Execute(Player player, Level level, InteractionHand hand,@Nullable UseOnContext context) {
         List<Entity> entities = level.getEntitiesOfClass(Entity.class, player.getBoundingBox().inflate(3D));
+        //IBotsModAnimatable animatable = (IBotsModAnimatable) player;
+        //animatable.getSet().startAnimation("botsmod.spellcastingup",animatable.getObject().animator());
         for (Entity entity : entities) {
             if (entity instanceof ISFreezable && !(entity instanceof Player)) {
                 ISFreezable freezable = (ISFreezable) entity;
@@ -40,6 +47,44 @@ public class FreezeSpell extends AbstractSpell {
                 System.out.println("Freezed  :  " + entity);
             }
         }
-        super.Execute(player, level, hand);
+        super.Execute(player, level, hand, context);
     }
+
+
+    @Override
+    public ResourceLocation getIconLocation() {
+        return new ResourceLocation(BotsMod.MOD_ID,"textures/gui/spell/freeze_spell.png");
+    }
+
+    @Override
+    public boolean activeFinger1() {
+        return true;
+    }
+
+    @Override
+    public boolean activeFinger2() {
+        return true;
+    }
+
+    @Override
+    public boolean activeFinger3() {
+        return true;
+    }
+
+    @Override
+    public boolean activeFinger4() {
+        return true;
+    }
+
+    @Override
+    public boolean activeBlade() {
+        return false;
+    }
+
+    @Override
+    public int modeActive() {
+        return 0;
+    }
+
+
 }

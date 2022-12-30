@@ -1,13 +1,10 @@
 package com.thefreak.botsmod.objects.blocks.HeatBlockMechanics;
 
-import com.thefreak.botsmod.tileentity.HeatCapacitorTileEntity;
-import com.thefreak.botsmod.tileentity.TileBases.HeatBlockEntityBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.SoulFireBlock;
-import net.minecraft.world.level.material.LavaFluid;
 
 public class HeatMaths {
 

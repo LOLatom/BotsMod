@@ -1,22 +1,17 @@
 package com.thefreak.botsmod.objects.items;
 
-import com.thefreak.botsmod.entities.PinkPurifiedSaltItemEntity;
 import com.thefreak.botsmod.entities.WanderingSpecterEntity;
 import com.thefreak.botsmod.init.EffectInitNew;
-
 import com.thefreak.botsmod.init.ModEntityTypes;
-
-
-import java.util.Collection;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import java.util.Collection;
 
 public class PinkPurifiedSalt extends Item {
     public PinkPurifiedSalt(Properties properties) {

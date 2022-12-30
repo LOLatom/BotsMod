@@ -1,8 +1,6 @@
 package com.thefreak.botsmod.client.entity.render;
 
-import com.thefreak.botsmod.client.entity.model.GiantTardigradeModel;
 import com.thefreak.botsmod.client.entity.model.LadybugModel;
-import com.thefreak.botsmod.entities.GiantTardigradeEntity;
 import com.thefreak.botsmod.entities.LadybugEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;

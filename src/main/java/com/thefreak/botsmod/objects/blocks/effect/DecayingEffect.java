@@ -6,8 +6,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 
-import java.util.List;
-
 public class DecayingEffect extends MobEffect implements IEffectSpecialRenderings {
     public DecayingEffect(MobEffectCategory p_i50391_1_, int p_i50391_2_) {
         super(p_i50391_1_, p_i50391_2_);

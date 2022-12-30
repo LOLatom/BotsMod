@@ -5,9 +5,11 @@ import com.deltateam.deltalib.API.animation.keyframes.animator.ModelAnimator;
 import com.deltateam.deltalib.API.animation.keyframes.animator.builders.AnimationBuilder;
 import com.deltateam.deltalib.API.animation.keyframes.animator.builders.AnimationSetBuilder;
 import com.deltateam.deltalib.API.animation.keyframes.animator.builders.KeyframeSequenceBuilder;
+import com.deltateam.deltalib.util.animation.KeyframeGroup;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
 import com.thefreak.botsmod.client.access.IAnimationHolder;
 import com.thefreak.botsmod.client.access.IBotsModAnimatable;
+import com.thefreak.botsmod.objects.animations.SpellUpCastingKeyFrame;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
@@ -65,18 +67,9 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 	
 	protected AnimationSet buildAnimations() {
 		return new AnimationSetBuilder()
-				.addAnimation("botsmod.test", new AnimationBuilder()
+				.addAnimation("botsmod.spellcastingup", new AnimationBuilder()
 						.animatePart(rightArm,
-								new KeyframeSequenceBuilder()
-										.addPosition(0, new Vec3(0, 0, 0))
-										.addPosition(80, new Vec3(0, 0, 0))
-										.addRotation(0, new Vec3(0, 0, 0), true)
-										.addRotation(20, new Vec3(0, 90, 0), true)
-										.addRotation(40, new Vec3(0, 90, 90), true)
-										.addRotation(60, new Vec3(0, 0, 90), true)
-										.addRotation(80, new Vec3(0, 0, 0), true)
-										.addPosition(10, new Vec3(0, 0, 0))
-										.build()
+								new KeyframeGroup(null,new SpellUpCastingKeyFrame(null,null,120))
 						).build()
 				).build();
 	}

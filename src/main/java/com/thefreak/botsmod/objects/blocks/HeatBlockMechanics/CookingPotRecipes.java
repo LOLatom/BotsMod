@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.objects.blocks.HeatBlockMechanics;
 
 import com.thefreak.botsmod.tileentity.CookingPotTileEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 

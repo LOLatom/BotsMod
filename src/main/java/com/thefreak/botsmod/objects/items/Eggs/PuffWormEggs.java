@@ -2,17 +2,13 @@ package com.thefreak.botsmod.objects.items.Eggs;
 
 import com.thefreak.botsmod.entities.PuffWormEntity;
 import com.thefreak.botsmod.init.ModEntityTypes;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;

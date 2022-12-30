@@ -2,32 +2,22 @@ package com.thefreak.botsmod.objects.items.loreandclueitems;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
-import com.thefreak.botsmod.ClassReferences;
-import com.thefreak.botsmod.client.access.IBotsModAnimatable;
-import com.thefreak.botsmod.client.gui.gkhguis.FingerScreen;
-import com.thefreak.botsmod.init.iteminit.FoodItemInit;
-import com.thefreak.botsmod.objects.items.bewlr.BanhirHeadBEWLR;
-import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandBEWLR;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
-import com.thefreak.botsmod.objects.items.bewlr.models.GodKillerHandModel;
 import com.thefreak.botsmod.spells.SpellIdentifier;
 import com.thefreak.botsmod.spells.spellclass.AbstractSpell;
+import com.thefreak.botsmod.util.packets.BotsPacketHandler;
+import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenFingerGUI;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +39,6 @@ import software.bernie.geckolib3.network.GeckoLibNetwork;
 import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.awt.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -120,6 +109,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
             nbt.putBoolean("thirdfing",false);
             nbt.putBoolean("fourthfing",false);
             nbt.putInt("spellid",0);
+            nbt.putInt("mode",0);
 
             nbt.putBoolean("blade",false);
         } else {
@@ -128,6 +118,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
             nbt.putBoolean("thirdfing",nbt.getBoolean("thirdfing"));
             nbt.putBoolean("fourthfing",nbt.getBoolean("fourthfing"));
             nbt.putInt("spellid",nbt.getInt("spellid"));
+            nbt.putInt("mode",nbt.getInt("mode"));
 
             nbt.putBoolean("blade",nbt.getBoolean("blade"));
         }
@@ -173,17 +164,19 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
         //    animatable.getSet().startAnimation("botsmod.test", animatable.getObject().animator());
         //}
 
-        if (pLevel.isClientSide && pPlayer.isCrouching()) ClassReferences.getClientMC().setScreen(new FingerScreen(pLevel, pPlayer, stack, pUsedHand));
+
         if (!pLevel.isClientSide) {
             final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerLevel) pLevel);
             final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> pPlayer);
-
+            if (pPlayer.isCrouching()) {
+                BotsPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) pPlayer), new OpenFingerGUI());
+            }
 
         }
         if (!pPlayer.isCrouching()) {
-            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack);
+            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack, null);
             AbstractSpell spell = SI.getSpellFromID(spellID);
-            spell.startExecuting(pPlayer, pLevel, pUsedHand);
+            spell.startExecuting(pPlayer, pLevel, pUsedHand,null,false);
         }
         return InteractionResultHolder.pass(stack);
     }
@@ -196,7 +189,21 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
             pTarget.hurt(DamageSource.mobAttack(pAttacker), 5F);
             System.out.println("BLADEDAMAGE");
         }
+        boolean finger1 = nbt.getBoolean("firstfing");
+        boolean finger2 = nbt.getBoolean("secondfing");
+        boolean finger3 = nbt.getBoolean("thirdfing");
+        boolean finger4 = nbt.getBoolean("fourthfing");
+        int spellID = nbt.getInt("spellid");
+        SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, pStack, null);
+        AbstractSpell spell = SI.getOnAttackSpellFromID(spellID);
+        spell.setTarget(pTarget);
+        spell.startExecuting((Player) pAttacker, pAttacker.level, InteractionHand.MAIN_HAND,null,false);
         return super.hurtEnemy(pStack, pTarget, pAttacker);
+    }
+
+    @Override
+    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+        super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
     }
 
     @Override
@@ -212,9 +219,9 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
         System.out.println("CLICKCLICKCLICK");
 
         if (!pContext.getPlayer().isCrouching()) {
-            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack);
+            SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack, pContext);
             AbstractSpell spell = SI.getUseOnSpellFromID(spellID);
-            spell.startExecuting(pContext.getPlayer(), pContext.getLevel(), pContext.getHand());
+            spell.startExecuting(pContext.getPlayer(), pContext.getLevel(), pContext.getHand(),pContext,false);
         }
 
         return super.useOn(pContext);
@@ -241,6 +248,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
             nbt.putBoolean("thirdfing",false);
             nbt.putBoolean("fourthfing",false);
             nbt.putInt("spellid",0);
+            nbt.putInt("mode",0);
 
             nbt.putBoolean("blade",false);
         }

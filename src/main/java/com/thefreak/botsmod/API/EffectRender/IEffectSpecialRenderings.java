@@ -2,14 +2,10 @@ package com.thefreak.botsmod.API.EffectRender;
 
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
-
 import net.minecraft.resources.ResourceLocation;
-
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.apache.logging.log4j.util.BiConsumer;
-import org.apache.logging.log4j.util.TriConsumer;
 
 public interface IEffectSpecialRenderings {
     //Set to true if the potion effect has a custom background

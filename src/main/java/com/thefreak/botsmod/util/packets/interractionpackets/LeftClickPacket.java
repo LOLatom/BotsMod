@@ -1,6 +1,5 @@
 package com.thefreak.botsmod.util.packets.interractionpackets;
 
-import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.items.loreandclueitems.GodKillerHand;
 import com.thefreak.botsmod.spells.SpellIdentifier;
 import com.thefreak.botsmod.spells.spellclass.AbstractSpell;
@@ -10,10 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
-import software.bernie.geckolib3.network.GeckoLibNetwork;
-import software.bernie.geckolib3.network.ISyncable;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.function.Supplier;
 
@@ -54,9 +49,9 @@ public class LeftClickPacket {
             if (ctx.get().getSender().isCrouching()) {
 
             } else {
-                SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack);
+                SpellIdentifier SI = new SpellIdentifier(finger1, finger2, finger3, finger4, blade, spellID, stack,null);
                 AbstractSpell spell = SI.getLeftCliclkSpellFromID(spellID);
-                spell.startExecuting(ctx.get().getSender(), ctx.get().getSender().level, InteractionHand.MAIN_HAND);
+                spell.startExecuting(ctx.get().getSender(), ctx.get().getSender().level, InteractionHand.MAIN_HAND,null,false);
             }
         }
     }

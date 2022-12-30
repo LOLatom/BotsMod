@@ -1,10 +1,7 @@
 package com.thefreak.botsmod.client.entity.render;
 
 import com.thefreak.botsmod.client.entity.model.DrainedChiefModel;
-import com.thefreak.botsmod.client.entity.model.DrainedModel;
 import com.thefreak.botsmod.entities.DrainedChiefEntity;
-import com.thefreak.botsmod.entities.DrainedEntity;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

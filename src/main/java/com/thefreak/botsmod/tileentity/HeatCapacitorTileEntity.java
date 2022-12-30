@@ -1,29 +1,20 @@
 package com.thefreak.botsmod.tileentity;
 
-import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
-import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
-import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatMaths;
 import com.thefreak.botsmod.tileentity.TileBases.HeatBlockEntityBase;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 
-import java.util.List;
 import java.util.Random;
 
 public class HeatCapacitorTileEntity extends HeatBlockEntityBase implements BlockEntityTicker {

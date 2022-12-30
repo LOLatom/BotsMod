@@ -21,7 +21,7 @@ public class WhereDoIReferenceClientLevel {
                         outputStream.close();
                         outputStream.flush();
                         reader.close();
-                        if (str.contains("GuiEventListener")) System.out.println(listFile);
+                        if (str.contains("KeyMapping")) System.out.println(listFile);
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.init.blockinit;
 
 import com.thefreak.botsmod.BotsMod;
-import com.thefreak.botsmod.objects.blocks.plants.LogMushroom;
 import com.thefreak.botsmod.objects.blocks.plants.LuxureMelon;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;

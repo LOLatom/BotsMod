@@ -4,34 +4,26 @@ import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.client.gui.secrets.SecretTitleScreen;
 import com.thefreak.botsmod.util.misc.SecretOptions;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.AccessibilityOptionsScreen;
-import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.lwjgl.glfw.GLFW;
 
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.nio.file.FileSystem;
 
-@Mod.EventBusSubscriber(modid = BotsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = BotsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class MainMenutScreenEvent {
     private static final ResourceLocation ACCESSIBILITY_TEXTURE = new ResourceLocation(BotsMod.MOD_ID,"textures/gui/secret_button.png");
     public boolean accesible = false;
 
     @SubscribeEvent
     public static void onMenuRender(ScreenEvent.InitScreenEvent event) {
-        Screen screen = event.getScreen();
+       /* Screen screen = event.getScreen();
 
 
         Minecraft mc = ClassReferences.getClientMC();
@@ -48,7 +40,7 @@ public class MainMenutScreenEvent {
                 mc.setScreen(new SecretTitleScreen());
             }));
 
-        }
+        }*/
     }
 
 

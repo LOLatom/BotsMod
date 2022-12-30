@@ -1,11 +1,7 @@
 package com.thefreak.botsmod.util.misc;
 
-import com.google.common.base.Splitter;
-import com.ibm.icu.impl.locale.XCldrStub;
-import com.mojang.datafixers.types.templates.CompoundList;
 import com.thefreak.botsmod.ClassReferences;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
@@ -13,10 +9,9 @@ import oshi.util.tuples.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystem;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @OnlyIn(Dist.CLIENT)
 public class SecretOptions {

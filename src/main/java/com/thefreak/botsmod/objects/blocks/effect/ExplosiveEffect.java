@@ -7,8 +7,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
-import javax.swing.*;
-
 public class ExplosiveEffect extends MobEffect implements IEffectSpecialRenderings {
     public ExplosiveEffect(MobEffectCategory typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);

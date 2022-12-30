@@ -1,8 +1,8 @@
 package com.thefreak.botsmod.tileentity;
 
+import com.thefreak.botsmod.init.ModTileEntityTypes;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
-import com.thefreak.botsmod.init.ModTileEntityTypes;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.CookingPotRecipes;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatMaths;

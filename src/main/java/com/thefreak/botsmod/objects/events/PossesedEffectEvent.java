@@ -7,7 +7,6 @@ import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
 import com.thefreak.botsmod.util.AI.AttackWhenPossesedGoal;
 import com.thefreak.botsmod.util.AI.TargetNearestWhenPossesed;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

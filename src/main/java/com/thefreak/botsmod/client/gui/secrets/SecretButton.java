@@ -6,14 +6,11 @@ import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.ClassReferences;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-
-import java.awt.*;
 
 public class SecretButton extends Button {
     public static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation(BotsMod.MOD_ID,"textures/gui/secret_widget.png");

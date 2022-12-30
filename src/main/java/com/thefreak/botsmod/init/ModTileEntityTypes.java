@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
-
 import com.thefreak.botsmod.tileentity.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;

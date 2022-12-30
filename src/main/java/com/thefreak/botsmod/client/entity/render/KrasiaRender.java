@@ -2,11 +2,8 @@ package com.thefreak.botsmod.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.thefreak.botsmod.client.entity.model.DrainedChiefModel;
 import com.thefreak.botsmod.client.entity.model.KrasiaModel;
-import com.thefreak.botsmod.entities.DrainedChiefEntity;
 import com.thefreak.botsmod.entities.KrasiaEntity;
-import com.thefreak.botsmod.entities.WickedOne;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.thefreak.botsmod.entities.DrainedEntity;
 import com.thefreak.botsmod.entities.WickedOne;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

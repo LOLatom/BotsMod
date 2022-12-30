@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
-
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.entities.misc.ShadowLightningBolt;
 import net.minecraft.resources.ResourceLocation;

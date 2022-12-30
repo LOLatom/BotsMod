@@ -1,8 +1,6 @@
 package com.thefreak.botsmod.objects.items.bewlr.models;
 
 import com.thefreak.botsmod.BotsMod;
-import com.thefreak.botsmod.entities.KrasiaEntity;
-import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandBEWLR;
 import com.thefreak.botsmod.objects.items.loreandclueitems.GodKillerHand;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

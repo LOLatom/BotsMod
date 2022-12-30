@@ -3,7 +3,6 @@ package com.thefreak.botsmod.util.botsevent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
-import org.openjdk.nashorn.internal.objects.annotations.Getter;
 
 public class TooltipDisplayEvent extends Event {
 

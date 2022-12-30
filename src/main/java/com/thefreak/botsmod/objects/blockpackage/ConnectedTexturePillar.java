@@ -1,11 +1,8 @@
 package com.thefreak.botsmod.objects.blockpackage;
 
 
-
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;

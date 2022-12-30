@@ -2,7 +2,6 @@ package com.thefreak.botsmod.objects.blocks.HeatBlockMechanics;
 
 import com.thefreak.botsmod.API.TileEntity.ITileEntityBase;
 import com.thefreak.botsmod.init.ModTileEntityTypes;
-import com.thefreak.botsmod.tileentity.HeatAccumulatorTileEntity;
 import com.thefreak.botsmod.tileentity.HeatCapacitorTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

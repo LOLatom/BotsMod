@@ -5,10 +5,8 @@ import com.thefreak.botsmod.objects.blocks.effect.DecayingEffect;
 import com.thefreak.botsmod.objects.blocks.effect.ExplosiveEffect;
 import com.thefreak.botsmod.objects.blocks.effect.MogroveToxinsEffect;
 import com.thefreak.botsmod.objects.blocks.effect.PossesionEffect;
-
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

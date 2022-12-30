@@ -2,29 +2,19 @@ package com.thefreak.botsmod.mixins.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.thefreak.botsmod.API.IAmDivine;
-import com.thefreak.botsmod.ClassReferences;
-import com.thefreak.botsmod.client.Rendering.RenderTargets;
 import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import com.thefreak.botsmod.client.entity.render.HumanoidLayer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Mob;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
-import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
 @Mixin(PlayerRenderer.class)
 public class HumanoidRendererMixin{

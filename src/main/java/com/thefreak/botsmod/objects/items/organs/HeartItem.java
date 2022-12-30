@@ -4,7 +4,6 @@ import com.thefreak.botsmod.API.IHaveSpecialTooltip;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

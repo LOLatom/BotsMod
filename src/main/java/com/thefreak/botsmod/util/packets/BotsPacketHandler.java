@@ -4,10 +4,7 @@ import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
 import com.thefreak.botsmod.util.packets.interractionpackets.LeftClickPacket;
 import com.thefreak.botsmod.util.packets.interractionpackets.OpenCloseGodKHPacket;
 import com.thefreak.botsmod.util.packets.interractionpackets.SetGodKHSpellPacket;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenFingerGUI;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenSpellGUI;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.SomeoneClickedDivineKeyPacket;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.UpdateBlocksAt;
+import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
@@ -70,6 +67,12 @@ public class BotsPacketHandler {
                 .encoder(UpdateBlocksAt::encode)
                 .decoder(UpdateBlocksAt::decode)
                 .consumer(UpdateBlocksAt::handle)
+                .add();
+
+        INSTANCE.messageBuilder(OpenDialogueGUI.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(OpenDialogueGUI::encode)
+                .decoder(OpenDialogueGUI::decode)
+                .consumer(OpenDialogueGUI::handle)
                 .add();
 
 

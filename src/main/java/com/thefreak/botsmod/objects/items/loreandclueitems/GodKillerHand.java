@@ -2,6 +2,8 @@ package com.thefreak.botsmod.objects.items.loreandclueitems;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.thefreak.botsmod.API.Animation.IHandlePoseable;
+import com.thefreak.botsmod.API.IHaveSpecialTooltip;
+import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
 import com.thefreak.botsmod.spells.SpellIdentifier;
 import com.thefreak.botsmod.spells.spellclass.AbstractSpell;
@@ -10,6 +12,10 @@ import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenF
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +27,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -39,10 +46,12 @@ import software.bernie.geckolib3.network.GeckoLibNetwork;
 import software.bernie.geckolib3.network.ISyncable;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.awt.*;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHandlePoseable {
+public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHandlePoseable, IHaveSpecialTooltip {
     public static final int F1 = 1;
     public static final int F2 = 2;
     public static final int F3 = 3;
@@ -128,6 +137,32 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
     }
 
     @Override
+    public Color colorBottom() {
+        return new Color(79, 55, 34, 255);
+    }
+
+    @Override
+    public Color colorTop() {
+        return new Color(142, 98, 41, 255);
+    }
+
+    @Override
+    public Color backgroundColorTop() {
+        return new Color(44, 35, 30,226);
+    }
+
+    @Override
+    public Color backgroundColorBottom() {
+        return new Color(20, 18, 17, 226);
+    }
+
+    @Override
+    public boolean hasCustomBackGroundColor() {
+        return true;
+    }
+
+
+    @Override
     public void readShareTag(ItemStack stack,  CompoundTag nbt) {
         super.readShareTag(stack,nbt);
         stack.setTag(nbt);
@@ -180,6 +215,18 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHand
         }
         return InteractionResultHolder.pass(stack);
     }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(new TextComponent("HHHHHIJ").withStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "logofont"))));
+        pTooltipComponents.add(new TextComponent("135").withStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "logofont"))));
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    }
+
+
+
+
+
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {

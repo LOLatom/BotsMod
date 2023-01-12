@@ -16,7 +16,8 @@
     "client.LivingEntityMixin",
     "client.WindowMixin",
     "client.LevelRendererMixin",
-    "client.EntityRendererDispatcherMixin"
+    "client.EntityRendererDispatcherMixin",
+    "client.SlotMixinForEvent"
   ],
   "mixins": [
     "server.LivingEntityMixin",

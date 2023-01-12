@@ -12,6 +12,6 @@ public class SpellUpCastingKeyFrame extends Keyframe {
 
     @Override
     public Vec3 currentPos(Entity entity, Vec3 lastpos, Vec3 defaultpos, double v) {
-        return new Vec3(Math.toRadians(lastpos.x + Math.sin(v * 500) * 25), lastpos.y, Math.toRadians(lastpos.z + Math.sin(v * 500) * 25));
+        return new Vec3(lastpos.x + Math.sin((v) * 4*(Math.PI)), lastpos.y, lastpos.z + Math.sin((v) * 4*(Math.PI)) * 2);
     }
 }

@@ -37,8 +37,8 @@ public class FreezeSpell extends AbstractSpell {
     @Override
     public void Execute(Player player, Level level, InteractionHand hand,@Nullable UseOnContext context) {
         List<Entity> entities = level.getEntitiesOfClass(Entity.class, player.getBoundingBox().inflate(3D));
-        //IBotsModAnimatable animatable = (IBotsModAnimatable) player;
-        //animatable.getSet().startAnimation("botsmod.spellcastingup",animatable.getObject().animator());
+        IBotsModAnimatable animatable = (IBotsModAnimatable) player;
+        animatable.getSet().startAnimation("botsmod.spellcastingup",animatable.getObject().animator());
         for (Entity entity : entities) {
             if (entity instanceof ISFreezable && !(entity instanceof Player)) {
                 ISFreezable freezable = (ISFreezable) entity;

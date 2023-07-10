@@ -2,7 +2,6 @@ package com.thefreak.botsmod.util.packets.interractionpackets.serverpackets;
 
 import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.client.gui.dialogue.DialogueGUI;
-import com.thefreak.botsmod.client.gui.gkhguis.FingerScreen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

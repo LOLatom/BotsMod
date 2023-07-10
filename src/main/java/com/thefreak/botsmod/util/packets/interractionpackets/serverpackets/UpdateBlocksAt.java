@@ -1,7 +1,5 @@
 package com.thefreak.botsmod.util.packets.interractionpackets.serverpackets;
 
-import com.thefreak.botsmod.ClassReferences;
-import com.thefreak.botsmod.client.gui.gkhguis.FingerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;

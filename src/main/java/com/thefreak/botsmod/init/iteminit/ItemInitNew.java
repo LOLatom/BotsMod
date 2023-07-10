@@ -13,6 +13,7 @@ import com.thefreak.botsmod.objects.items.loreandclueitems.BanhirHead;
 import com.thefreak.botsmod.objects.items.loreandclueitems.GodKillerHand;
 import com.thefreak.botsmod.objects.items.loreandclueitems.TabletItem;
 import com.thefreak.botsmod.objects.items.loreandclueitems.TremoringTabletItem;
+import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.objects.items.organs.FleshBucket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -90,6 +91,7 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> GROUND_BESTIAL_AMULET = ITEMS.register("ground_bestial_amulet", () -> new AmuletItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
+    public static final RegistryObject<Item> SPELL_CARD = ITEMS.register("spell_card", () -> new SpellCardItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
     //public static final RegistryObject<Item> CELL_FLUID_BUCKET = ITEMS.register("cell_fluid_bucket", () -> new FleshBucket(BOTSFluids.CELL.get(), new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 }

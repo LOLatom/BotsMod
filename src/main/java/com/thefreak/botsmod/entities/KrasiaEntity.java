@@ -1,14 +1,7 @@
 package com.thefreak.botsmod.entities;
 
-import com.thefreak.botsmod.ClassReferences;
-import com.thefreak.botsmod.client.gui.dialogue.DialogueGUI;
 import com.thefreak.botsmod.util.misc.DialoguesHelper;
-import com.thefreak.botsmod.util.packets.BotsPacketHandler;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenDialogueGUI;
-import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.OpenFingerGUI;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.PacketDistributor;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -34,8 +26,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.awt.*;
-
 public class KrasiaEntity extends LivingEntity implements IAnimatable {
     public KrasiaEntity(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
         super(p_20966_, p_20967_);
@@ -43,7 +33,7 @@ public class KrasiaEntity extends LivingEntity implements IAnimatable {
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.krasia.idle");
+    public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("misc.lying_idle");
     private final NonNullList<ItemStack> tradeItems = NonNullList.withSize(4, ItemStack.EMPTY);
 
 

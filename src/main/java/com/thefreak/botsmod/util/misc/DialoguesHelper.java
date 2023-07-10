@@ -19,9 +19,9 @@ public class DialoguesHelper {
     public void krasiaFirstDialogue() {
         DialogueGUI dialogueFirst = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_icon.png"),
                 "","(sigh) . . .", "Well this was close...");
-        dialogueFirst.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,1);
+        dialogueFirst.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,1,false);
         dialogueFirst.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"));
-        dialogueFirst.setTextPassingTime(1,3,1);
+        dialogueFirst.setTextPassingTime(1,2,1);
         dialogueFirst.setFirstAwnser(true,"[[ . . . ]]", (dialogueGUI) -> {
             dialogueGUI.onClose();
             krasiaSecondDialogue();
@@ -32,9 +32,9 @@ public class DialoguesHelper {
     public void krasiaSecondDialogue() {
         DialogueGUI dialogue = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"),
                 "Oh....","OH! sorry my poor child i havn't seen you,","You may call me Krasia");
-        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sweat_icon.png"),true,10,2);
-        dialogue.setTextPassingTime(3,1,2);
-        dialogue.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2);
+        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sweat_icon.png"),true,10,2,false);
+        dialogue.setTextPassingTime(3,1,1);
+        dialogue.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2,false);
         dialogue.setSecondLineColor(new Color(182, 182, 182));
         dialogue.setFirstAwnser(true,"I'm confused...", (dialogueGUI) -> {
             dialogueGUI.onClose();
@@ -63,9 +63,9 @@ public class DialoguesHelper {
     public void krasiaDialogue_2() {
         DialogueGUI dialogue = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"),
                 "Hey...","I'm the goddess of Time and Beauty","I'm glad to see you child");
-        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2);
+        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2,false);
         dialogue.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_smile_icon.png"));
-        dialogue.setTextPassingTime(3,1,1);
+        dialogue.setTextPassingTime(2,1,1);
         dialogue.setFirstAwnser(true,"Why were you trapped in here ?", (dialogueGUI) -> {
             dialogueGUI.onClose();
             krasiaDialogue_4();
@@ -79,9 +79,9 @@ public class DialoguesHelper {
     public void krasiaDialogue_3() {
         DialogueGUI dialogue = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"),
                 "","I'm the goddess of Time and Beauty","I'm glad to see you child");
-        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2);
+        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,2,false);
         dialogue.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"));
-        dialogue.setTextPassingTime(3,1,1);
+        dialogue.setTextPassingTime(1,1,1);
         dialogue.setFirstAwnser(true,"Why were you trapped in here ?", (dialogueGUI) -> {
             dialogueGUI.onClose();
             krasiaDialogue_4();
@@ -98,11 +98,11 @@ public class DialoguesHelper {
         dialogue.setTextPassingTime(1,1,1);
         dialogue.setFirstAwnser(true,"[[ Let Her Continue ]]", (dialogueGUI) -> {
             dialogueGUI.onClose();
-            krasiaInterupt_1();
+            krasiaContinue_1();
         });
         dialogue.setSecondAwnser(true,"[[ Interrupt ]]",(dialogueGUI) -> {
             dialogueGUI.onClose();
-            krasiaContinue_1();
+            krasiaInterupt_1();
         });
         ClassReferences.getClientMC().setScreen(dialogue);
     }
@@ -110,10 +110,14 @@ public class DialoguesHelper {
     public void krasiaInterupt_1() {
         DialogueGUI dialogue = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"),
                 ". . .",". . .Child please don't interrupt me alright ?","Anyway ! I'll continue child");
-        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_angry_icon.png"),true,20,2);
+        dialogue.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_angry_icon.png"),true,28,2,true);
         dialogue.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_smile_icon.png"));
-        dialogue.setTextPassingTime(1,2,1);
+        dialogue.setTextPassingTime(2,1,1);
         ClassReferences.getClientMC().setScreen(dialogue);
+        dialogue.setFirstAwnser(true,"[[ Let Her Continue ]]", (dialogueGUI) -> {
+            dialogueGUI.onClose();
+            krasiaContinue_1();
+        });
     }
     public void krasiaContinue_1() {
 

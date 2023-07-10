@@ -19,36 +19,6 @@ public class JoinWorldEvent{
 
     @SubscribeEvent
     public static void Joined(PlayerEvent.PlayerLoggedInEvent event) {
-        ItemStack stack = event.getEntityLiving().getMainHandItem();
-        if (stack.getItem() instanceof ISyncable) {
-            Level level = event.getPlayer().level;
-            CompoundTag nbt = stack.getOrCreateTag();
-            final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerLevel) level);
-            final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> event.getPlayer());
-            if (nbt.getBoolean("firstfing") == true) {
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id, GodKillerHand.F1);
-
-            }
-            if (nbt.getBoolean("secondfing") == true) {
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id, GodKillerHand.F2);
-
-            }
-            if (nbt.getBoolean("thirdfing") == true) {
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id, GodKillerHand.F3);
-
-            }
-            if (nbt.getBoolean("fourthfing") == true) {
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id, GodKillerHand.F4);
-
-            }
-            if (nbt.getBoolean("blade") == true) {
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id, GodKillerHand.BLADE_OUT);
-                GeckoLibNetwork.syncAnimation(target, (ISyncable) stack.getItem(), id,
-                        GodKillerHand.ARM);
-
-            }
-        }
-
     }
 
 }

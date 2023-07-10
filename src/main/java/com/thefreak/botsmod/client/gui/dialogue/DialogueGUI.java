@@ -58,6 +58,9 @@ public class DialogueGUI extends Screen {
     int firstAnimSpeed;
     int secondAnimSpeed;
 
+    boolean isSecondLooping;
+    boolean isFirstLooping;
+
     Color color;
     Color colorb;
     Color colorc;
@@ -101,6 +104,8 @@ public class DialogueGUI extends Screen {
         this.frameProgress = 0;
         this.firstAnimSpeed = 1;
         this.secondAnimSpeed = 1;
+        this.isSecondLooping = false;
+        this.isFirstLooping = false;
     }
 
     @Override
@@ -199,22 +204,24 @@ public class DialogueGUI extends Screen {
     public void setSecondIcon(ResourceLocation icon) {
         this.DIALOGUE_ICONB = icon;
     }
-    public void setSecondIcon(ResourceLocation icon, boolean isAnimated, int framesAmount, int frameSpeed) {
+    public void setSecondIcon(ResourceLocation icon, boolean isAnimated, int framesAmount, int frameSpeed, boolean loop) {
         this.DIALOGUE_ICONB = icon;
         this.firstFrameProgress = 0;
         this.firstIconAnimated = isAnimated;
         this.FIRST_AMOUNT_OF_FRAMES = framesAmount;
         this.firstAnimSpeed = frameSpeed;
+        this.isFirstLooping = loop;
     }
     public void setThirdIcon(ResourceLocation icon) {
         this.DIALOGUE_ICONC = icon;
     }
-    public void setThirdIcon(ResourceLocation icon, boolean isAnimated, int framesAmount, int frameSpeed) {
+    public void setThirdIcon(ResourceLocation icon, boolean isAnimated, int framesAmount, int frameSpeed, boolean loop) {
         this.DIALOGUE_ICONC = icon;
         this.secondFrameProgress = 0;
         this.secondIconAnimated = isAnimated;
         this.SECOND_AMOUNT_OF_FRAMES = framesAmount;
         this.secondAnimSpeed = frameSpeed;
+        this.isSecondLooping = loop;
     }
 
     public void setFirstAwnser(boolean exist, String awnser, Consumer<DialogueGUI> action) {
@@ -250,6 +257,8 @@ public class DialogueGUI extends Screen {
                 if (this.firstIconAnimated && ticks % this.firstAnimSpeed == 0) {
                     if (this.frameProgress < this.AMOUNT_OF_FRAMES - 1) {
                         this.frameProgress++;
+                    } else if (this.frameProgress == this.AMOUNT_OF_FRAMES - 1 && this.isFirstLooping) {
+                        this.frameProgress = 0;
                     }
                 }
                 this.lineProcessSecond = this.lineProcessSecond + this.lineSecond.charAt(this.linebpro);
@@ -270,6 +279,8 @@ public class DialogueGUI extends Screen {
                 if (this.secondIconAnimated && ticks % this.secondAnimSpeed == 0) {
                     if (this.frameProgress < this.AMOUNT_OF_FRAMES - 1) {
                         this.frameProgress++;
+                    } else if (this.frameProgress == this.AMOUNT_OF_FRAMES - 1 && this.isSecondLooping) {
+                        this.frameProgress = 0;
                     }
                 }
                 System.out.println(this.frameProgress);

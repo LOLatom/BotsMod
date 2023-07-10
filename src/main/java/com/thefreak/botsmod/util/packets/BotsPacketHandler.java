@@ -2,8 +2,6 @@ package com.thefreak.botsmod.util.packets;
 
 import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
 import com.thefreak.botsmod.util.packets.interractionpackets.LeftClickPacket;
-import com.thefreak.botsmod.util.packets.interractionpackets.OpenCloseGodKHPacket;
-import com.thefreak.botsmod.util.packets.interractionpackets.SetGodKHSpellPacket;
 import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
@@ -25,11 +23,7 @@ public class BotsPacketHandler {
         //ServerBound
 
         //
-        INSTANCE.messageBuilder(OpenCloseGodKHPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(OpenCloseGodKHPacket::encode)
-                .decoder(OpenCloseGodKHPacket::decode)
-                .consumer(OpenCloseGodKHPacket::handle)
-                .add();
+
 
         INSTANCE.messageBuilder(LeftClickPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(LeftClickPacket::encode)
@@ -43,12 +37,6 @@ public class BotsPacketHandler {
                 .consumer(DivineKeyClick::handle)
                 .add();
 
-        INSTANCE.messageBuilder(SetGodKHSpellPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(SetGodKHSpellPacket::encode)
-                .decoder(SetGodKHSpellPacket::decode)
-                .consumer(SetGodKHSpellPacket::handle)
-                .add();
-
 
         //ClientBound
 
@@ -57,18 +45,11 @@ public class BotsPacketHandler {
                 .decoder(SomeoneClickedDivineKeyPacket::decode)
                 .consumer(SomeoneClickedDivineKeyPacket::handle)
                 .add();
-
-        INSTANCE.messageBuilder(OpenFingerGUI.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(OpenFingerGUI::encode)
-                .decoder(OpenFingerGUI::decode)
-                .consumer(OpenFingerGUI::handle)
-                .add();
         INSTANCE.messageBuilder(UpdateBlocksAt.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(UpdateBlocksAt::encode)
                 .decoder(UpdateBlocksAt::decode)
                 .consumer(UpdateBlocksAt::handle)
                 .add();
-
         INSTANCE.messageBuilder(OpenDialogueGUI.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(OpenDialogueGUI::encode)
                 .decoder(OpenDialogueGUI::decode)

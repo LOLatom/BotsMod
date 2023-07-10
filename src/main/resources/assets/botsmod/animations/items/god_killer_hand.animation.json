@@ -293,6 +293,31 @@
 					}
 				}
 			}
+		},"animation.god_killer_hand.fingerfidgeting": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Finger1": {
+					"rotation": {
+						"vector": ["-12.452 - math.cos(query.anim_time * 100) * 5 ", 22.49824, "94.7123 + math.sin(query.anim_time * 100) * 25 "]
+					}
+				},
+				"Finger2": {
+					"rotation": {
+						"vector": [0, 0, "92.5 - math.cos(query.anim_time * 100) * 25 "]
+					}
+				},
+				"Finger3": {
+					"rotation": {
+						"vector": [0, 0, "97.5 + math.sin(query.anim_time * 100) * 25 "]
+					}
+				},
+				"Finger4": {
+					"rotation": {
+						"vector": ["12.5 + math.sin(query.anim_time * 100) * 5 ", 0, "85 + math.cos(query.anim_time * 100) * 25 "]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

@@ -100,8 +100,7 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
 
         for(MobEffectInstance mobeffectinstance : p_194006_) {
             MobEffect mobeffect = mobeffectinstance.getEffect();
-            if (mobeffect instanceof IEffectSpecialRenderings) {
-                IEffectSpecialRenderings effectSpecialRenderings = (IEffectSpecialRenderings) mobeffect;
+            if (mobeffect instanceof IEffectSpecialRenderings effectSpecialRenderings) {
                 if (effectSpecialRenderings.hasCustomBackground(mobeffectinstance)) {
                     RenderSystem.setShaderTexture(0, effectSpecialRenderings.hasCustomBackgroundLocation(mobeffectinstance));
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -136,9 +135,17 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
 
         for(MobEffectInstance mobeffectinstance : p_194012_) {
             MobEffect mobeffect = mobeffectinstance.getEffect();
-            TextureAtlasSprite textureatlassprite = mobeffecttexturemanager.get(mobeffect);
-            RenderSystem.setShaderTexture(0, textureatlassprite.atlas().location());
-            blit(p_194009_, p_194010_ + (p_194013_ ? 6 : 7), i + 7, this.getBlitOffset(), 18, 18, textureatlassprite);
+            if (mobeffect instanceof IEffectSpecialRenderings ie) {
+                if (ie.showEffectIcon(mobeffectinstance)) {
+                    TextureAtlasSprite textureatlassprite = mobeffecttexturemanager.get(mobeffect);
+                RenderSystem.setShaderTexture(0, textureatlassprite.atlas().location());
+                blit(p_194009_, p_194010_ + (p_194013_ ? 6 : 7), i + 7, this.getBlitOffset(), 18, 18, textureatlassprite);
+            }
+            }else {
+                TextureAtlasSprite textureatlassprite = mobeffecttexturemanager.get(mobeffect);
+                RenderSystem.setShaderTexture(0, textureatlassprite.atlas().location());
+                blit(p_194009_, p_194010_ + (p_194013_ ? 6 : 7), i + 7, this.getBlitOffset(), 18, 18, textureatlassprite);
+            }
             i += p_194011_;
         }
 
@@ -149,16 +156,35 @@ public abstract class DisplayEffectsScreenMixin<T extends AbstractContainerMenu>
 
         for(MobEffectInstance mobeffectinstance : pEffects) {
             MobEffect mobeffect = mobeffectinstance.getEffect();
-            net.minecraftforge.client.EffectRenderer renderer = net.minecraftforge.client.RenderProperties.getEffectRenderer(mobeffectinstance);
-            if (!renderer.shouldRenderInvText(mobeffectinstance)) {
+            if (mobeffect instanceof IEffectSpecialRenderings ie) {
+                    net.minecraftforge.client.EffectRenderer renderer = net.minecraftforge.client.RenderProperties.getEffectRenderer(mobeffectinstance);
+                    if (!renderer.shouldRenderInvText(mobeffectinstance)) {
+                        i += pYOffset;
+                        continue;
+                    }
+
+                    Component component = this.getEffectName(mobeffectinstance);
+                if (ie.showEffectLabelName(mobeffectinstance)) {
+                    this.font.drawShadow(pPoseStack, component, (float) (pRenderX + 10 + 18), (float) (i + 6), 16777215);
+                }
+                    String s = MobEffectUtil.formatDuration(mobeffectinstance, 1.0F);
+                if (ie.showEffectLabelTime(mobeffectinstance)) {
+                    this.font.drawShadow(pPoseStack, s, (float) (pRenderX + 10 + 18), (float) (i + 6 + 10), 8355711);
+                }
+                    i += pYOffset;
+
+            } else {
+                net.minecraftforge.client.EffectRenderer renderer = net.minecraftforge.client.RenderProperties.getEffectRenderer(mobeffectinstance);
+                if (!renderer.shouldRenderInvText(mobeffectinstance)) {
+                    i += pYOffset;
+                    continue;
+                }
+                Component component = this.getEffectName(mobeffectinstance);
+                this.font.drawShadow(pPoseStack, component, (float) (pRenderX + 10 + 18), (float) (i + 6), 16777215);
+                String s = MobEffectUtil.formatDuration(mobeffectinstance, 1.0F);
+                this.font.drawShadow(pPoseStack, s, (float) (pRenderX + 10 + 18), (float) (i + 6 + 10), 8355711);
                 i += pYOffset;
-                continue;
             }
-            Component component = this.getEffectName(mobeffectinstance);
-            this.font.drawShadow(pPoseStack, component, (float)(pRenderX + 10 + 18), (float)(i + 6), 16777215);
-            String s = MobEffectUtil.formatDuration(mobeffectinstance, 1.0F);
-            this.font.drawShadow(pPoseStack, s, (float)(pRenderX + 10 + 18), (float)(i + 6 + 10), 8355711);
-            i += pYOffset;
         }
 
     }

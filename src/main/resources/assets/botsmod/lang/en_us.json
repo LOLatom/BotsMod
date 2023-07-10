@@ -32,6 +32,7 @@
 	"item.botsmod.god_killer_hand": "God Killer Hand",
 	"item.botsmod.heart": "Heart",
 	"item.botsmod.perished_heart": "Perished Heart",
+	"item.botsmod.spell_card": "Spell Card",
 
 	"item.botsmod.cave_angelia_guppie_scale": "Cave angelia Guppie scale",
 
@@ -141,6 +142,7 @@
 	"effect.botsmod.mogrove_toxins": "Mogrove Toxins",
 	"effect.botsmod.possesion_effect": "Possesion",
 	"effect.botsmod.decaying_effect": "Decaying",
+	"effect.botsmod.watched_upon_effect": "Krasia Blessing",
 
 	"entity.botsmod.wandering_specter": "Wandering Specter",
 

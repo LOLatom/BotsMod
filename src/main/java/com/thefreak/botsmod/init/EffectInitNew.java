@@ -1,10 +1,7 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
-import com.thefreak.botsmod.objects.blocks.effect.DecayingEffect;
-import com.thefreak.botsmod.objects.blocks.effect.ExplosiveEffect;
-import com.thefreak.botsmod.objects.blocks.effect.MogroveToxinsEffect;
-import com.thefreak.botsmod.objects.blocks.effect.PossesionEffect;
+import com.thefreak.botsmod.objects.blocks.effect.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,4 +18,7 @@ public class EffectInitNew {
     public static  final RegistryObject<MobEffect> POSSESION = EFFECTS.register("possesion_effect", () -> new PossesionEffect(MobEffectCategory.HARMFUL, 0xc2b2b0));
 
     public static  final RegistryObject<MobEffect> DECAYING = EFFECTS.register("decaying_effect", () -> new DecayingEffect(MobEffectCategory.HARMFUL, 0x9a655a));
+
+    public static  final RegistryObject<MobEffect> WATCHED_UPON = EFFECTS.register("watched_upon_effect", () -> new WatchedUpon(MobEffectCategory.NEUTRAL, 0x44ca54));
+
 }

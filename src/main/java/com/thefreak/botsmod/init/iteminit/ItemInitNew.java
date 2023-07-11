@@ -13,6 +13,7 @@ import com.thefreak.botsmod.objects.items.loreandclueitems.*;
 import com.thefreak.botsmod.objects.items.loreandclueitems.coins.ArloCoinItem;
 import com.thefreak.botsmod.objects.items.loreandclueitems.coins.CoinItem;
 import com.thefreak.botsmod.objects.items.loreandclueitems.coins.ManiacCityCoin;
+import com.thefreak.botsmod.objects.items.loreandclueitems.coins.ProfoundCityCoin;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.objects.items.organs.FleshBucket;
 import net.minecraft.resources.ResourceLocation;
@@ -96,6 +97,8 @@ public class ItemInitNew {
     public static final RegistryObject<Item> ARLO_COIN = ITEMS.register("arlo_coin", () -> new ArloCoinItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
     public static final RegistryObject<Item> MANIAC_CITY_COIN = ITEMS.register("maniac_city_coin", () -> new ManiacCityCoin(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> PROFOUND_CITY_COIN = ITEMS.register("profound_city_coin", () -> new ProfoundCityCoin(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
     //public static final RegistryObject<Item> CELL_FLUID_BUCKET = ITEMS.register("cell_fluid_bucket", () -> new FleshBucket(BOTSFluids.CELL.get(), new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 }

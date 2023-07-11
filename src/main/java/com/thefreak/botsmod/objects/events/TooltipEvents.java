@@ -29,6 +29,10 @@ public class TooltipEvents {
             return;
         }
         IHaveSpecialTooltip stStack = (IHaveSpecialTooltip) stack.getItem();
+        if (stStack.isCoin(stack)) {
+
+            return;
+        }
         PoseStack poseStack = event.getPoseStack();
 
         int width = event.getWidth();

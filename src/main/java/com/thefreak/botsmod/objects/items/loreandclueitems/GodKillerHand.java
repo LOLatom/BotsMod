@@ -4,6 +4,7 @@ import com.thefreak.botsmod.API.IHaveSpecialTooltip;
 import com.thefreak.botsmod.API.ItemSpecialRendering.IHaveIcon;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
+import com.thefreak.botsmod.util.capabilities.ItemCapGKH;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -51,7 +53,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     }
 
     @Override
-    public ResourceLocation iconTex() {
+    public ResourceLocation iconTex(ItemStack pStack) {
         return new ResourceLocation("botsmod:textures/icons/caster_icon.png");
     }
 
@@ -95,6 +97,11 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     @Override
     public CompoundTag getShareTag(ItemStack stack) {
         CompoundTag nbt = stack.getOrCreateTag();
+        if (!nbt.contains("spellID")) {
+            nbt.putInt("spellID", 0);
+        } else {
+            nbt.putInt("spellID", nbt.getInt("spellID"));
+        }
         return nbt;
 
     }
@@ -128,6 +135,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     @Override
     public void readShareTag(ItemStack stack,  CompoundTag nbt) {
         super.readShareTag(stack,nbt);
+        stack.setTag(nbt);
     }
 
 

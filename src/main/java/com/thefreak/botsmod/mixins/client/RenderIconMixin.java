@@ -44,7 +44,7 @@ public class RenderIconMixin {
     public void renderIconForInter(ItemStack pStack, int pX, int pY, BakedModel pBakedmodel, CallbackInfo ci) {
         if (pStack.getItem() instanceof IHaveIcon iHaveIcon) {
             if (iHaveIcon.hasIcon()) {
-                ResourceLocation customTexture = iHaveIcon.iconTex();
+                ResourceLocation customTexture = iHaveIcon.iconTex(pStack);
                 Minecraft minecraft = Minecraft.getInstance();
                 TextureAtlasSprite sprite = minecraft.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(customTexture);
 

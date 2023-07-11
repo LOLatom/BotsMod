@@ -257,7 +257,6 @@ public class BotsMod
         }
 
 
-
     @SubscribeEvent
     public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
         final IForgeRegistry<Item> registry = event.getRegistry();

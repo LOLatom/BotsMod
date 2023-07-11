@@ -19,7 +19,7 @@ public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialToolti
     }
 
     @Override
-    public ResourceLocation iconTex() {
+    public ResourceLocation iconTex(ItemStack pStack) {
         return new ResourceLocation("botsmod:textures/icons/shield_icon.png");
     }
 

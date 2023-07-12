@@ -99,8 +99,10 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
         CompoundTag nbt = stack.getOrCreateTag();
         if (!nbt.contains("spellID")) {
             nbt.putInt("spellID", 0);
+            nbt.putInt("handMode", 0);
         } else {
             nbt.putInt("spellID", nbt.getInt("spellID"));
+            nbt.putInt("handMode", nbt.getInt("handMode"));
         }
         return nbt;
 

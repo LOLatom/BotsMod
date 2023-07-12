@@ -2,13 +2,14 @@ package com.thefreak.botsmod.objects.items.magic;
 
 import com.thefreak.botsmod.API.IHaveSpecialTooltip;
 import com.thefreak.botsmod.API.ItemSpecialRendering.IHaveIcon;
+import com.thefreak.botsmod.spells.implementations.IAmSpellCard;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 
-public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialTooltip {
+public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialTooltip, IAmSpellCard {
     public SpellCardItem(Properties pProperties) {
         super(pProperties);
     }
@@ -51,4 +52,9 @@ public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialToolti
         return new Color(52, 53, 37, 169);
     }
 
+
+    @Override
+    public ResourceLocation spellCardTexture() {
+        return new ResourceLocation("botsmod:textures/gui/spell/empty_spell_card.png");
+    }
 }

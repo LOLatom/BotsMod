@@ -1,7 +1,6 @@
 package com.thefreak.botsmod.util.packets;
 
-import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
-import com.thefreak.botsmod.util.packets.interractionpackets.LeftClickPacket;
+import com.thefreak.botsmod.util.packets.interractionpackets.*;
 import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
@@ -22,9 +21,6 @@ public class BotsPacketHandler {
         
         //ServerBound
 
-        //
-
-
         INSTANCE.messageBuilder(LeftClickPacket.class,ID++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(LeftClickPacket::encode)
                 .decoder(LeftClickPacket::decode)
@@ -35,6 +31,24 @@ public class BotsPacketHandler {
                 .encoder(DivineKeyClick::encode)
                 .decoder(DivineKeyClick::decode)
                 .consumer(DivineKeyClick::handle)
+                .add();
+
+        INSTANCE.messageBuilder(NextSpellPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(NextSpellPacket::encode)
+                .decoder(NextSpellPacket::decode)
+                .consumer(NextSpellPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(PreviousSpellPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(PreviousSpellPacket::encode)
+                .decoder(PreviousSpellPacket::decode)
+                .consumer(PreviousSpellPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(ResetSpellPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ResetSpellPacket::encode)
+                .decoder(ResetSpellPacket::decode)
+                .consumer(ResetSpellPacket::handle)
                 .add();
 
 

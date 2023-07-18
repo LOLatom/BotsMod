@@ -20,7 +20,7 @@ public class KrasiaRender extends GeoEntityRenderer<KrasiaEntity> {
     }
     @Override
     public RenderType getRenderType(KrasiaEntity animatable, float partialTicks, PoseStack stack, MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
-        return RenderType.entitySmoothCutout(new ResourceLocation("botsmod:textures/entities/krasia.png"));    }
+        return RenderType.entityCutout(new ResourceLocation("botsmod:textures/entities/krasia.png"));    }
 
 
     @Override

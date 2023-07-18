@@ -4,12 +4,19 @@ import com.thefreak.botsmod.API.IHaveSpecialTooltip;
 import com.thefreak.botsmod.API.ItemSpecialRendering.IHaveIcon;
 import com.thefreak.botsmod.spells.implementations.IAmSpellCard;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import org.apache.logging.log4j.util.TriConsumer;
 
 import java.awt.*;
 
 public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialTooltip, IAmSpellCard {
+
+    public static int remainingticksTime = 72000;
     public SpellCardItem(Properties pProperties) {
         super(pProperties);
     }
@@ -28,6 +35,12 @@ public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialToolti
     public boolean hasAdvancedCustomToolTip(ItemStack stack) {
         return true;
     }
+
+    @Override
+    public ResourceLocation AdvancedCustomToolTipLocation(ItemStack stack) {
+        return new ResourceLocation("botsmod:textures/gui/tooltip/spell_card.png");
+    }
+
 
     @Override
     public boolean hasCustomBackGroundColor() {
@@ -56,5 +69,22 @@ public class SpellCardItem extends Item implements IHaveIcon, IHaveSpecialToolti
     @Override
     public ResourceLocation spellCardTexture() {
         return new ResourceLocation("botsmod:textures/gui/spell/empty_spell_card.png");
+    }
+
+    @Override
+    public TriConsumer<Level, Player, InteractionHand> rightClickAction() {
+        return (level,player,hand) ->{
+
+        };
+    }
+
+    @Override
+    public void tickingOnUse(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+
+    }
+
+    @Override
+    public void onRelease(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
+
     }
 }

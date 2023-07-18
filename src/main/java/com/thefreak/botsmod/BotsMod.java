@@ -10,6 +10,7 @@ import com.thefreak.botsmod.init.*;
 import com.thefreak.botsmod.init.blockinit.NoItemBlockInit;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
+import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.PostPass;
@@ -298,6 +299,21 @@ public class BotsMod
         public ItemStack makeIcon()
         {
             return new ItemStack(FoodItemInit.PINK_PURIFIED_SALT.get());
+        }
+    }
+
+    public static class BotsMagicItemGroup extends CreativeModeTab {
+
+        public static final BotsMagicItemGroup magic = new BotsMagicItemGroup(CreativeModeTab.TABS.length,"botsmagic");
+
+        public BotsMagicItemGroup(int pId, String pLangId) {
+            super(pId, pLangId);
+        }
+
+
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(ItemInitNew.SPELL_CARD.get());
         }
     }
 

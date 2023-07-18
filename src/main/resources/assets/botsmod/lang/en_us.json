@@ -24,18 +24,23 @@
 	"key.botsmod.second_finger_motion" : "Second finger",
 	"key.botsmod.third_finger_motion" : "Third finger",
 	"key.botsmod.fourth_finger_motion" : "Fourth finger",
-	"key.botsmod.special" : "Special",
-	"key.botsmod.fast_spell" : "Fast Spell",
+	"key.botsmod.previous" : "Previous Key",
+	"key.botsmod.next" : "Next Key",
 
 	"item.botsmod.banhir_head": "§aBanhir's Head",
 	"item.botsmod.tremoring_tablet": "Tremoring Tablet",
 	"item.botsmod.god_killer_hand": "God Killer Hand",
 	"item.botsmod.heart": "Heart",
 	"item.botsmod.perished_heart": "Perished Heart",
+
+
 	"item.botsmod.spell_card": "Spell Card",
+	"item.botsmod.heat_spell_card": "Spell Card",
+
 	"item.botsmod.arlo_coin": "Coin",
 	"item.botsmod.maniac_city_coin": "Coin",
 	"item.botsmod.profound_city_coin": "Coin",
+	"item.botsmod.starling_city_coin": "Coin",
 
 	"item.botsmod.cave_angelia_guppie_scale": "Cave angelia Guppie scale",
 
@@ -149,5 +154,7 @@
 
 	"entity.botsmod.wandering_specter": "Wandering Specter",
 
-	"itemGroup.botstab": "Bane Of The Souls"
+	"itemGroup.botstab": "Bane Of The Souls",
+	"itemGroup.botsmagic": "BOTS: Magic",
+	"itemGroup.botsfood": "BOTS: Foods"
 }

@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "botsmod:block/specialised_crafting_table"
+            },
+            {
+                "model": "botsmod:block/specialised_crafting_table",
+                "y": 90
+            },
+            {
+                "model": "botsmod:block/specialised_crafting_table",
+                "y": 180
+            },
+            {
+                "model": "botsmod:block/specialised_crafting_table",
+                "y": 270
+            }
+        ]
+    }
+}

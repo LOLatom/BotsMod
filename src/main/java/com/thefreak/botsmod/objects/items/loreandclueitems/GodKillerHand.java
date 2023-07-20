@@ -7,6 +7,8 @@ import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
 import com.thefreak.botsmod.spells.implementations.IAmSpellCard;
 import com.thefreak.botsmod.util.capabilities.ItemCapGKH;
+import com.thefreak.botsmod.util.packets.BotsPacketHandler;
+import com.thefreak.botsmod.util.packets.interractionpackets.StartAnimationPacket;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -155,15 +157,16 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
         }
         int selection = nbt.getInt("spellID");
         // Execute the spell
-        ((IAmSpellCard) inv.get(selection).getItem()).rightClickAction().accept(pLevel,pPlayer,pUsedHand);
-
-        if (!pLevel.isClientSide) {
-            final int id = GeckoLibUtil.guaranteeIDForStack(pPlayer.getItemInHand(InteractionHand.MAIN_HAND), (ServerLevel) pLevel);
-            final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
-                    .with(() -> pPlayer);
-            GeckoLibNetwork.syncAnimation(target, this, id, ((IAmSpellCard) inv.get(selection).getItem()).animationForActivation());
+        if (inv.size() >0) {
+            ((IAmSpellCard) inv.get(selection).getItem()).rightClickAction().accept(pLevel, pPlayer, pUsedHand);
         }
-        if (((IAmSpellCard) inv.get(selection).getItem()).isTickAllowed()) pPlayer.startUsingItem(pUsedHand);
+
+        if (pLevel.isClientSide) {
+            BotsPacketHandler.INSTANCE.sendToServer(new StartAnimationPacket(((IAmSpellCard) inv.get(selection).getItem()).animationForActivation()));
+        }
+        if (inv.size() >0) {
+            if (((IAmSpellCard) inv.get(selection).getItem()).isTickAllowed()) pPlayer.startUsingItem(pUsedHand);
+        }
 
         return InteractionResultHolder.pass(pPlayer.getItemInHand(pUsedHand));
     }
@@ -171,11 +174,8 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
         Player player = (Player) pLivingEntity;
-        if (!pLevel.isClientSide) {
-            final int id = GeckoLibUtil.guaranteeIDForStack(player.getItemInHand(InteractionHand.MAIN_HAND), (ServerLevel) pLevel);
-            final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
-                    .with(() -> player);
-            GeckoLibNetwork.syncAnimation(target, this, id, ANIM_NONE);
+        if (pLevel.isClientSide) {
+            BotsPacketHandler.INSTANCE.sendToServer(new StartAnimationPacket(ANIM_NONE));
         }
         ArrayList<ItemStack> inv = new ArrayList<>();
         CompoundTag nbt = player.getItemInHand(InteractionHand.MAIN_HAND).getOrCreateTag();
@@ -186,7 +186,9 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
             }
         }
         int selection = nbt.getInt("spellID");
-        ((IAmSpellCard) inv.get(selection).getItem()).onRelease(pStack,pLevel,pLivingEntity,pTimeCharged);
+        if (inv.size() >0) {
+            ((IAmSpellCard) inv.get(selection).getItem()).onRelease(pStack, pLevel, pLivingEntity, pTimeCharged);
+        }
         System.out.println("discharged" + player.getName());
         super.releaseUsing(pStack, pLevel, pLivingEntity, pTimeCharged);
     }
@@ -218,7 +220,9 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
             }
         }
         int selection = nbt.getInt("spellID");
-        ((IAmSpellCard) inv.get(selection).getItem()).tickingOnUse(pLevel,pLivingEntity,pStack,pRemainingUseDuration);
+        if (inv.size() >0) {
+            ((IAmSpellCard) inv.get(selection).getItem()).tickingOnUse(pLevel,pLivingEntity,pStack,pRemainingUseDuration);
+        }
         super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
     }
 

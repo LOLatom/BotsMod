@@ -51,6 +51,12 @@ public class BotsPacketHandler {
                 .consumer(ResetSpellPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(StartAnimationPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(StartAnimationPacket::encode)
+                .decoder(StartAnimationPacket::decode)
+                .consumer(StartAnimationPacket::handle)
+                .add();
+
 
         //ClientBound
 

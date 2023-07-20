@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "botsmod:blocks/ancient_brick_pillar_top",
-        "side": "botsmod:blocks/ancient_brick_smooth_pillar_sides"
-    }
-}

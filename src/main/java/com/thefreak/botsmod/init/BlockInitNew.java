@@ -13,6 +13,7 @@ import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.CookingPotBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
 import com.thefreak.botsmod.objects.blocks.PostMortalAltar;
+import com.thefreak.botsmod.objects.blocks.crafting.SpecialisedCraftingTableBlock;
 import com.thefreak.botsmod.objects.blocks.plants.LogMushroom;
 import com.thefreak.botsmod.objects.blocks.plants.MedusaGroveFlower;
 import com.thefreak.botsmod.objects.blocks.plants.RedBirdBranchBlock;
@@ -475,6 +476,8 @@ public class BlockInitNew {
 	public static final RegistryObject<Block> TREMORING_STONE_PILLAR  = BLOCKS.register("tremoring_stone_pillar", () -> new ConnectedTexturePillar(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
 
 	public static final RegistryObject<Block> MUD_PUDDLE  = BLOCKS.register("mud_puddle", () -> new MudPuddleBlock(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.ROOTED_DIRT).strength(2.0F)));
+
+	public static final RegistryObject<Block> SPECIALISED_CRAFTING_TABLE  = BLOCKS.register("specialised_crafting_table", () -> new SpecialisedCraftingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

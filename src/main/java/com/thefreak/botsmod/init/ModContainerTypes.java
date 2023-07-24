@@ -1,6 +1,9 @@
 package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.objects.containers.CoinSpecContainer;
+import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
+import com.thefreak.botsmod.objects.containers.screens.SpecialisedCraftingScreen;
 import com.thefreak.botsmod.objects.items.magic.spells.HeatSpellCardItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -16,6 +19,6 @@ public class ModContainerTypes {
 		public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(
 				ForgeRegistries.CONTAINERS, BotsMod.MOD_ID);
 
-
+		public static final RegistryObject<MenuType<SpecialisedCraftingMenu>> SPECIALISED_CRAFTING_MENU = CONTAINER_TYPES.register("specialised_crafting_menu", () -> new MenuType<>(SpecialisedCraftingMenu::new));
 
 }

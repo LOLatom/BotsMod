@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 
-public class SpecialisedCraftingContainer implements Container, StackedContentsCompatible {
+public class CoinSpecContainer implements Container, StackedContentsCompatible {
     @Override
     public int getContainerSize() {
         return 0;

@@ -1,0 +1,15 @@
+{
+    "type": "botsmod:arlo_crafting_shaped",
+    "pattern": [
+        "## "
+    ],
+    "key": {
+        "#": {
+            "item": "botsmod:arlo_coin"
+        }
+    },
+    "result": {
+        "item": "minecraft:iron_ingot",
+        "count": 1
+    }
+}

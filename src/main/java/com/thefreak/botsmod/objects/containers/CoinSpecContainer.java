@@ -1,59 +1,66 @@
 package com.thefreak.botsmod.objects.containers;
 
+import com.thefreak.botsmod.objects.items.loreandclueitems.coins.CoinItem;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 
 public class CoinSpecContainer implements Container, StackedContentsCompatible {
-    @Override
+    private final NonNullList<ItemStack> itemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
     public int getContainerSize() {
-        return 0;
+        return 1;
     }
 
-    @Override
     public boolean isEmpty() {
-        return false;
+        for(ItemStack itemstack : this.itemStacks) {
+            if (!itemstack.isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    @Override
+
     public ItemStack getItem(int pIndex) {
-        return null;
+        return this.itemStacks.get(0);
     }
 
-    @Override
+
     public ItemStack removeItem(int pIndex, int pCount) {
-        return null;
+        return ContainerHelper.takeItem(this.itemStacks, 0);
     }
 
-    @Override
+
     public ItemStack removeItemNoUpdate(int pIndex) {
-        return null;
+        return ContainerHelper.takeItem(this.itemStacks, 0);
     }
 
-    @Override
+
     public void setItem(int pIndex, ItemStack pStack) {
-
+            this.itemStacks.set(0, pStack);
     }
 
-    @Override
     public void setChanged() {
-
     }
 
-    @Override
+
     public boolean stillValid(Player pPlayer) {
-        return false;
+        return true;
     }
 
-    @Override
     public void clearContent() {
-
+        this.itemStacks.clear();
     }
 
     @Override
     public void fillStackedContents(StackedContents pHelper) {
 
     }
+
+
 }

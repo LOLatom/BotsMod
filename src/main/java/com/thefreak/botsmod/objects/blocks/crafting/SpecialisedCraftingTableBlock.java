@@ -1,6 +1,7 @@
 package com.thefreak.botsmod.objects.blocks.crafting;
 
 
+import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SpecialisedCraftingTableBlock extends Block {
 
-    private static final Component CONTAINER_TITLE = new TextComponent("Specialised Crafting Table");
+    private static final Component CONTAINER_TITLE = new TextComponent("");
     public SpecialisedCraftingTableBlock(Properties p_49795_) {
         super(p_49795_);
     }
@@ -32,13 +33,16 @@ public class SpecialisedCraftingTableBlock extends Block {
         if (pLevel.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            if (pPlayer instanceof ServerPlayer serverPlayer) {
-                serverPlayer.openMenu(new SimpleMenuProvider((p_52229_, p_52230_, p_52231_) -> {
-                    return new CraftingMenu(p_52229_, p_52230_, ContainerLevelAccess.create(pLevel, pPos));
-                }, CONTAINER_TITLE));
-                serverPlayer.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
-            }
+            pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
+            pPlayer.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
             return InteractionResult.CONSUME;
         }
+    }
+
+    @Override
+    public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
+        return new SimpleMenuProvider((id, inventory, p_52231_) -> {
+            return new SpecialisedCraftingMenu(id, ContainerLevelAccess.create(pLevel, pPos), inventory);
+        }, CONTAINER_TITLE);
     }
 }

@@ -2,6 +2,7 @@ package com.thefreak.botsmod;
 
 import com.deltateam.deltalib.API.rendering.shader.PostProcessingUtils;
 import com.deltateam.deltalib.accessors.ShaderAccessor;
+import com.mojang.blaze3d.platform.ScreenManager;
 import com.thefreak.botsmod.client.Rendering.RenderTargets;
 import com.thefreak.botsmod.entities.*;
 import com.thefreak.botsmod.fluids.BOTSFluids;
@@ -10,8 +11,12 @@ import com.thefreak.botsmod.init.*;
 import com.thefreak.botsmod.init.blockinit.NoItemBlockInit;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
+import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
+import com.thefreak.botsmod.objects.containers.screens.SpecialisedCraftingScreen;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
+import com.thefreak.botsmod.recipes.BotsRecipeType;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.client.renderer.RenderType;
@@ -57,6 +62,7 @@ public class BotsMod
     	final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	modEventBus.addListener(this::registerEntityAttributes);
     	modEventBus.addListener(this::doClientStuff);
+        modEventBus.register(new ModMenuScreens());
         BOTSFluids.BOTS_FLUIDS.register(modEventBus);
         FluidInit.FLUIDS.register(modEventBus);
         EffectInitNew.EFFECTS.register(modEventBus);
@@ -66,12 +72,14 @@ public class BotsMod
         NoItemBlockInit.BLOCKS.register(modEventBus);
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+        BotsRecipeType.RECIPES.register(modEventBus);
         BotsPacketHandler.init();
         if (!FMLEnvironment.production) MinecraftForge.EVENT_BUS.addListener(this::tick);
     	ModEntityTypes.ENTITY.register(modEventBus);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerModel);
         });
+
 
 
 

@@ -3,6 +3,8 @@ package com.thefreak.botsmod.objects.containers.slots;
 import com.thefreak.botsmod.init.ItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.containers.CoinSpecContainer;
+import com.thefreak.botsmod.recipes.BotsRecipeType;
+import com.thefreak.botsmod.recipes.specialised.shaped.ArloShapedRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -73,7 +75,7 @@ public class SpecialisedResultSlot extends Slot {
         this.checkTakeAchievements(pStack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
         if ((specContainer.getItem(0)).getItem() == ItemInitNew.ARLO_COIN.get()) {
-            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(RecipeType.CRAFTING, this.craftSlots, pPlayer.level);
+            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(ArloShapedRecipe.Type.INSTANCE, this.craftSlots, pPlayer.level);
         } else {
             nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(RecipeType.CRAFTING, this.craftSlots, pPlayer.level);
         }

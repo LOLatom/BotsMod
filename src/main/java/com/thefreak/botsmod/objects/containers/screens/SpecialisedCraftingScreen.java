@@ -47,6 +47,10 @@ public class SpecialisedCraftingScreen extends AbstractContainerScreen<Specialis
 
     }
 
+    @Override
+    protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+    }
+
     protected boolean isHovering(int pX, int pY, int pWidth, int pHeight, double pMouseX, double pMouseY) {
         return super.isHovering(pX, pY, pWidth, pHeight, pMouseX, pMouseY);
     }

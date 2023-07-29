@@ -1,18 +1,18 @@
 {
     "type": "botsmod:specialised_crafting_shaped",
     "pattern": [
-        "## "
+        " # "
     ],
     "key": {
         "#": {
-            "item": "botsmod:arlo_coin"
+            "item": "minecraft:redstone_block"
         }
     },
     "coin": {
-        "item": "botsmod:arlo_coin"
+        "item": "botsmod:maniac_city_coin"
     },
     "result": {
-        "item": "minecraft:iron_ingot",
-        "count": 1
+        "item": "botsmod:redstone_quart",
+        "count": 4
     }
 }

@@ -7,24 +7,27 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.objects.containers.CoinSpecContainer;
 import com.thefreak.botsmod.recipes.BotsRecipeType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Set;
 
-public class ArloShapedRecipe implements net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer>{
+public class SpecialisedShapedRecipe implements net.minecraftforge.common.crafting.IShapedRecipe<CoinSpecContainer>{
     static int MAX_WIDTH = 3;
     static int MAX_HEIGHT = 3;
 
@@ -37,16 +40,18 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
     final int height;
     final NonNullList<Ingredient> recipeItems;
     final ItemStack result;
+    final ItemStack coin;
     private final ResourceLocation id;
     final String group;
 
-    public ArloShapedRecipe(ResourceLocation pId, String pGroup, int pWidth, int pHeight, NonNullList<Ingredient> pRecipeItems, ItemStack pResult) {
+    public SpecialisedShapedRecipe(ResourceLocation pId, String pGroup, int pWidth, int pHeight, NonNullList<Ingredient> pRecipeItems, ItemStack pResult, ItemStack coin) {
         this.id = pId;
         this.group = pGroup;
         this.width = pWidth;
         this.height = pHeight;
         this.recipeItems = pRecipeItems;
         this.result = pResult;
+        this.coin = coin;
     }
 
     public ResourceLocation getId() {
@@ -54,7 +59,7 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
     }
 
     public RecipeSerializer<?> getSerializer() {
-        return BotsRecipeType.ARLO_SHAPED.get();
+        return BotsRecipeType.SPECIALISED_SHAPED.get();
     }
 
     @Override
@@ -72,6 +77,10 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
         return this.result;
     }
 
+    public ItemStack getCoinItem() {
+        return this.coin;
+    }
+
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
     }
@@ -81,9 +90,9 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
     }
 
 
-    public boolean matches(CraftingContainer pInv, Level pLevel) {
-        for(int i = 0; i <= pInv.getWidth() - this.width; ++i) {
-            for(int j = 0; j <= pInv.getHeight() - this.height; ++j) {
+    public boolean matches(CoinSpecContainer pInv, Level pLevel) {
+        for(int i = 0; i <= MAX_WIDTH - this.width; ++i) {
+            for(int j = 0; j <= MAX_HEIGHT - this.height; ++j) {
                 if (this.matches(pInv, i, j, true)) {
                     return true;
                 }
@@ -97,9 +106,9 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
         return false;
     }
 
-    private boolean matches(CraftingContainer pCraftingInventory, int pWidth, int pHeight, boolean pMirrored) {
-        for(int i = 0; i < pCraftingInventory.getWidth(); ++i) {
-            for(int j = 0; j < pCraftingInventory.getHeight(); ++j) {
+    private boolean matches(CoinSpecContainer pCraftingInventory, int pWidth, int pHeight, boolean pMirrored) {
+        for(int i = 0; i < MAX_WIDTH; ++i) {
+            for(int j = 0; j < MAX_HEIGHT; ++j) {
                 int k = i - pWidth;
                 int l = j - pHeight;
                 Ingredient ingredient = Ingredient.EMPTY;
@@ -111,16 +120,18 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
                     }
                 }
 
-                if (!ingredient.test(pCraftingInventory.getItem(i + j * pCraftingInventory.getWidth()))) {
+                if (!ingredient.test(pCraftingInventory.getItem(i + j * MAX_WIDTH))) {
                     return false;
                 }
             }
         }
-
+        if (!pCraftingInventory.getItem(9).is(this.getCoinItem().getItem())) {
+            return false;
+        }
         return true;
     }
 
-    public ItemStack assemble(CraftingContainer pInv) {
+    public ItemStack assemble(CoinSpecContainer pInv) {
         return this.getResultItem().copy();
     }
 
@@ -292,30 +303,31 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
         }
     }
 
-    public static class Type implements RecipeType<ArloShapedRecipe> {
+    public static class Type implements RecipeType<SpecialisedShapedRecipe> {
         private Type() { }
         public static final Type INSTANCE = new Type();
-        public static final String ID = "arlo_crafting_shaped";
+        public static final String ID = "specialised_crafting_shaped";
     }
 
-    public static class Serializer implements RecipeSerializer<ArloShapedRecipe> {
+    public static class Serializer implements RecipeSerializer<SpecialisedShapedRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        private static final ResourceLocation ID = new ResourceLocation("botsmod", "arlo_crafting_shaped");
+        private static final ResourceLocation ID = new ResourceLocation(BotsMod.MOD_ID, "specialised_crafting_shaped");
 
         @Override
-        public ArloShapedRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+        public SpecialisedShapedRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
             String s = GsonHelper.getAsString(pJson, "group", "");
-            Map<String, Ingredient> map = ArloShapedRecipe.keyFromJson(GsonHelper.getAsJsonObject(pJson, "key"));
-            String[] astring = ArloShapedRecipe.shrink(ArloShapedRecipe.patternFromJson(GsonHelper.getAsJsonArray(pJson, "pattern")));
+            Map<String, Ingredient> map = SpecialisedShapedRecipe.keyFromJson(GsonHelper.getAsJsonObject(pJson, "key"));
+            String[] astring = SpecialisedShapedRecipe.shrink(SpecialisedShapedRecipe.patternFromJson(GsonHelper.getAsJsonArray(pJson, "pattern")));
             int i = astring[0].length();
             int j = astring.length;
-            NonNullList<Ingredient> nonnulllist = ArloShapedRecipe.dissolvePattern(astring, map, i, j);
-            ItemStack itemstack = ArloShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "result"));
-            return new ArloShapedRecipe(pRecipeId, s, i, j, nonnulllist, itemstack);
+            NonNullList<Ingredient> nonnulllist = SpecialisedShapedRecipe.dissolvePattern(astring, map, i, j);
+            ItemStack coin = SpecialisedShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "coin"));
+            ItemStack itemstack = SpecialisedShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "result"));
+            return new SpecialisedShapedRecipe(pRecipeId, s, i, j, nonnulllist, itemstack, coin);
         }
 
         @Override
-        public ArloShapedRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+        public SpecialisedShapedRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             int i = pBuffer.readVarInt();
             int j = pBuffer.readVarInt();
             String s = pBuffer.readUtf();
@@ -325,12 +337,13 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
                 nonnulllist.set(k, Ingredient.fromNetwork(pBuffer));
             }
 
+            ItemStack coin = pBuffer.readItem();
             ItemStack itemstack = pBuffer.readItem();
-            return new ArloShapedRecipe(pRecipeId, s, i, j, nonnulllist, itemstack);
+            return new SpecialisedShapedRecipe(pRecipeId, s, i, j, nonnulllist, itemstack, coin);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, ArloShapedRecipe pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, SpecialisedShapedRecipe pRecipe) {
             pBuffer.writeVarInt(pRecipe.width);
             pBuffer.writeVarInt(pRecipe.height);
             pBuffer.writeUtf(pRecipe.group);
@@ -339,6 +352,7 @@ public class ArloShapedRecipe implements net.minecraftforge.common.crafting.ISha
                 ingredient.toNetwork(pBuffer);
             }
 
+            pBuffer.writeItem(pRecipe.coin);
             pBuffer.writeItem(pRecipe.result);
         }
 

@@ -92,6 +92,13 @@ public class ItemInitNew {
 
 
     public static final RegistryObject<Item> ASH = ITEMS.register("ash", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+    public static final RegistryObject<Item> REDSTONE_QUART = ITEMS.register("redstone_quart", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> POENICAN_CRYSTAL = ITEMS.register("poenican_crystal", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> POENICAN_CRYSTALITES = ITEMS.register("poenican_crystalites", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
+
+    public static final RegistryObject<Item> BANNED_LAND_KEY = ITEMS.register("banned_land_key", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
 
 

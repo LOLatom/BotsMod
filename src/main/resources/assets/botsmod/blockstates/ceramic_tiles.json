@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "":  { "model": "botsmod:block/ceramic_tiles" }
+
+    }
+}

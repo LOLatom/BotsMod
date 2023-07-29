@@ -1,30 +1,25 @@
 package com.thefreak.botsmod.objects.containers.slots;
 
-import com.thefreak.botsmod.init.ItemInit;
-import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.containers.CoinSpecContainer;
-import com.thefreak.botsmod.recipes.BotsRecipeType;
-import com.thefreak.botsmod.recipes.specialised.shaped.ArloShapedRecipe;
+import com.thefreak.botsmod.recipes.specialised.NormalCraftingRecipeRef;
+import com.thefreak.botsmod.recipes.specialised.shaped.SpecialisedShapedRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 
 public class SpecialisedResultSlot extends Slot {
-    private final CoinSpecContainer specContainer;
-    private final CraftingContainer craftSlots;
+    private final CoinSpecContainer craftSlots;
+
     private final Player player;
     private int removeCount;
 
-    public SpecialisedResultSlot(Player player, CraftingContainer craftingContainer, CoinSpecContainer specContainer, Container p_40168_, int index, int x, int y) {
+    public SpecialisedResultSlot(Player player,CoinSpecContainer specContainer, Container p_40168_, int index, int x, int y) {
         super(p_40168_, index, x, y);
         this.player = player;
-        this.craftSlots = craftingContainer;
-        this.specContainer = specContainer;
+        this.craftSlots = specContainer;
     }
     public boolean mayPlace(ItemStack pStack) {
         return false;
@@ -71,17 +66,17 @@ public class SpecialisedResultSlot extends Slot {
     }
 
     public void onTake(Player pPlayer, ItemStack pStack) {
-        NonNullList<ItemStack> nonnulllist;
         this.checkTakeAchievements(pStack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
-        if ((specContainer.getItem(0)).getItem() == ItemInitNew.ARLO_COIN.get()) {
-            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(ArloShapedRecipe.Type.INSTANCE, this.craftSlots, pPlayer.level);
-        } else {
-            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(RecipeType.CRAFTING, this.craftSlots, pPlayer.level);
-        }
+        NonNullList<ItemStack> nonnulllist;
 
+        if (this.craftSlots.getItem(9).isEmpty()) {
+            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(NormalCraftingRecipeRef.INSTANCE, this.craftSlots, pPlayer.level);
+        } else {
+            nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(SpecialisedShapedRecipe.Type.INSTANCE, this.craftSlots, pPlayer.level);
+        }
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
-        for(int i = 0; i < nonnulllist.size(); ++i) {
+        for(int i = 0; i < nonnulllist.size() - 1; ++i) {
             ItemStack itemstack = this.craftSlots.getItem(i);
             ItemStack itemstack1 = nonnulllist.get(i);
             if (!itemstack.isEmpty()) {

@@ -1,0 +1,18 @@
+{
+    "type": "botsmod:specialised_crafting_shaped",
+    "pattern": [
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "botsmod:poenican_crystal"
+        }
+    },
+    "coin": {
+        "item": "botsmod:maniac_city_coin"
+    },
+    "result": {
+        "item": "botsmod:poenican_crystalites",
+        "count": 2
+    }
+}

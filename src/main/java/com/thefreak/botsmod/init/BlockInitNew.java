@@ -479,6 +479,12 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> SPECIALISED_CRAFTING_TABLE  = BLOCKS.register("specialised_crafting_table", () -> new SpecialisedCraftingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
 
+	public static final RegistryObject<Block> CERAMIC_TILES  = BLOCKS.register("ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> DIRTY_CERAMIC_TILES  = BLOCKS.register("dirty_ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> SLIGHTLY_DIRTY_CERAMIC_TILES  = BLOCKS.register("slightly_dirty_ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {
 		return new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, (p_235431_2_) -> {

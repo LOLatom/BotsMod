@@ -1,5 +1,6 @@
 package com.thefreak.botsmod.objects.events;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.thefreak.botsmod.API.IAmDivine;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.ClassReferences;
@@ -8,6 +9,7 @@ import com.thefreak.botsmod.objects.items.loreandclueitems.TremoringTabletItem;
 import com.thefreak.botsmod.objects.keys.KeyInitiation;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
 import com.thefreak.botsmod.util.packets.interractionpackets.DivineKeyClick;
+import com.thefreak.botsmod.util.packets.interractionpackets.PressKeyInDuelPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -30,6 +32,13 @@ public class KeyPressedEvent {
 
     @SubscribeEvent
     public static void pressKey(InputEvent.KeyInputEvent event) {
+        if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_F)) {
+                BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(0));
+        }else if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_G)) {
+                BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(1));
+        }else if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_H)) {
+                BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(2));
+        }
         if (KeyInitiation.botskeyMapping.consumeClick()) {
             boolean isme = ClassReferences.getPlayer().getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || ClassReferences.getPlayer().getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
             System.out.println("KEYPRESSED");

@@ -98,7 +98,7 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> POENICAN_CRYSTALITES = ITEMS.register("poenican_crystalites", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
-    public static final RegistryObject<Item> BANNED_LAND_KEY = ITEMS.register("banned_land_key", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+    public static final RegistryObject<Item> BANNED_LAND_KEY = ITEMS.register("banned_land_key", () -> new BannedLandKey(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
 
 

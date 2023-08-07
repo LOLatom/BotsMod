@@ -57,6 +57,12 @@ public class BotsPacketHandler {
                 .consumer(StartAnimationPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(PressKeyInDuelPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(PressKeyInDuelPacket::encode)
+                .decoder(PressKeyInDuelPacket::decode)
+                .consumer(PressKeyInDuelPacket::handle)
+                .add();
+
 
         //ClientBound
 
@@ -74,6 +80,11 @@ public class BotsPacketHandler {
                 .encoder(OpenDialogueGUI::encode)
                 .decoder(OpenDialogueGUI::decode)
                 .consumer(OpenDialogueGUI::handle)
+                .add();
+        INSTANCE.messageBuilder(SetDuelPacket.class,ID++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SetDuelPacket::encode)
+                .decoder(SetDuelPacket::decode)
+                .consumer(SetDuelPacket::handle)
                 .add();
 
 

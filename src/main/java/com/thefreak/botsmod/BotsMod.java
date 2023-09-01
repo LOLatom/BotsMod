@@ -119,8 +119,11 @@ public class BotsMod
         event.put(ModEntityTypes.DRAINED.get(), DrainedEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.DRAINED_CHIEF.get(), DrainedChiefEntity.setCustomAttributes().build());
         event.put(ModEntityTypes.WICKED_ONE.get(), WickedOne.createAttributes().build());
+        event.put(ModEntityTypes.GATE_KEEPER.get(), GateKeeper.createAttributes().build());
         event.put(ModEntityTypes.KRASIA.get(), KrasiaEntity.createAttributes().build());
         event.put(ModEntityTypes.CAVE_ANGELIA_GUPPIE.get(), CaveAngeliaGuppie.createAttributes().build());
+
+
 
     }
 
@@ -133,12 +136,6 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.CARVED_STRECHED_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_PEPON_FRUIT.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_STRECHED_PEPON_FRUIT.get(), RenderType.cutoutMipped());
-     /*   ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_GROWTH.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_HALF_GROWN.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TINY_PEPON_FRUIT_SPROUT.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.CARVED_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.GLOWING_TINY_PEPON_FRUIT.get(), RenderType.cutoutMipped()); */
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.BAUMEA_LEAVES.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.TAR_TORCH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.POST_MORTAL_ALTAR.get(), RenderType.cutoutMipped());
@@ -154,6 +151,8 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.RED_BIRD_GROWTH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.RED_BIRD_BRANCH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.FLESH_COLUMN.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPECIALISED_CRAFTING_TABLE.get(), RenderType.cutoutMipped());
+
 
 
         ItemBlockRenderTypes.setRenderLayer(BOTSFluids.CELL.get(), RenderType.translucent());

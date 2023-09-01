@@ -5,8 +5,6 @@ import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.entities.WanderingSpecterEntity;
 import com.thefreak.botsmod.init.EffectInitNew;
 import com.thefreak.botsmod.init.ModEntityTypes;
-import com.thefreak.botsmod.util.AI.AttackWhenPossesedGoal;
-import com.thefreak.botsmod.util.AI.TargetNearestWhenPossesed;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -40,10 +38,6 @@ public class PossesedEffectEvent {
     public static void testEvent(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         boolean isPlayer = entity instanceof Player;
-        if (!isPlayer && entity instanceof Mob mobEntity) {
-            mobEntity.goalSelector.addGoal(1, new AttackWhenPossesedGoal(mobEntity,1D, true));
-            mobEntity.targetSelector.addGoal(1, new TargetNearestWhenPossesed<>(mobEntity, Player.class, true));
-        }
     }
 
 

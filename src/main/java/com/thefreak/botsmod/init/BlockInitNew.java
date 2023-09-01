@@ -477,7 +477,7 @@ public class BlockInitNew {
 
 	public static final RegistryObject<Block> MUD_PUDDLE  = BLOCKS.register("mud_puddle", () -> new MudPuddleBlock(BlockBehaviour.Properties.of(Material.DIRT).sound(SoundType.ROOTED_DIRT).strength(2.0F)));
 
-	public static final RegistryObject<Block> SPECIALISED_CRAFTING_TABLE  = BLOCKS.register("specialised_crafting_table", () -> new SpecialisedCraftingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+	public static final RegistryObject<Block> SPECIALISED_CRAFTING_TABLE  = BLOCKS.register("specialised_crafting_table", () -> new SpecialisedCraftingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).noOcclusion().dynamicShape()));
 
 	public static final RegistryObject<Block> CERAMIC_TILES  = BLOCKS.register("ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
 

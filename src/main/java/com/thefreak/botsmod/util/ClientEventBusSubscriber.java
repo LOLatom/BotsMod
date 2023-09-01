@@ -31,6 +31,7 @@ public class ClientEventBusSubscriber {
         EntityRenderers.register(ModEntityTypes.WICKED_ONE.get(), WickedOneRender::new);
         EntityRenderers.register(ModEntityTypes.KRASIA.get(), KrasiaRender::new);
         EntityRenderers.register(ModEntityTypes.CAVE_ANGELIA_GUPPIE.get(), CaveAngeliaGuppieRender::new);
+        EntityRenderers.register(ModEntityTypes.GATE_KEEPER.get(), GateKeeperRender::new);
 
 
 

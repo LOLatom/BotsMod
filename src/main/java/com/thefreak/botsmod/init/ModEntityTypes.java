@@ -35,6 +35,10 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<WickedOne>> WICKED_ONE = ENTITY.register("wicked_one", () ->
 			EntityType.Builder.<WickedOne>of(WickedOne::new, MobCategory.MONSTER).sized(0.8F,3.9F).build(new ResourceLocation(BotsMod.MOD_ID,"wicked_one").toString()));
 
+	public static final RegistryObject<EntityType<GateKeeper>> GATE_KEEPER = ENTITY.register("gate_keeper", () ->
+			EntityType.Builder.<GateKeeper>of(GateKeeper::new, MobCategory.MONSTER).sized(1.2F,3.9F).build(new ResourceLocation(BotsMod.MOD_ID,"gate_keeper").toString()));
+
+
 	public static final RegistryObject<EntityType<KrasiaEntity>> KRASIA = ENTITY.register("krasia", () ->
 			EntityType.Builder.<KrasiaEntity>of(KrasiaEntity::new, MobCategory.MISC).sized(1.5F,3.9F).build(new ResourceLocation(BotsMod.MOD_ID,"krasia").toString()));
 

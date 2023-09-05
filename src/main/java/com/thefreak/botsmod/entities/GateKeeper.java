@@ -1,6 +1,8 @@
 package com.thefreak.botsmod.entities;
 
+import com.thefreak.botsmod.entities.misc.LightSwordConstruct;
 import com.thefreak.botsmod.entities.util.BotsMonster;
+import com.thefreak.botsmod.init.ModEntityTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -112,6 +114,9 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (pSource.getEntity() instanceof Player player) {
             this.level.playSound(player,this.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.HOSTILE,2F,1.5F);
+            LightSwordConstruct lightSwordConstruct = new LightSwordConstruct(ModEntityTypes.LIGHT_SWORD_CONSTRUCT.get(), this.level, 100, player);
+            lightSwordConstruct.setPos(player.getX(), player.getY() + 5, player.getZ());
+            this.level.addFreshEntity(lightSwordConstruct);
         }
         return false;
     }
@@ -139,6 +144,11 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController(this, "controller", 10, this::predicate));
 
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
     }
 
     @Override
@@ -236,7 +246,7 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
 
 
         public boolean canUse() {
-            return this.mob.getRandom().nextFloat() < 0.02F && GateKeeper.this.getActionFlags() == 2;
+            return this.mob.getRandom().nextFloat() < 0.02F && GateKeeper.this.getAwakened();
         }
 
 
@@ -313,11 +323,11 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
                     this.lookAt = this.mob.level.getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
                 } else {
                     this.lookAt = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate((double)this.lookDistance, 3.0D, (double)this.lookDistance), (p_148124_) -> {
-                        return true;
+                        return true && GateKeeper.this.getAwakened();
                     }), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
                 }
 
-                return this.lookAt != null;
+                return this.lookAt != null && GateKeeper.this.getAwakened();
             }
         }
 

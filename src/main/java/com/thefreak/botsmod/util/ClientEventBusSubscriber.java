@@ -37,6 +37,7 @@ public class ClientEventBusSubscriber {
 
         //      SPECIAL       //
         EntityRenderers.register(ModEntityTypes.SHADOW_LIGHTNING_BOLT.get(), ShadowLightningBoltRenderer::new);
+        EntityRenderers.register(ModEntityTypes.LIGHT_SWORD_CONSTRUCT.get(), LightSwordConstructRenderer::new);
         //      ITEMS       //
 
 

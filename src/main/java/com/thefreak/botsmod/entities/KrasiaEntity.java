@@ -88,6 +88,7 @@ public class KrasiaEntity extends LivingEntity implements IAnimatable {
         return PlayState.CONTINUE;
     }
 
+
     @Override
     public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {
 

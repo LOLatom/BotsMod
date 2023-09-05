@@ -2,6 +2,7 @@ package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.entities.*;
+import com.thefreak.botsmod.entities.misc.LightSwordConstruct;
 import com.thefreak.botsmod.entities.misc.ShadowLightningBolt;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -41,6 +42,9 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<KrasiaEntity>> KRASIA = ENTITY.register("krasia", () ->
 			EntityType.Builder.<KrasiaEntity>of(KrasiaEntity::new, MobCategory.MISC).sized(1.5F,3.9F).build(new ResourceLocation(BotsMod.MOD_ID,"krasia").toString()));
+
+	public static final RegistryObject<EntityType<LightSwordConstruct>> LIGHT_SWORD_CONSTRUCT = ENTITY.register("light_sword_construct", () ->
+			EntityType.Builder.<LightSwordConstruct>of(LightSwordConstruct::new, MobCategory.MISC).sized(1.5F,3.9F).build(new ResourceLocation(BotsMod.MOD_ID,"light_sword_construct").toString()));
 
 	public static final RegistryObject<EntityType<CaveAngeliaGuppie>> CAVE_ANGELIA_GUPPIE = ENTITY.register("cave_angelia_guppie", () ->
 			EntityType.Builder.<CaveAngeliaGuppie>of(CaveAngeliaGuppie::new, MobCategory.WATER_AMBIENT).sized(1F,0.5F).build(new ResourceLocation(BotsMod.MOD_ID,"cave_angelia_guppie").toString()));

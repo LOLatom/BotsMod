@@ -30,37 +30,54 @@ public class BanhirHeadBEWLR extends BlockEntityWithoutLevelRenderer {
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         super.renderByItem(stack, transformType, matrixStack, buffer, combinedLight, combinedOverlay);
+        if (transformType != ItemTransforms.TransformType.GUI) {
+            matrixStack.pushPose();
+            matrixStack.translate(0.25F, 0.5F, 0.5F);
+            PoseStack.Pose entry = matrixStack.last();
+            matrixStack.popPose();
+            Random random = new Random();
+            entry = matrixStack.last();
+            //NORMAL
+            BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(BotsMod.MOD_ID,
+                    "item/banhir_head_model"));
+            VertexConsumer vertexBuilder = buffer
+                    .getBuffer(RenderType.entityTranslucent(InventoryMenu.BLOCK_ATLAS));
 
-        matrixStack.pushPose();
-        matrixStack.translate(0.25F, 0.5F, 0.5F);
-        PoseStack.Pose entry = matrixStack.last();
-        matrixStack.popPose();
-        Random random = new Random();
-        entry = matrixStack.last();
-        //NORMAL
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(BotsMod.MOD_ID,
-                "item/banhir_head_model"));
-        VertexConsumer vertexBuilder = buffer
-                .getBuffer(RenderType.entityTranslucent(InventoryMenu.BLOCK_ATLAS));
+            for (int i = 0; i < model.getQuads(null, null, random, EmptyModelData.INSTANCE).size(); i++) {
+                vertexBuilder.putBulkData(entry, model.getQuads(null, null, random, EmptyModelData.INSTANCE).get(i), 1, 1, 1, 1, combinedLight, combinedOverlay, true);
+            }
+            PoseStack poseStack2 = matrixStack;
 
-        for (int i = 0; i < model.getQuads(null, null, random, EmptyModelData.INSTANCE).size(); i++) {
-            vertexBuilder.putBulkData(entry, model.getQuads(null, null, random, EmptyModelData.INSTANCE).get(i), 1, 1, 1, 1, combinedLight, combinedOverlay, true);
-        }
-        PoseStack poseStack2 = matrixStack;
+            matrixStack.pushPose();
+            matrixStack.translate(0.25F, 0.5F, 0.5F);
+            PoseStack.Pose entry2 = matrixStack.last();
+            matrixStack.popPose();
+            entry2 = matrixStack.last();
+            //NORMAL
+            BakedModel model2 = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(BotsMod.MOD_ID,
+                    "item/banhir_head_model_glow"));
+            VertexConsumer vertexBuilder2 = buffer
+                    .getBuffer(RenderType.eyes(InventoryMenu.BLOCK_ATLAS));
 
-        matrixStack.pushPose();
-        matrixStack.translate(0.25F, 0.5F, 0.5F);
-        PoseStack.Pose entry2 = matrixStack.last();
-        matrixStack.popPose();
-        entry2 = matrixStack.last();
-        //NORMAL
-        BakedModel model2 = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(BotsMod.MOD_ID,
-                "item/banhir_head_model_glow"));
-        VertexConsumer vertexBuilder2 = buffer
-                .getBuffer(RenderType.eyes(InventoryMenu.BLOCK_ATLAS));
+            for (int i = 0; i < model2.getQuads(null, null, random, EmptyModelData.INSTANCE).size(); i++) {
+                vertexBuilder2.putBulkData(entry2, model2.getQuads(null, null, random, EmptyModelData.INSTANCE).get(i), 50, 50, 50, 1, combinedLight, combinedOverlay, true);
+            }
+        } else {
+            matrixStack.pushPose();
+            matrixStack.translate(0.25F, 0.5F, 0.5F);
+            PoseStack.Pose entry = matrixStack.last();
+            matrixStack.popPose();
+            Random random = new Random();
+            entry = matrixStack.last();
+            //NORMAL
+            BakedModel model = Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(BotsMod.MOD_ID,
+                    "item/banhir_head_item_model"));
+            VertexConsumer vertexBuilder = buffer
+                    .getBuffer(RenderType.entityTranslucent(InventoryMenu.BLOCK_ATLAS));
 
-        for (int i = 0; i < model2.getQuads(null, null, random, EmptyModelData.INSTANCE).size(); i++) {
-            vertexBuilder2.putBulkData(entry2, model2.getQuads(null, null, random, EmptyModelData.INSTANCE).get(i), 50, 50, 50, 1, combinedLight, combinedOverlay, true);
+            for (int i = 0; i < model.getQuads(null, null, random, EmptyModelData.INSTANCE).size(); i++) {
+                vertexBuilder.putBulkData(entry, model.getQuads(null, null, random, EmptyModelData.INSTANCE).get(i), 1, 1, 1, 1, combinedLight, combinedOverlay, true);
+            }
         }
     }
 }

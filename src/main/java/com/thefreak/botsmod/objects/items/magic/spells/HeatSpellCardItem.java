@@ -40,7 +40,7 @@ public class HeatSpellCardItem extends SpellCardItem {
 
     @Override
     public Component spellName() {
-        return new TextComponent("HEAT WAVE").withStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "clearfont"))) ;
+        return new TextComponent("Heat Wave");
     }
 
     @Override

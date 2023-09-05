@@ -6,6 +6,8 @@ import com.thefreak.botsmod.API.IHaveSpecialTooltip;
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.ClassReferences;
 import com.thefreak.botsmod.objects.items.bewlr.BanhirHeadBEWLR;
+import com.thefreak.botsmod.objects.items.bewlr.BanhirHeadGeoBEWLR;
+import com.thefreak.botsmod.objects.items.bewlr.GodKillerHandGEOBEWLR;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
@@ -20,17 +22,28 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
+import software.bernie.geckolib3.network.ISyncable;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.awt.*;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialTooltip {
+public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialTooltip, IAnimatable, ISyncable {
+
+    public AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public BanhirHead(Properties pProperties) {
         super(pProperties);
-
+        GeckoLibNetwork.registerSyncable(this);
     }
 
     @Override
@@ -70,15 +83,20 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
         return (poseStack, t) -> {};
     }
 
+    private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+        return PlayState.CONTINUE;
+    }
+
+
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IItemRenderProperties() {
-
+            private final BlockEntityWithoutLevelRenderer renderer = new BanhirHeadGeoBEWLR();
             @Override
             public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
 
-                return new BanhirHeadBEWLR(ClassReferences.getClientMC().getBlockEntityRenderDispatcher(),ClassReferences.getClientMC().getEntityModels());
+                return renderer;
             }
         });
     }
@@ -119,4 +137,18 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
     }
 
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 1, this::predicate));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    @Override
+    public void onAnimationSync(int id, int state) {
+
+    }
 }

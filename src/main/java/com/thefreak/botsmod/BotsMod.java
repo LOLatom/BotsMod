@@ -14,6 +14,7 @@ import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
 import com.thefreak.botsmod.objects.containers.screens.SpecialisedCraftingScreen;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
+import com.thefreak.botsmod.particles.ModParticleType;
 import com.thefreak.botsmod.recipes.BotsRecipeType;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -73,6 +74,7 @@ public class BotsMod
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
         BotsRecipeType.RECIPES.register(modEventBus);
+        ModParticleType.PARTICLE_TYPES.register(modEventBus);
         BotsPacketHandler.init();
         if (!FMLEnvironment.production) MinecraftForge.EVENT_BUS.addListener(this::tick);
     	ModEntityTypes.ENTITY.register(modEventBus);

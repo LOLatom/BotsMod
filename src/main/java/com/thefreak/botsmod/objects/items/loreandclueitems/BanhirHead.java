@@ -71,11 +71,7 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.nullToEmpty("#2 is waiting").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont"))));
-        pTooltipComponents.add(Component.nullToEmpty("#2 is a demon").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont"))));
-        pTooltipComponents.add(Component.nullToEmpty("! dream for her").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont")).withColor(new Color(255, 98, 98).getRGB())));
-        pTooltipComponents.add(Component.nullToEmpty("pure banishment for the demon").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont"))));
-        pTooltipComponents.add(Component.nullToEmpty("NO DREAM").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont"))));
+        pTooltipComponents.add(Component.nullToEmpty("4").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "rarityfont"))));
     }
 
     @Override
@@ -103,12 +99,12 @@ public class BanhirHead extends Item implements IHandlePoseable, IHaveSpecialToo
 
     @Override
     public Color colorTop() {
-        return new Color(64, 89, 66);
+        return new Color(66, 54, 50);
     }
 
     @Override
     public Color colorBottom() {
-        return new Color(64, 89, 66);
+        return new Color(66, 54, 50);
     }
 
     @Override

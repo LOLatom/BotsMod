@@ -1,41 +1,43 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.god_killer_hand.open": {
-			"loop": true,
-			"bones": {
-				"ArmPart": {
-					"rotation": [0, 0, 0],
-					"position": [0, 0, "0 + math.sin(query.anim_time * 100) * 0.3"]
-				},
-				"Finger1": {
-					"rotation": [-67.16959, 1.50069, "148.5636 - math.sin(query.anim_time * 100) * 8"]
-				},
-				"Finger2": {
-					"rotation": [-17.46271, 0.86717, "134.9244 + math.cos(query.anim_time * 100) * 8"]
-				},
-				"Finger3": {
-					"rotation": [10.16283, -7.29274, "157.8776 - math.cos(query.anim_time * 100) * 8"]
-				},
-				"Finger4": {
-					"rotation": [29.558, -19.80851, "139.1317 + math.sin(query.anim_time * 100) * 8"]
-				}
-			}
-		},
 		"animation.god_killer_hand.none": {
 			"loop": true,
 			"bones": {
 				"Finger1": {
-					"rotation": [0, 0, 0]
+					"rotation": {
+						"vector": [45.10922, -3.53329, -3.54002]
+					}
 				},
 				"Finger2": {
-					"rotation": [0, 0, 0]
+					"rotation": {
+						"vector": [45.10922, 3.53329, 3.54002]
+					}
 				},
 				"Finger3": {
-					"rotation": [-4.14036, 4.77146, 3.00587]
+					"rotation": {
+						"vector": [0, 17.5, 0]
+					}
+				}
+			}
+		},
+		"animation.god_killer_hand.open": {
+			"loop": true,
+			"bones": {
+				"Finger1": {
+					"rotation": {
+						"vector": ["-57.5 +math.sin(query.anim_time * 450) * 13", 0, 0]
+					}
 				},
-				"Finger4": {
-					"rotation": [0, 0, 0]
+				"Finger2": {
+					"rotation": {
+						"vector": ["-55 +math.cos(query.anim_time * 450) * 13", 0, 0]
+					}
+				},
+				"Finger3": {
+					"rotation": {
+						"vector": [0, "-50+math.cos(query.anim_time * 450) * 13", 0]
+					}
 				}
 			}
 		}

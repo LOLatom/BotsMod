@@ -24,6 +24,7 @@ public class TooltipEvents {
 
     @SubscribeEvent
     public static void renderPostTooltip(TooltipDisplayEvent event) {
+
         ItemStack stack = event.getStack();
         if (!(stack.getItem() instanceof IHaveSpecialTooltip)) {
             return;
@@ -101,6 +102,7 @@ public class TooltipEvents {
         event.setBorderEnd(bottom);
 
     }
+
 
 
 }

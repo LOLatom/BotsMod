@@ -61,7 +61,7 @@ public class LightSwordConstruct extends Projectile {
             this.level.playLocalSound(this.getX(),this.getY(),this.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.AMBIENT, 2, 1.1F, true);
             shoot(0,-5,0,2,0);
         }
-        if (this.ticksSpent > getTicksBeforeFalling() + 3 && this.getDeltaMovement().y == 0) {
+        if (this.ticksSpent > getTicksBeforeFalling() + 10 && this.getDeltaMovement().y == 0) {
             for(int i = 0; i < 360; i++) {
                 if (i % 20 == 0) {
                     this.level.addParticle(ModParticleType.GOLDEN_SPECTER_PARTICLE.get(), this.getX() + 0.2d, this.getY() + 0.1, this.getZ() + 0.2d,

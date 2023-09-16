@@ -56,6 +56,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     public static final int ANIM_OPEN = 0;
 
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
     public GodKillerHand(Properties pProperties) {
         super(pProperties);
         GeckoLibNetwork.registerSyncable(this);
@@ -75,6 +76,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
     public Component getName(ItemStack pStack) {
         return (Component.nullToEmpty("GOD KILLER HAND").copy().withStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "underfont"))));
     }
+
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
@@ -145,6 +147,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
 
 
 
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ArrayList<ItemStack> inv = new ArrayList<>();
@@ -161,7 +164,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
             ((IAmSpellCard) inv.get(selection).getItem()).rightClickAction().accept(pLevel, pPlayer, pUsedHand);
         }
 
-        if (pLevel.isClientSide) {
+        if (pLevel.isClientSide && inv.size() >0) {
             BotsPacketHandler.INSTANCE.sendToServer(new StartAnimationPacket(((IAmSpellCard) inv.get(selection).getItem()).animationForActivation()));
         }
         if (inv.size() >0) {
@@ -231,7 +234,6 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
 
         return super.useOn(pContext);
     }
-
 
     @Override
     public AnimationFactory getFactory() {

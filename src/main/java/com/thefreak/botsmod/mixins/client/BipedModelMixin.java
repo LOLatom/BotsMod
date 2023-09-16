@@ -10,6 +10,7 @@ import com.thefreak.botsmod.API.Animation.IHandlePoseable;
 import com.thefreak.botsmod.client.access.IAnimationHolder;
 import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import com.thefreak.botsmod.objects.animations.SpellUpCastingKeyFrame;
+import com.thefreak.botsmod.objects.animations.SpellUpCastingKeyFrameSecond;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
@@ -69,7 +70,9 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 		return new AnimationSetBuilder()
 				.addAnimation("botsmod.spellcastingup", new AnimationBuilder()
 						.animatePart(rightArm,
-								new KeyframeGroup(null,new SpellUpCastingKeyFrame(null,null,120))
+								new KeyframeGroup(null,new SpellUpCastingKeyFrame(null,null,1))
+						).animatePart(leftArm,
+								new KeyframeGroup(null,new SpellUpCastingKeyFrameSecond(null,null, 1))
 						).build()
 				).build();
 	}
@@ -146,6 +149,7 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 			if (!animatableObject.getObject().isSetup(this))
 				animatableObject.getObject().setup(this);
 			// TODO: figure out how to get partial ticks to work right
+			float partialTicks = pAgeInTicks - entity.tickCount;
 			animator.tick(entity, (pAgeInTicks % 1 /* idk how modulo works on decimals, but */));
 		}
 	}

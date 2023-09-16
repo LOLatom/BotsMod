@@ -29,8 +29,8 @@ public class LightSwordConstructRenderer extends EntityRenderer<LightSwordConstr
         pMatrixStack.pushPose();
         pMatrixStack.mulPose(Quaternion.fromXYZ(180 * ((float) Math.PI / 180F),0,0));
         pMatrixStack.translate(0,-1.1,0);
-        VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.eyes(TEXTURE_LOCATION));
-        this.model.renderToBuffer(pMatrixStack,vertexconsumer,pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.entityTranslucent(TEXTURE_LOCATION));
+        this.model.renderToBuffer(pMatrixStack,vertexconsumer,pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1);
         pMatrixStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
     }

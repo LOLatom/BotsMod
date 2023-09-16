@@ -1,8 +1,11 @@
 package com.thefreak.botsmod.objects.items.magic.spells;
 
 import com.thefreak.botsmod.BotsMod;
+import com.thefreak.botsmod.client.access.IBotsModAnimatable;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
+import com.thefreak.botsmod.mixins.client.AbstractClientPlayerMixin;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,10 +21,12 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.util.TriConsumer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,12 @@ public class HeatSpellCardItem extends SpellCardItem {
     }
 
 
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        pTooltipComponents.add(Component.nullToEmpty("0").copy().withStyle().setStyle(Style.EMPTY.withFont(new ResourceLocation(BotsMod.MOD_ID, "rarityfont"))));
+        pTooltipComponents.add(Component.nullToEmpty("Spell: Heat Wave"));
+    }
 
     @Override
     public Component spellName() {
@@ -55,9 +66,13 @@ public class HeatSpellCardItem extends SpellCardItem {
         return new ResourceLocation("botsmod:textures/gui/spell/heat_spell_card.png");
     }
 
+
     @Override
     public void tickingOnUse(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
         List<LivingEntity> entities = getEntitiesInFrontOfPlayer((Player) pLivingEntity);
+        if (pLivingEntity instanceof IBotsModAnimatable animatable && pLivingEntity instanceof AbstractClientPlayer) {
+            animatable.getSet().startAnimation("botsmod.spellcastingup", animatable.getObject().animator());
+        }
 
         Vec3 pushVector = ((Player) pLivingEntity).getLookAngle().scale(0.15);
 
@@ -67,6 +82,11 @@ public class HeatSpellCardItem extends SpellCardItem {
             entity.setSecondsOnFire(1);
         }
         super.tickingOnUse(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
+    }
+
+    @Override
+    public void onRelease(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
+        super.onRelease(pStack, pLevel, pLivingEntity, pTimeCharged);
     }
 
     public List<LivingEntity> getEntitiesInFrontOfPlayer(Player player) {

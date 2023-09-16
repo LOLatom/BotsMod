@@ -35,6 +35,8 @@ public class AbstractClientPlayerMixin implements IBotsModAnimatable<AbstractCli
 			// if you want to animate another part, add it here
 			if (!animator.hasPart(model.rightArm))
 				animator.addPartAnimator(model.rightArm, new PartAnimator(null, Vec3.ZERO, Vec3.ZERO, model.rightArm));
+			if (!animator.hasPart(model.leftArm))
+				animator.addPartAnimator(model.leftArm, new PartAnimator(null, Vec3.ZERO, Vec3.ZERO, model.leftArm));
 		}
 		
 		@Override

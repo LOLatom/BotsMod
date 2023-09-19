@@ -71,7 +71,7 @@ public class HeatSpellCardItem extends SpellCardItem {
     public void tickingOnUse(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
         List<LivingEntity> entities = getEntitiesInFrontOfPlayer((Player) pLivingEntity);
         if (pLivingEntity instanceof IBotsModAnimatable animatable && pLivingEntity instanceof AbstractClientPlayer) {
-            animatable.getSet().startAnimation("botsmod.spellcastingup", animatable.getObject().animator());
+            animatable.getSet().startAnimation("botsmod.foward_spell_casting", animatable.getObject().animator());
         }
 
         Vec3 pushVector = ((Player) pLivingEntity).getLookAngle().scale(0.15);

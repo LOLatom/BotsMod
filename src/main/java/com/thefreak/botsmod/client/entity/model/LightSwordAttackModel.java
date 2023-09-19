@@ -9,6 +9,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class LightSwordAttackModel <T extends LightSwordConstruct> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -40,7 +42,6 @@ public class LightSwordAttackModel <T extends LightSwordConstruct> extends Entit
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
 	}
 
 	@Override

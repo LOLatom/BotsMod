@@ -14,4 +14,8 @@ public class ModParticleType {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, BotsMod.MOD_ID);
 
     public static final RegistryObject<SimpleParticleType> GOLDEN_SPECTER_PARTICLE = PARTICLE_TYPES.register("golden_specter", () -> new SimpleParticleType(true));
+
+    public static final RegistryObject<SimpleParticleType> STEAM_RING_PARTICLE = PARTICLE_TYPES.register("steam_ring", () -> new SimpleParticleType(true));
+
+
 }

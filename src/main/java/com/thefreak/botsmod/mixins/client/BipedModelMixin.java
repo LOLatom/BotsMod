@@ -68,7 +68,7 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableLis
 	
 	protected AnimationSet buildAnimations() {
 		return new AnimationSetBuilder()
-				.addAnimation("botsmod.spellcastingup", new AnimationBuilder()
+				.addAnimation("botsmod.foward_spell_casting", new AnimationBuilder()
 						.animatePart(rightArm,
 								new KeyframeGroup(null,new SpellUpCastingKeyFrame(null,null,1))
 						).animatePart(leftArm,

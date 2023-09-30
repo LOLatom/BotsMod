@@ -14,6 +14,7 @@ import com.thefreak.botsmod.objects.items.loreandclueitems.coins.*;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.objects.items.magic.spells.HeatSpellCardItem;
 import com.thefreak.botsmod.objects.items.organs.FleshBucket;
+import com.thefreak.botsmod.objects.items.organs.tools.Cleaver;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -99,6 +100,8 @@ public class ItemInitNew {
     public static final RegistryObject<Item> POENICAN_CRYSTALITES = ITEMS.register("poenican_crystalites", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
     public static final RegistryObject<Item> BANNED_LAND_KEY = ITEMS.register("banned_land_key", () -> new BannedLandKey(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> CLEAVER = ITEMS.register("cleaver", () -> new Cleaver(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
 
 

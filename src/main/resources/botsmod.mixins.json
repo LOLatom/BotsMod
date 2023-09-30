@@ -19,13 +19,15 @@
     "client.EntityRendererDispatcherMixin",
     "client.SlotMixinForEvent",
     "client.RenderIconMixin",
-    "client.MouseHandlerMixin"
+    "client.MouseHandlerMixin",
+    "client.prosthetic.InventoryScreenMixin"
   ],
   "mixins": [
     "server.LivingEntityMixin",
     "server.EntityMixin",
     "server.LevelMixin",
-    "server.PlayerMixin"
+    "server.PlayerMixin",
+    "server.prosthetic.InventoryMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

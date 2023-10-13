@@ -153,13 +153,13 @@ public class DrainedEntity extends Monster implements IAnimatable {
 
     @Override
     protected void dropCustomDeathLoot(DamageSource damageSource, int p_213333_2_, boolean p_213333_3_) {
-        Level world = damageSource.getEntity().level;
+        /*Level world = damageSource.getEntity().level;
         ArrayList<ItemStack> itemStacks = new ArrayList<ItemStack>();
         itemStacks.add(Items.DIAMOND.getDefaultInstance());
         itemStacks.add(Items.IRON_INGOT.getDefaultInstance());
         if (this.entityData.get(VASE)) {
             this.level.addFreshEntity(new ItemEntity(this.level,this.getX(),this.getY(),this.getZ(), itemStacks.get(random.nextInt(2))));
-        }
+        }*/
         super.dropCustomDeathLoot(damageSource, p_213333_2_, p_213333_3_);
     }
 

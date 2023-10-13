@@ -9,6 +9,7 @@ import com.thefreak.botsmod.fluids.BOTSFluids;
 import com.thefreak.botsmod.fluids.FluidInit;
 import com.thefreak.botsmod.init.*;
 import com.thefreak.botsmod.init.blockinit.NoItemBlockInit;
+import com.thefreak.botsmod.init.customregistries.ProstheticRegistry;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
 import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
@@ -161,6 +162,8 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BOTSFluids.FLOWING_CELL.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(FluidInit.CELL_FLUID.get(), RenderType.translucent());
 
+        //weird ahh custom registry thingy
+        ProstheticRegistry.setupRegistries();
 
         ForgeModelBakery.addSpecialModel(new ResourceLocation("botsmod:item/delta_crystal_shard_model"));
     }

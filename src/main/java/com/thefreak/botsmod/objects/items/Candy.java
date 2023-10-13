@@ -15,8 +15,6 @@ public class Candy extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         Player playerEntity = entityLiving instanceof Player ? worldIn.getNearestPlayer(entityLiving, 0.1D) : null;
-
-
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }
 

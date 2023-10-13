@@ -51,7 +51,7 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
     public static AnimationBuilder IDLE_ANIM = new AnimationBuilder().addAnimation("animation.gate_keeper.idle");
 
 
-    private static final EntityDataAccessor<Boolean> DATA_AWAKEN = SynchedEntityData.defineId(WickedOne.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_AWAKEN = SynchedEntityData.defineId(GateKeeper.class, EntityDataSerializers.BOOLEAN);
 
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

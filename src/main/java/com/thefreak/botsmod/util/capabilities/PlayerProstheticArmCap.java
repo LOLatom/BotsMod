@@ -5,7 +5,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
 
 public class PlayerProstheticArmCap {
-    private ItemStack prostheticArm;
+    private ItemStack prostheticArm = ItemStack.EMPTY;
 
 
     public ItemStack getProstheticArm() {

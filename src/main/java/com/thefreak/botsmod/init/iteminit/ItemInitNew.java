@@ -2,7 +2,6 @@ package com.thefreak.botsmod.init.iteminit;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.objects.items.Eggs.PuffWormEggs;
-import com.thefreak.botsmod.objects.items.GeoriteCrystal;
 import com.thefreak.botsmod.objects.items.ItemType.AmuletItem;
 import com.thefreak.botsmod.objects.items.ItemType.CleaverSwordItem;
 import com.thefreak.botsmod.objects.items.ItemType.HammerItem;
@@ -53,8 +52,6 @@ public class ItemInitNew {
     public static final RegistryObject<Item> GRAY_NOTE = ITEMS.register("gray_note", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
     public static final RegistryObject<Item> BIG_RUBY = ITEMS.register("big_ruby", () -> new Item(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
-
-    public static final RegistryObject<Item> GEORITE_CRYSTAL = ITEMS.register("georite_crystal", () -> new GeoriteCrystal(new Item.Properties().tab(BotsMod.BotsItemGroup.instance)));
 
     public static final RegistryObject<Item> GOLD_BRONZE_LADLE = ITEMS.register("gold_bronze_ladle", () -> new LiquidHolder(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 

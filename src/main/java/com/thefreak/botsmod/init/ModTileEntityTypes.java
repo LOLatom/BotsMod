@@ -29,5 +29,9 @@ public class ModTileEntityTypes {
 	public static final RegistryObject<BlockEntityType<CookingPotTileEntity>> COOKING_POT_TILE_ENTITY = TILE_ENTITY_TYPES
 			.register("cooking_pot", () -> BlockEntityType.Builder
 					.of(CookingPotTileEntity::new, BlockInitNew.COOKING_POT.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<ArmFactoryTileEntity>> ARM_FACTORY_TILE_ENTITY = TILE_ENTITY_TYPES
+			.register("arm_factory", () -> BlockEntityType.Builder
+					.of(ArmFactoryTileEntity::new, BlockInitNew.ARM_FACTORY_BLOCK.get()).build(null));
 }
 

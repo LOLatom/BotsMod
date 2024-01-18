@@ -9,4 +9,5 @@ public class GodKillerHandGEOBEWLR extends GeoItemRenderer<GodKillerHand>{
         super(new GodKillerHandModel());
 
     }
+
 }

@@ -7,7 +7,9 @@ import com.thefreak.botsmod.objects.customobjects.ProstheticRender;
 import com.thefreak.botsmod.util.capabilities.PlayerProstheticArmProvider;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.Entity;
@@ -15,8 +17,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class ProstheticLayer<T extends LivingEntity, M extends EntityModel<T> & ArmedModel> extends RenderLayer {
-    public ProstheticLayer(RenderLayerParent<T, M> pRenderer) {
+
+    EntityModelSet modelSet;
+
+    public ProstheticLayer(RenderLayerParent<T, M> pRenderer, EntityModelSet modelSet) {
         super(pRenderer);
+        this.modelSet = modelSet;
+    }
+
+    public EntityModelSet getModelSet() {
+        return modelSet;
     }
 
     @Override
@@ -26,7 +36,8 @@ public class ProstheticLayer<T extends LivingEntity, M extends EntityModel<T> & 
                 if (!playerProstheticArmCap.getProstheticArm().isEmpty()) {
                     IAmProstheticItem prostheticItem = (IAmProstheticItem) playerProstheticArmCap.getProstheticArm().getItem();
                     ProstheticRender prostheticRender = ProstheticRegistry.PROSTHETIC_RENDERERS.get(prostheticItem.getRendererID());
-                    prostheticRender.renderProsthetic(playerProstheticArmCap.getProstheticArm(), pMatrixStack, pBuffer, pPackedLight, player, pLimbSwing, pLimbSwingAmount, pPartialTicks, pAgeInTicks, pNetHeadYaw, pHeadPitch);
+
+                    prostheticRender.renderProsthetic(getModelSet() ,playerProstheticArmCap.getProstheticArm(), pMatrixStack, pBuffer, pPackedLight, player, pLimbSwing, pLimbSwingAmount, pPartialTicks, pAgeInTicks, pNetHeadYaw, pHeadPitch, getParentModel());
                 }
             });
 

@@ -10,10 +10,13 @@ import com.thefreak.botsmod.objects.items.LadybugItem;
 import com.thefreak.botsmod.objects.items.LiquidHolder;
 import com.thefreak.botsmod.objects.items.loreandclueitems.*;
 import com.thefreak.botsmod.objects.items.loreandclueitems.coins.*;
+import com.thefreak.botsmod.objects.items.magic.MythicalSpellCardItem;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.objects.items.magic.spells.HeatSpellCardItem;
 import com.thefreak.botsmod.objects.items.organs.FleshBucket;
 import com.thefreak.botsmod.objects.items.organs.tools.Cleaver;
+import com.thefreak.botsmod.objects.items.organs.tools.arms.*;
+import com.thefreak.botsmod.objects.items.relics.SacrificialTongue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -108,6 +111,8 @@ public class ItemInitNew {
 
     public static final RegistryObject<Item> HEAT_SPELL_CARD = ITEMS.register("heat_spell_card", () -> new HeatSpellCardItem(new Item.Properties().tab(BotsMod.BotsMagicItemGroup.magic).stacksTo(1)));
 
+    public static final RegistryObject<Item> MYTHICAL_SPELL_CARD = ITEMS.register("mythical_spell_card", () -> new MythicalSpellCardItem(new Item.Properties().tab(BotsMod.BotsMagicItemGroup.magic).stacksTo(1)));
+
 
     //                              -----COIN-----
 
@@ -118,6 +123,22 @@ public class ItemInitNew {
     public static final RegistryObject<Item> PROFOUND_CITY_COIN = ITEMS.register("profound_city_coin", () -> new ProfoundCityCoin(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
     public static final RegistryObject<Item> STARLING_CITY_COIN = ITEMS.register("starling_city_coin", () -> new StarlingCityCoin(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+
+    public static final RegistryObject<Item> SACRIFICIAL_TONGUE = ITEMS.register("sacrificial_tongue", () -> new SacrificialTongue(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+
+    public static final RegistryObject<Item> MECHANICAL_ARM = ITEMS.register("mechanical_arm", () -> new MechanicalArm(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> ALCHEMINE_PISTON = ITEMS.register("alchemine_piston", () -> new AlcheminePistonItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> UPPER_OUTER_STEEL_PLATE = ITEMS.register("upper_outer_steel_plate", () -> new UpperOuterSteelPlateItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> LOWER_OUTER_STEEL_PLATE = ITEMS.register("lower_outer_steel_plate", () -> new LowerOuterSteelPlateItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> MODULE_ATTACHMENT_COMPONENT = ITEMS.register("module_attachment_component", () -> new ModuleAttachmentComponentItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> IRON_LONG_BLADE_MODULE = ITEMS.register("iron_long_blade_module", () -> new IronLongBladeModuleItem(new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 
     //public static final RegistryObject<Item> CELL_FLUID_BUCKET = ITEMS.register("cell_fluid_bucket", () -> new FleshBucket(BOTSFluids.CELL.get(), new Item.Properties().tab(BotsMod.BotsItemGroup.instance).stacksTo(1)));
 }

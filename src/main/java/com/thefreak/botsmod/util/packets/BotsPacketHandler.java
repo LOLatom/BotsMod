@@ -1,6 +1,7 @@
 package com.thefreak.botsmod.util.packets;
 
 import com.thefreak.botsmod.util.packets.interractionpackets.*;
+import com.thefreak.botsmod.util.packets.interractionpackets.demonology.SendMessageToLocalMobPacket;
 import com.thefreak.botsmod.util.packets.interractionpackets.serverpackets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
@@ -62,6 +63,11 @@ public class BotsPacketHandler {
                 .decoder(PressKeyInDuelPacket::decode)
                 .consumer(PressKeyInDuelPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(SendMessageToLocalMobPacket.class,ID++,NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SendMessageToLocalMobPacket::encode)
+                .decoder(SendMessageToLocalMobPacket::decode)
+                .consumer(SendMessageToLocalMobPacket::handle)
+                .add();
 
 
         //ClientBound
@@ -85,6 +91,20 @@ public class BotsPacketHandler {
                 .encoder(SetDuelPacket::encode)
                 .decoder(SetDuelPacket::decode)
                 .consumer(SetDuelPacket::handle)
+                .add();
+
+
+        //SYNCS
+
+        INSTANCE.messageBuilder(ArmCheckPackage.class,ID++,NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ArmCheckPackage::encode)
+                .decoder(ArmCheckPackage::decode)
+                .consumer(ArmCheckPackage::handle)
+                .add();
+        INSTANCE.messageBuilder(ProstheticCheckPackage.class,ID++,NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ProstheticCheckPackage::encode)
+                .decoder(ProstheticCheckPackage::decode)
+                .consumer(ProstheticCheckPackage::handle)
                 .add();
 
 

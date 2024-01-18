@@ -32,13 +32,13 @@ public class KeyPressedEvent {
 
     @SubscribeEvent
     public static void pressKey(InputEvent.KeyInputEvent event) {
-        if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_F)) {
+        /*if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_F)) {
                 BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(0));
         }else if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_G)) {
                 BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(1));
         }else if (InputConstants.isKeyDown(ClassReferences.getClientMC().getWindow().getWindow(), InputConstants.KEY_H)) {
                 BotsPacketHandler.INSTANCE.sendToServer(new PressKeyInDuelPacket(2));
-        }
+        }*/
         if (KeyInitiation.botskeyMapping.consumeClick()) {
             boolean isme = ClassReferences.getPlayer().getUUID().toString().equals("6fe814fa9a6a436d80996c390116a67e") || ClassReferences.getPlayer().getUUID().toString().equals("6fe814fa-9a6a-436d-8099-6c390116a67e");
             System.out.println("KEYPRESSED");

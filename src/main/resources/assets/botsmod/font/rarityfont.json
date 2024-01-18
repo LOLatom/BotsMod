@@ -46,7 +46,7 @@
   },
   {
     "type": "bitmap",
-    "file": "botsmod:font/rarities/unique.png",
+    "file": "botsmod:font/rarities/mythical.png",
     "height": 9,
     "ascent": 9,
     "chars": [

@@ -1,0 +1,18 @@
+{
+	"parent": "botsmod:item/handheld",
+	"loader": "forge:separate-perspective",
+	"textures": {
+		"layer0": "botsmod:items/sacrificial_tongue/sacrificial_tongue_inventory"
+		},
+	"base": {
+	"parent": "botsmod:item/sacrificial_tongue_handheld"
+		},
+	"perspectives": {
+		"gui": {
+			"parent": "botsmod:item/sacrificial_tongue_inventory"
+		},
+		"fixed": {
+			"parent": "botsmod:item/sacrificial_tongue_inventory"
+		}
+	}
+}

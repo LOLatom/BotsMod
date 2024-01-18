@@ -1,22 +1,31 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.god_killer_hand.none": {
+		"animation.god_killer_hand.closed": {
 			"loop": true,
 			"bones": {
 				"Finger1": {
 					"rotation": {
-						"vector": [45.10922, -3.53329, -3.54002]
+						"vector": [65.85133, 20.70481, -9.00717]
+					},
+					"position": {
+						"vector": [0, 1.25, 0]
 					}
 				},
 				"Finger2": {
 					"rotation": {
-						"vector": [45.10922, 3.53329, 3.54002]
+						"vector": [66.87402, -10.51794, 6.79286]
+					},
+					"position": {
+						"vector": [0, 1, 0]
 					}
 				},
 				"Finger3": {
 					"rotation": {
-						"vector": [0, 17.5, 0]
+						"vector": [39.62397, -26.11515, 47.0071]
+					},
+					"position": {
+						"vector": [1, 0, -0.5]
 					}
 				}
 			}
@@ -26,17 +35,26 @@
 			"bones": {
 				"Finger1": {
 					"rotation": {
-						"vector": ["-57.5 +math.sin(query.anim_time * 450) * 13", 0, 0]
+						"vector": ["-48.5575 - math.sin(query.anim_time * 300) * 15", 8.8577, -29.87339]
+					},
+					"position": {
+						"vector": [0, 0, -0.25]
 					}
 				},
 				"Finger2": {
 					"rotation": {
-						"vector": ["-55 +math.cos(query.anim_time * 450) * 13", 0, 0]
+						"vector": ["-60.1378 + math.cos(query.anim_time * 300) * 15", -10.19191, 25.97172]
+					},
+					"position": {
+						"vector": [0, 0, -0.25]
 					}
 				},
 				"Finger3": {
 					"rotation": {
-						"vector": [0, "-50+math.cos(query.anim_time * 450) * 13", 0]
+						"vector": ["-49.6198 - math.cos(query.anim_time * 300) * 15", -4.68561, 65.4714]
+					},
+					"position": {
+						"vector": [0.25, 0, 0]
 					}
 				}
 			}

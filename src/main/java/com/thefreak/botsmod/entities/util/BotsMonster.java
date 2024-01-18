@@ -1,6 +1,5 @@
 package com.thefreak.botsmod.entities.util;
 
-import com.thefreak.botsmod.entities.WickedOne;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,16 +10,20 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 
-import java.util.HashMap;
+
+import java.util.*;
 
 public class BotsMonster extends PathfinderMob {
     private static final byte PLAYING_MUSIC_ID = 67;
@@ -30,7 +33,11 @@ public class BotsMonster extends PathfinderMob {
 
     private int ticksRecorded;
 
-    private static final EntityDataAccessor<Integer> DATA_ACTION_FLAGS = SynchedEntityData.defineId(WickedOne.class, EntityDataSerializers.INT);
+    private ArrayList<UUID> playerWatchingIDs;
+
+    private int ticksRecordedSinceFirstRendered;
+
+    private static final EntityDataAccessor<Integer> DATA_ACTION_FLAGS = SynchedEntityData.defineId(BotsMonster.class, EntityDataSerializers.INT);
 
     protected HashMap<Integer,AnimationBuilder> animations = new HashMap<>();
 
@@ -40,12 +47,21 @@ public class BotsMonster extends PathfinderMob {
         this.xpReward = 10;
         this.recordingTicks = false;
         this.ticksRecorded = 0;
+        this.playerWatchingIDs = new ArrayList<>();
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ACTION_FLAGS, 0);
+    }
+
+    /**
+     * A method that execute whenever the player tell a message in chat
+     * @param msg the message that has been sent
+     * @param player the player who sent the message
+     */
+    public void worded(String msg, Player player) {
     }
 
     @Override
@@ -64,6 +80,8 @@ public class BotsMonster extends PathfinderMob {
             }
         }
     }
+
+    public void onPlayerScreenTick(Player player) {};
 
     public void setActionFlags(int actionFlags) {
         this.entityData.set(DATA_ACTION_FLAGS, actionFlags);
@@ -85,6 +103,9 @@ public class BotsMonster extends PathfinderMob {
         return this.recordingTicks;
     }
 
+    public void setRecordingTicks(int ticksRecorded) {
+        this.ticksRecorded = ticksRecorded;
+    }
     public void startRecordingTicks() {
         this.recordingTicks = true;
     }
@@ -94,6 +115,8 @@ public class BotsMonster extends PathfinderMob {
         this.ticksRecorded = 0;
     }
 
+    public void playerRendering() {
+    }
     @Override
     public boolean doHurtTarget(Entity pEntity) {
         return doHurtTarget(pEntity, 1F,1F);

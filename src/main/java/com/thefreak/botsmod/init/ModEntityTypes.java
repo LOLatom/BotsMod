@@ -2,6 +2,8 @@ package com.thefreak.botsmod.init;
 
 import com.thefreak.botsmod.BotsMod;
 import com.thefreak.botsmod.entities.*;
+import com.thefreak.botsmod.entities.demons.SadFace;
+import com.thefreak.botsmod.entities.demons.SadMan;
 import com.thefreak.botsmod.entities.misc.LightSwordConstruct;
 import com.thefreak.botsmod.entities.misc.ShadowLightningBolt;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +50,12 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<CaveAngeliaGuppie>> CAVE_ANGELIA_GUPPIE = ENTITY.register("cave_angelia_guppie", () ->
 			EntityType.Builder.<CaveAngeliaGuppie>of(CaveAngeliaGuppie::new, MobCategory.WATER_AMBIENT).sized(1F,0.5F).build(new ResourceLocation(BotsMod.MOD_ID,"cave_angelia_guppie").toString()));
+
+	public static final RegistryObject<EntityType<SadMan>> SAD_MAN = ENTITY.register("sad_man", () ->
+			EntityType.Builder.<SadMan>of(SadMan::new, MobCategory.CREATURE).sized(0.8F,3F).build(new ResourceLocation(BotsMod.MOD_ID,"sad_man").toString()));
+
+	public static final RegistryObject<EntityType<SadFace>> SAD_FACE = ENTITY.register("sad_face", () ->
+			EntityType.Builder.<SadFace>of(SadFace::new, MobCategory.MONSTER).sized(1.5F,2F).build(new ResourceLocation(BotsMod.MOD_ID,"sad_face").toString()));
 
 	public static final RegistryObject<EntityType<ShadowLightningBolt>> SHADOW_LIGHTNING_BOLT = ENTITY.register("shadow_lightning_bolt", () ->
 			EntityType.Builder.<ShadowLightningBolt>of(ShadowLightningBolt::new, MobCategory.MISC).sized(0F,0F).build(new ResourceLocation(BotsMod.MOD_ID,"shadow_lightning_bolt").toString()));

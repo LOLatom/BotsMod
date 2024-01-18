@@ -5,6 +5,7 @@ import com.deltateam.deltalib.accessors.ShaderAccessor;
 import com.mojang.blaze3d.platform.ScreenManager;
 import com.thefreak.botsmod.client.Rendering.RenderTargets;
 import com.thefreak.botsmod.entities.*;
+import com.thefreak.botsmod.entities.demons.SadMan;
 import com.thefreak.botsmod.fluids.BOTSFluids;
 import com.thefreak.botsmod.fluids.FluidInit;
 import com.thefreak.botsmod.init.*;
@@ -12,12 +13,14 @@ import com.thefreak.botsmod.init.blockinit.NoItemBlockInit;
 import com.thefreak.botsmod.init.customregistries.ProstheticRegistry;
 import com.thefreak.botsmod.init.iteminit.FoodItemInit;
 import com.thefreak.botsmod.init.iteminit.ItemInitNew;
+import com.thefreak.botsmod.init.sounds.SoundRegistry;
 import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
 import com.thefreak.botsmod.objects.containers.screens.SpecialisedCraftingScreen;
 import com.thefreak.botsmod.objects.items.magic.SpellCardItem;
 import com.thefreak.botsmod.particles.ModParticleType;
 import com.thefreak.botsmod.recipes.BotsRecipeType;
 import com.thefreak.botsmod.util.packets.BotsPacketHandler;
+import com.thefreak.botsmod.util.shaders.ShaderEffects;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.PostPass;
@@ -76,6 +79,7 @@ public class BotsMod
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
         BotsRecipeType.RECIPES.register(modEventBus);
         ModParticleType.PARTICLE_TYPES.register(modEventBus);
+        SoundRegistry.SOUND_EVENTS.register(modEventBus);
         BotsPacketHandler.init();
         if (!FMLEnvironment.production) MinecraftForge.EVENT_BUS.addListener(this::tick);
     	ModEntityTypes.ENTITY.register(modEventBus);
@@ -125,9 +129,8 @@ public class BotsMod
         event.put(ModEntityTypes.GATE_KEEPER.get(), GateKeeper.createAttributes().build());
         event.put(ModEntityTypes.KRASIA.get(), KrasiaEntity.createAttributes().build());
         event.put(ModEntityTypes.CAVE_ANGELIA_GUPPIE.get(), CaveAngeliaGuppie.createAttributes().build());
-
-
-
+        event.put(ModEntityTypes.SAD_MAN.get(), SadMan.createAttributes().build());
+        event.put(ModEntityTypes.SAD_FACE.get(), SadMan.createAttributes().build());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -155,6 +158,7 @@ public class BotsMod
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.RED_BIRD_BRANCH.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.FLESH_COLUMN.get(), RenderType.cutoutMipped());
         ItemBlockRenderTypes.setRenderLayer(BlockInitNew.SPECIALISED_CRAFTING_TABLE.get(), RenderType.cutoutMipped());
+        //ItemBlockRenderTypes.setRenderLayer(BlockInitNew.ARM_FACTORY_BLOCK.get(), RenderType.cutoutMipped());
 
 
 
@@ -179,95 +183,11 @@ public class BotsMod
         ForgeModelBakery.addSpecialModel(new ResourceLocation(MOD_ID, "item/georite_crystal_model_part"));
     }
 
-    static boolean inCellFluid = false;
 
     public void tick(TickEvent.ClientTickEvent event) {
-	/*	if (event.phase == TickEvent.Phase.START) {
-			if (!PostProcessingUtils.hasPass(new ResourceLocation("deltalib:blur"))) {
-				PostPass shader;
-				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:glow"), new ResourceLocation("deltalib:blur"));
-				((ShaderAccessor) shader).addDepthTarget("VanillaDepth", Minecraft.getInstance().getMainRenderTarget());
-				((ShaderAccessor) shader).addDepthTarget("GlowDepth", glowTarget);
-				((ShaderAccessor) shader).setSourceBuffer(glowTarget);
-				((ShaderAccessor) shader).setTargetBuffer(glowTargetSwap);
-				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:merge"), new ResourceLocation("deltalib:draw"));
-				((ShaderAccessor) shader).addAuxTarget("glow", glowTargetSwap);
-				((ShaderAccessor) shader).addDepthTarget("GlowDepth", glowTarget);
-				shader = PostProcessingUtils.addPass(new ResourceLocation("deltalib:blit"), new ResourceLocation("minecraft:blit"));
-			}
-		}*/
-        if (event.phase == TickEvent.Phase.START && ClassReferences.getClientMC().getEntityRenderDispatcher().camera != null) {
-
-
-            boolean a = ClassReferences.getClientMC().getEntityRenderDispatcher().camera.getBlockAtCamera().getBlock() == FluidInit.CELL_FLUID.get();
-            a = a && ClassReferences.getClientMC().getEntityRenderDispatcher().camera.getFluidInCamera().equals(FogType.WATER);
-
-             if (!inCellFluid && a) {
-                 inCellFluid = true;
-
-                if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_x"))) {
-                    PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:blur_x"), new ResourceLocation("minecraft:blur"));
-                    shader.getEffect().getUniform("BlurDir").set(1f, 0f);
-                    shader.getEffect().getUniform("Radius").set(10f);
-                }
-                if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_y"))) {
-                    PostPass  shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:blur_y"), new ResourceLocation("minecraft:blur"));
-                    shader.getEffect().getUniform("BlurDir").set(0f, 1f);
-                    shader.getEffect().getUniform("Radius").set(10f);
-                }
-                 if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:redview"))) {
-                     PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:redview"), new ResourceLocation("botsmod","redview"));
-
-                 }
-                if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_blit"))) {
-                    PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:blur_blit"), new ResourceLocation("minecraft:blit"));
-
-                }
-            }
-            if (inCellFluid && !a) {
-                inCellFluid = false;
-                if (PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_x"))) {
-                    PostProcessingUtils.removePass(new ResourceLocation("botsmod:blur_x"));
-                }
-                if (PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_y"))) {
-                    PostProcessingUtils.removePass(new ResourceLocation("botsmod:blur_y"));
-                }
-                if (PostProcessingUtils.hasPass(new ResourceLocation("botsmod:redview"))) {
-                    PostProcessingUtils.removePass(new ResourceLocation("botsmod:redview"));
-                }
-                if (PostProcessingUtils.hasPass(new ResourceLocation("botsmod:blur_blit"))) {
-                    PostProcessingUtils.removePass(new ResourceLocation("botsmod:blur_blit"));
-                }
-            }
-
-            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_x"))) {
-                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_x"), new ResourceLocation("blur"));
-                shader.getEffect().getUniform("BlurDir").set(1f, 0f);
-                shader.getEffect().getUniform("Radius").set(5f);
-                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayer);
-                ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayerSwap);
-            }
-            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_y"))) {
-                PostPass  shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_y"), new ResourceLocation("blur"));
-                shader.getEffect().getUniform("BlurDir").set(0f, 1f);
-                shader.getEffect().getUniform("Radius").set(5f);
-                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayerSwap);
-                ((ShaderAccessor)shader).setTargetBuffer(RenderTargets.FreakPlayer);
-            }
-            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_merge"))) {
-                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_merge"), new ResourceLocation("botsmod:merge"));
-//                ((ShaderAccessor)shader).addDepthTarget("DiffuseDepthSampler", ClassReferences.getClientMC().getMainRenderTarget());
-                ((ShaderAccessor)shader).addAuxTarget("FreakBlur", RenderTargets.FreakPlayer);
-                ((ShaderAccessor)shader).addDepthTarget("FreakBlurDepth", RenderTargets.FreakPlayerDepth);
-//                ((ShaderAccessor)shader).setTargetBuffer(Minecraft.getInstance().getMainRenderTarget());
-            }
-            if (!PostProcessingUtils.hasPass(new ResourceLocation("botsmod:freak_blur_blit"))) {
-                PostPass shader = PostProcessingUtils.addPass(new ResourceLocation("botsmod:freak_blur_blit"), new ResourceLocation("minecraft:blit"));
-//                ((ShaderAccessor)shader).setSourceBuffer(RenderTargets.FreakPlayer);
-//                ((ShaderAccessor)shader).setTargetBuffer(Minecraft.getInstance().getMainRenderTarget());
-            }
-            }
-        }
+        //Creating the shaders there :
+        ShaderEffects.shaderEffectCreate(event);
+    }
 
 
     @SubscribeEvent

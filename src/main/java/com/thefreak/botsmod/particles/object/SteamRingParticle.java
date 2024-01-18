@@ -29,6 +29,7 @@ public class SteamRingParticle extends SimpleAnimatedParticle {
 
 
 
+
     @Override
     public void render(VertexConsumer pBuffer, Camera pRenderInfo, float pPartialTicks) {
         super.render(pBuffer, pRenderInfo, pPartialTicks);

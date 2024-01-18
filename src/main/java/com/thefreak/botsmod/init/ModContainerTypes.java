@@ -6,6 +6,7 @@ import com.thefreak.botsmod.objects.containers.CoinSpecContainer;
 import com.thefreak.botsmod.objects.containers.SpecialisedCraftingMenu;
 import com.thefreak.botsmod.objects.containers.screens.SpecialisedCraftingScreen;
 import com.thefreak.botsmod.objects.items.magic.spells.HeatSpellCardItem;
+import com.thefreak.botsmod.objects.screens.menu.ArmFactoryMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.CraftingMenu;
@@ -24,6 +25,8 @@ public class ModContainerTypes {
 				ForgeRegistries.CONTAINERS, BotsMod.MOD_ID);
 
 		public static final RegistryObject<MenuType<SpecialisedCraftingMenu>> SPECIALISED_CRAFTING_MENU = CONTAINER_TYPES.register("specialised_crafting_menu", () -> new MenuType<>(SpecialisedCraftingMenu::new));
+
+		public static final RegistryObject<MenuType<ArmFactoryMenu>> ARM_FACTORY_MENU = CONTAINER_TYPES.register("arm_factory_menu", () -> new MenuType<>(ArmFactoryMenu::new));
 
 
 }

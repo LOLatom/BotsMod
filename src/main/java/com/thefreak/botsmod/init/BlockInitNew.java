@@ -13,6 +13,7 @@ import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.CookingPotBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatAccumulatorBlock;
 import com.thefreak.botsmod.objects.blocks.HeatBlockMechanics.HeatCapacitorBlock;
 import com.thefreak.botsmod.objects.blocks.PostMortalAltar;
+import com.thefreak.botsmod.objects.blocks.crafting.ArmFactoryBlock;
 import com.thefreak.botsmod.objects.blocks.crafting.SpecialisedCraftingTableBlock;
 import com.thefreak.botsmod.objects.blocks.plants.LogMushroom;
 import com.thefreak.botsmod.objects.blocks.plants.MedusaGroveFlower;
@@ -484,6 +485,8 @@ public class BlockInitNew {
 	public static final RegistryObject<Block> DIRTY_CERAMIC_TILES  = BLOCKS.register("dirty_ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
 
 	public static final RegistryObject<Block> SLIGHTLY_DIRTY_CERAMIC_TILES  = BLOCKS.register("slightly_dirty_ceramic_tiles", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F)));
+
+	public static final RegistryObject<Block> ARM_FACTORY_BLOCK  = BLOCKS.register("arm_factory", () -> new ArmFactoryBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.0F).noOcclusion()));
 
 
 	protected static RotatedPillarBlock log(MaterialColor p_235430_0_, MaterialColor p_235430_1_) {

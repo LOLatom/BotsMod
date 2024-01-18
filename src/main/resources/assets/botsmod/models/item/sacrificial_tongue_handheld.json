@@ -1,0 +1,6 @@
+{
+	"parent": "botsmod:item/bighandheld",
+	"textures": {
+		"layer0": "botsmod:items/sacrificial_tongue/sacrificial_tongue_handheld"
+		}
+}

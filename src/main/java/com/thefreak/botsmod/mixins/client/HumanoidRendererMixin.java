@@ -28,7 +28,7 @@ public class HumanoidRendererMixin{
     @Inject(method = "<init>" , at = @At("TAIL"))
     public void ConstructorMixin(EntityRendererProvider.Context p_174557_, boolean p_174558_, CallbackInfo ci) {
         ((PlayerRenderer)(Object)this).addLayer(new HumanoidLayer(((PlayerRenderer)(Object)this)));
-        ((PlayerRenderer)(Object)this).addLayer(new ProstheticLayer<>((PlayerRenderer)(Object)this));
+        ((PlayerRenderer)(Object)this).addLayer(new ProstheticLayer<>((PlayerRenderer)(Object)this, p_174557_.getModelSet()));
     }
 
 
@@ -51,8 +51,10 @@ public class HumanoidRendererMixin{
         pClientPlayer.getCapability(PlayerLimbsProvider.PLAYER_LIMBS).ifPresent(playerLimbsCap -> {
             if (pClientPlayer.getMainArm() == HumanoidArm.RIGHT) {
                 playermodel.rightArm.visible = playerLimbsCap.hasMainArm();
+                playermodel.rightSleeve.visible = playerLimbsCap.hasMainArm();
             } else if (pClientPlayer.getMainArm() == HumanoidArm.LEFT) {
                 playermodel.leftArm.visible = playerLimbsCap.hasMainArm();
+                playermodel.leftSleeve.visible = playerLimbsCap.hasMainArm();
             }
         });
     }

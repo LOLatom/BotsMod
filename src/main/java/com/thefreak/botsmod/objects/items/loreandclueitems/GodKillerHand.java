@@ -266,7 +266,7 @@ public class GodKillerHand extends Item implements IAnimatable, ISyncable, IHave
         } else {
             controller = GeckoLibUtil.getControllerForID(this.factory, id, "openhand");
             controller.markNeedsReload();
-            controller.setAnimation(animationBuilder.addAnimation("animation.god_killer_hand.none", ILoopType.EDefaultLoopTypes.LOOP));
+            controller.setAnimation(animationBuilder.addAnimation("animation.god_killer_hand.closed", ILoopType.EDefaultLoopTypes.LOOP));
 
         }
 

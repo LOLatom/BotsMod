@@ -15,6 +15,8 @@ public class ModParticleType {
 
     public static final RegistryObject<SimpleParticleType> GOLDEN_SPECTER_PARTICLE = PARTICLE_TYPES.register("golden_specter", () -> new SimpleParticleType(true));
 
+    public static final RegistryObject<SimpleParticleType> SAD_FACE_PARTICLE = PARTICLE_TYPES.register("sad_face_particle", () -> new SimpleParticleType(true));
+
     public static final RegistryObject<SimpleParticleType> STEAM_RING_PARTICLE = PARTICLE_TYPES.register("steam_ring", () -> new SimpleParticleType(true));
 
 

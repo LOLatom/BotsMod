@@ -23,7 +23,7 @@ public class MainMenutScreenEvent {
 
     @SubscribeEvent
     public static void onMenuRender(ScreenEvent.InitScreenEvent event) {
-       /* Screen screen = event.getScreen();
+       Screen screen = event.getScreen();
 
 
         Minecraft mc = ClassReferences.getClientMC();
@@ -40,7 +40,7 @@ public class MainMenutScreenEvent {
                 mc.setScreen(new SecretTitleScreen());
             }));
 
-        }*/
+        }
     }
 
 

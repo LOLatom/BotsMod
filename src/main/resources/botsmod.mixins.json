@@ -7,7 +7,6 @@
   "client": [
     "client.BipedModelMixin",
     "client.HeldItemLayerMixin",
-    "client.IngameGuiMixin",
     "client.DisplayEffectsScreenMixin",
     "client.ScreenMixin",
     "client.HumanoidRendererMixin",
@@ -20,14 +19,17 @@
     "client.SlotMixinForEvent",
     "client.RenderIconMixin",
     "client.MouseHandlerMixin",
-    "client.prosthetic.InventoryScreenMixin"
+    "client.prosthetic.InventoryScreenMixin",
+    "client.ClientInteractionMixin",
+    "client.ItemInHandRendererMixin"
   ],
   "mixins": [
     "server.LivingEntityMixin",
     "server.EntityMixin",
     "server.LevelMixin",
     "server.PlayerMixin",
-    "server.prosthetic.InventoryMenuMixin"
+    "server.prosthetic.InventoryMenuMixin",
+    "server.ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

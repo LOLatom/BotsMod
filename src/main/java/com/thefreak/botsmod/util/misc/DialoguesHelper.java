@@ -18,7 +18,7 @@ public class DialoguesHelper {
 
     public void krasiaFirstDialogue() {
         DialogueGUI dialogueFirst = new DialogueGUI(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_icon.png"),
-                "","(sigh) . . .", "Well this was close...");
+                "","(sigh) . . .", "Well that was close...");
         dialogueFirst.setSecondIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_sigh_icon.png"),true,20,1,false);
         dialogueFirst.setThirdIcon(new ResourceLocation("botsmod", "textures/gui/dialogue/krasia_pity_icon.png"));
         dialogueFirst.setTextPassingTime(1,2,1);

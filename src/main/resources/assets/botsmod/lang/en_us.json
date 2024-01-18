@@ -19,6 +19,17 @@
 	"item.botsmod.jade_axe": "Jade Axe",
 	"item.botsmod.jade_pickaxe": "Jade Pickaxe",
 	"item.botsmod.jade_shovel": "Jade Shovel",
+	"item.botsmod.cleaver": "Cleaver",
+	"item.botsmod.mechanical_arm": "Mechanical Arm",
+	"item.botsmod.alchemine_piston": "Alchemine Piston",
+	"item.botsmod.upper_outer_steel_plate": "Upper Outer Steel Plate",
+	"item.botsmod.lower_outer_steel_plate": "Lower Outer Steel Plate",
+	"item.botsmod.module_attachment_component": "Module Attachment Component",
+
+	"block.botsmod.arm_factory": "Arm Factory",
+
+	"item.botsmod.sacrificial_tongue": "Sacrificial Tongue",
+
 	"key.botsmod.divine" : "N'hil bh'al",
 	"key.botsmod.first_finger_motion" : "First finger",
 	"key.botsmod.second_finger_motion" : "Second finger",
@@ -36,6 +47,7 @@
 
 	"item.botsmod.spell_card": "Spell Card",
 	"item.botsmod.heat_spell_card": "Spell Card",
+	"item.botsmod.mythical_spell_card": "Mythical Spell Card",
 
 	"item.botsmod.arlo_coin": "Coin",
 	"item.botsmod.maniac_city_coin": "Coin",

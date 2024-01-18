@@ -113,7 +113,7 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (pSource.getEntity() instanceof Player player) {
-            this.level.playSound(player,this.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.HOSTILE,2F,1.5F);
+            this.level.playSound(player,this.blockPosition(), SoundEvents.ANVIL_FALL, SoundSource.HOSTILE,2F,1.5F);
             LightSwordConstruct lightSwordConstruct = new LightSwordConstruct(ModEntityTypes.LIGHT_SWORD_CONSTRUCT.get(), this.level, 100, player);
             lightSwordConstruct.setPos(player.getX(), player.getY() + 5, player.getZ());
             this.level.addFreshEntity(lightSwordConstruct);
@@ -155,6 +155,7 @@ public class GateKeeper extends BotsMonster implements IAnimatable, Enemy {
     public boolean canBeCollidedWith() {
         return true;
     }
+
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0D)

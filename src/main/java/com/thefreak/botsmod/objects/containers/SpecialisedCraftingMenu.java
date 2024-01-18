@@ -25,6 +25,7 @@ public class SpecialisedCraftingMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_END = 37;
     private static final int USE_ROW_SLOT_START = 37;
     private static final int USE_ROW_SLOT_END = 46;
+
     private final ContainerLevelAccess access;
     private final ResultContainer resultContainer = new ResultContainer();
 

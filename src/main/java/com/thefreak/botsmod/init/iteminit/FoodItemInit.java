@@ -107,4 +107,9 @@ public class FoodItemInit {
             .food(new FoodProperties.Builder().nutrition(-1).saturationMod(-4)
                     .build()).stacksTo(1)));
 
+    public static final RegistryObject<Item> FLESH_CHUNK = ITEMS.register("flesh_chunk", () -> new Item(new Item.Properties()
+            .tab(BotsMod.BotsfoodItemGroup.food)
+            .food(new FoodProperties.Builder().nutrition(5).saturationMod(4)
+                    .build())));
+
 }
